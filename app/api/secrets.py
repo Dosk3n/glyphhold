@@ -65,7 +65,7 @@ def _secret_error(exc: Exception) -> HTTPException:
 
 @router.get("")
 def list_secrets(
-    _: Annotated[ApiPrincipal, Depends(require_scope("secrets:read"))],
+    _: Annotated[ApiPrincipal, Depends(require_scope("secrets:reveal"))],
     query: str | None = None,
     service: str | None = None,
     host: str | None = None,
@@ -137,7 +137,7 @@ def reveal_env(
 @router.get("/{id_or_name}")
 def get_secret(
     id_or_name: str,
-    _: Annotated[ApiPrincipal, Depends(require_scope("secrets:read"))],
+    _: Annotated[ApiPrincipal, Depends(require_scope("secrets:reveal"))],
 ) -> dict:
     secret = secrets.get_secret_metadata(id_or_name)
     if secret is None:

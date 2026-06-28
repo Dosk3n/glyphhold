@@ -80,6 +80,14 @@ Agents call the API with:
 Authorization: Bearer tw_live_xxxxxxxxxxxxxxxxx
 ```
 
+Secret scopes are deliberately simple:
+
+- `secrets:write` lets an agent create, update, and delete secrets.
+- `secrets:reveal` lets an agent search/list secrets and reveal actual values.
+- Without a secret scope, an agent cannot see or use secrets.
+
+Secret values are never included in agent prefetch.
+
 ## Public API
 
 The public API starts at `/api/v1`.
