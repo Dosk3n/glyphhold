@@ -6,11 +6,14 @@ from fastapi.templating import Jinja2Templates
 
 from app.config import settings
 from app.core import auth
+from app.core.request_context import get_request_id
 from app.storage.db import database_ok
 from app.storage.migrations import current_schema_version
 from app.storage.repositories import auth as auth_repo
 from app.storage.repositories import categories, entities, memories
 from app.storage.repositories import events as events_repo
+from app.storage.repositories import secrets as secrets_repo
+from app.storage.repositories.events import record_event
 
 router = APIRouter(tags=["dashboard"])
 templates = Jinja2Templates(directory="app/dashboard/templates")
@@ -389,4 +392,130 @@ def activity_page(
         events=events_repo.list_events(actor=actor, event_type=event_type, limit=100),
         actor=actor or "",
         event_type=event_type or "",
+    )
+
+
+@router.get("/dashboard/secrets", response_class=HTMLResponse)
+def secrets_page(
+    request: Request,
+    query: str | None = None,
+    service: str | None = None,
+    host: str | None = None,
+    scope: str | None = None,
+) -> Response:
+    user = auth.get_current_dashboard_user(request)
+    if user is None:
+        return _redirect("/login")
+    return _render(
+        request,
+        "secrets.html",
+        user=user,
+        secrets=secrets_repo.list_secrets(query=query, service=service, host=host, scope=scope),
+        query=query or "",
+        service=service or "",
+        host=host or "",
+        scope=scope or "",
+        revealed=None,
+        error=None,
+    )
+
+
+@router.post("/dashboard/secrets", response_class=HTMLResponse)
+def create_secret_from_dashboard(
+    request: Request,
+    name: str = Form(...),
+    value: str = Form(...),
+    description: str = Form(""),
+    value_type: str = Form("text"),
+    service: str = Form(""),
+    host: str = Form(""),
+    scope: str = Form(""),
+    tags: str = Form(""),
+) -> Response:
+    user = auth.get_current_dashboard_user(request)
+    if user is None:
+        return _redirect("/login")
+    tag_list = [item.strip() for item in tags.split(",") if item.strip()]
+    try:
+        secret = secrets_repo.create_secret(
+            name=name.strip(),
+            value=value,
+            description=description.strip() or None,
+            value_type=value_type.strip() or "text",
+            service=service.strip() or None,
+            host=host.strip() or None,
+            scope=scope.strip() or None,
+            tags=tag_list,
+        )
+    except Exception as exc:
+        return _render(
+            request,
+            "secrets.html",
+            user=user,
+            secrets=secrets_repo.list_secrets(),
+            query="",
+            service="",
+            host="",
+            scope="",
+            revealed=None,
+            error=str(exc),
+            status_code=400,
+        )
+    record_event(
+        request_id=get_request_id(request),
+        event_type="secret.create",
+        actor=user["username"],
+        target_type="secret",
+        target_id=secret["name"],
+        action="create",
+        success=True,
+        message=secret["name"],
+    )
+    return _redirect("/dashboard/secrets")
+
+
+@router.post("/dashboard/secrets/{id_or_name}/reveal", response_class=HTMLResponse)
+def reveal_secret_from_dashboard(request: Request, id_or_name: str) -> Response:
+    user = auth.get_current_dashboard_user(request)
+    if user is None:
+        return _redirect("/login")
+    try:
+        secret, value = secrets_repo.reveal_secret(id_or_name)
+    except Exception as exc:
+        return _render(
+            request,
+            "secrets.html",
+            user=user,
+            secrets=secrets_repo.list_secrets(),
+            query="",
+            service="",
+            host="",
+            scope="",
+            revealed=None,
+            error=str(exc),
+            status_code=400,
+        )
+    if secret is None:
+        return _redirect("/dashboard/secrets")
+    record_event(
+        request_id=get_request_id(request),
+        event_type="secret.reveal",
+        actor=user["username"],
+        target_type="secret",
+        target_id=secret["name"],
+        action="reveal",
+        success=True,
+        purpose="dashboard reveal",
+    )
+    return _render(
+        request,
+        "secrets.html",
+        user=user,
+        secrets=secrets_repo.list_secrets(),
+        query="",
+        service="",
+        host="",
+        scope="",
+        revealed={"name": secret["name"], "value": value},
+        error=None,
     )
