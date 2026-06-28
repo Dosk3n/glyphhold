@@ -204,6 +204,26 @@ CREATE TABLE IF NOT EXISTS app_settings (
 );
 """,
     ),
+    Migration(
+        version=3,
+        name="seed_default_categories",
+        sql="""
+INSERT OR IGNORE INTO memory_categories (
+    id, name, description, allow_auto_prefetch, agent_can_create, agent_can_write,
+    created_at, updated_at
+)
+VALUES
+    ('cat_people', 'people', 'People and identity context.', 1, 1, 1, strftime('%Y-%m-%dT%H:%M:%fZ', 'now'), strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+    ('cat_servers', 'servers', 'Servers, machines, hosts, and infrastructure.', 1, 1, 1, strftime('%Y-%m-%dT%H:%M:%fZ', 'now'), strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+    ('cat_services', 'services', 'Services, apps, ports, and operational details.', 1, 1, 1, strftime('%Y-%m-%dT%H:%M:%fZ', 'now'), strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+    ('cat_projects', 'projects', 'Project notes, goals, and implementation context.', 1, 1, 1, strftime('%Y-%m-%dT%H:%M:%fZ', 'now'), strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+    ('cat_procedures', 'procedures', 'Repeatable procedures and runbooks.', 1, 1, 1, strftime('%Y-%m-%dT%H:%M:%fZ', 'now'), strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+    ('cat_preferences', 'preferences', 'User preferences and working style.', 1, 1, 1, strftime('%Y-%m-%dT%H:%M:%fZ', 'now'), strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+    ('cat_decisions', 'decisions', 'Decisions and rationale.', 1, 1, 1, strftime('%Y-%m-%dT%H:%M:%fZ', 'now'), strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+    ('cat_facts', 'facts', 'General confirmed facts.', 1, 1, 1, strftime('%Y-%m-%dT%H:%M:%fZ', 'now'), strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+    ('cat_temporary', 'temporary', 'Temporary or short-lived context.', 0, 1, 1, strftime('%Y-%m-%dT%H:%M:%fZ', 'now'), strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
+""",
+    ),
 )
 
 

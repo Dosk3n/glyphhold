@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Categories{% endblock %}
+{% block content %}
+<section>
+  <h1>Categories</h1>
+  {% if error %}<div class="alert">{{ error }}</div>{% endif %}
+  <form method="post" action="/dashboard/categories" class="panel stack">
+    <h2>Create category</h2>
+    <label>Name <input name="name" required></label>
+    <label>Description <input name="description"></label>
+    <label class="checkbox"><input type="checkbox" name="allow_auto_prefetch" checked> Allow auto-prefetch</label>
+    <label class="checkbox"><input type="checkbox" name="agent_can_create" checked> Agents can create</label>
+    <label class="checkbox"><input type="checkbox" name="agent_can_write" checked> Agents can write</label>
+    <button type="submit">Create category</button>
+  </form>
+</section>
+<section>
+  <h2>Existing categories</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Auto-prefetch</th>
+        <th>Agent create</th>
+        <th>Agent write</th>
+        <th>Memories</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for category in categories %}
+      <tr>
+        <td>{{ category.name }}</td>
+        <td>{{ category.description or "" }}</td>
+        <td>{{ "yes" if category.allow_auto_prefetch else "no" }}</td>
+        <td>{{ "yes" if category.agent_can_create else "no" }}</td>
+        <td>{{ "yes" if category.agent_can_write else "no" }}</td>
+        <td>{{ category.memory_count }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
+

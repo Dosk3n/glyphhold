@@ -4,8 +4,13 @@ from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
+from app.api.agent import router as agent_router
+from app.api.categories import router as categories_router
 from app.api.dashboard import router as dashboard_router
+from app.api.entities import router as entities_router
+from app.api.events import router as events_router
 from app.api.health import router as health_router
+from app.api.memories import router as memories_router
 from app.config import settings
 from app.core.logging import configure_logging, log_info
 from app.core.request_context import RequestContextMiddleware
@@ -25,6 +30,11 @@ def create_app() -> FastAPI:
     app.mount("/static", StaticFiles(directory="app/dashboard/static"), name="static")
     app.include_router(dashboard_router)
     app.include_router(health_router)
+    app.include_router(categories_router)
+    app.include_router(entities_router)
+    app.include_router(memories_router)
+    app.include_router(events_router)
+    app.include_router(agent_router)
 
     @app.on_event("startup")
     def log_startup() -> None:
