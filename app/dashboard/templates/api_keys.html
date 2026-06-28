@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}API Keys{% endblock %}
+{% block content %}
+<section>
+  <h1>API Keys</h1>
+  {% if created_key %}
+  <div class="secret-once">
+    <h2>Copy this key now</h2>
+    <p>This value will not be shown again.</p>
+    <code>{{ created_key.value }}</code>
+  </div>
+  {% endif %}
+  {% if error %}<div class="alert">{{ error }}</div>{% endif %}
+  <form method="post" action="/dashboard/api-keys" class="panel stack">
+    <h2>Create key</h2>
+    <label>
+      Name
+      <input name="name" placeholder="Hermes on application-server" required>
+    </label>
+    <label>
+      Actor
+      <input name="actor" placeholder="hermes" required>
+    </label>
+    <label>
+      Description
+      <input name="description" placeholder="Optional">
+    </label>
+    <fieldset>
+      <legend>Scopes</legend>
+      {% for scope in default_scopes %}
+      <label class="checkbox">
+        <input type="checkbox" name="scopes" value="{{ scope }}" checked>
+        {{ scope }}
+      </label>
+      {% endfor %}
+      <label class="checkbox">
+        <input type="checkbox" name="scopes" value="admin">
+        admin
+      </label>
+    </fieldset>
+    <button type="submit">Create API key</button>
+  </form>
+</section>
+
+<section>
+  <h2>Existing keys</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Actor</th>
+        <th>Prefix</th>
+        <th>Scopes</th>
+        <th>Status</th>
+        <th>Last used</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for key in api_keys %}
+      <tr>
+        <td>{{ key.name }}</td>
+        <td>{{ key.actor }}</td>
+        <td><code>{{ key.key_prefix }}</code></td>
+        <td><code>{{ key.scopes_json }}</code></td>
+        <td>{% if key.enabled %}enabled{% else %}disabled{% endif %}</td>
+        <td>{{ key.last_used_at or "" }}</td>
+        <td>
+          {% if key.enabled %}
+          <form method="post" action="/dashboard/api-keys/{{ key.id }}/disable">
+            <button type="submit">Disable</button>
+          </form>
+          {% else %}
+          <form method="post" action="/dashboard/api-keys/{{ key.id }}/enable">
+            <button type="submit">Enable</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="7">No API keys yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
+

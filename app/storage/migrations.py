@@ -192,6 +192,18 @@ CREATE INDEX IF NOT EXISTS idx_events_actor ON event_log(actor);
 CREATE INDEX IF NOT EXISTS idx_events_type ON event_log(event_type);
 """,
     ),
+    Migration(
+        version=2,
+        name="app_settings",
+        sql="""
+CREATE TABLE IF NOT EXISTS app_settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+""",
+    ),
 )
 
 
@@ -227,4 +239,3 @@ def current_schema_version() -> int:
         except sqlite3.OperationalError:
             return 0
         return int(row["version"] or 0)
-

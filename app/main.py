@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
+from app.api.dashboard import router as dashboard_router
 from app.api.health import router as health_router
 from app.config import settings
 from app.core.logging import configure_logging, log_info
@@ -20,6 +22,8 @@ def create_app() -> FastAPI:
         description="A local, non-LLM memory and secrets service for agents.",
     )
     app.add_middleware(RequestContextMiddleware)
+    app.mount("/static", StaticFiles(directory="app/dashboard/static"), name="static")
+    app.include_router(dashboard_router)
     app.include_router(health_router)
 
     @app.on_event("startup")
@@ -40,4 +44,3 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
-

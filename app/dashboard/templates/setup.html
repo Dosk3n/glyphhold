@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Set Up Tomewarden{% endblock %}
+{% block content %}
+<section class="auth-panel">
+  <h1>Set up Tomewarden</h1>
+  <p>Create the first dashboard admin account.</p>
+  {% if error %}<div class="alert">{{ error }}</div>{% endif %}
+  <form method="post" action="/setup" class="stack">
+    <label>
+      Username
+      <input name="username" autocomplete="username" required>
+    </label>
+    <label>
+      Password
+      <input name="password" type="password" autocomplete="new-password" minlength="12" required>
+    </label>
+    <label>
+      Confirm password
+      <input name="confirm_password" type="password" autocomplete="new-password" minlength="12" required>
+    </label>
+    <button type="submit">Create admin</button>
+  </form>
+</section>
+{% endblock %}
+
