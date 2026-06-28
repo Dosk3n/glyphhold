@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ memory.title }}{% endblock %}
+{% block content %}
+<section class="panel wide">
+  <h1>{{ memory.title }}</h1>
+  <dl>
+    <dt>Category</dt><dd>{{ memory.category_name }}</dd>
+    <dt>Confidence</dt><dd>{{ memory.confidence }}</dd>
+    <dt>Auto-prefetch</dt><dd>{{ memory.auto_prefetch_level }}</dd>
+    <dt>Tags</dt><dd><code>{{ memory.tags_json }}</code></dd>
+    <dt>Summary</dt><dd>{{ memory.summary or "" }}</dd>
+    <dt>Body</dt><dd><pre>{{ memory.body }}</pre></dd>
+  </dl>
+</section>
+<section>
+  <h2>Revisions</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Created</th>
+        <th>Changed by</th>
+        <th>Reason</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for revision in revisions %}
+      <tr>
+        <td>{{ revision.created_at }}</td>
+        <td>{{ revision.changed_by or "" }}</td>
+        <td>{{ revision.change_reason or "" }}</td>
+        <td>{{ revision.title }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4">No revisions yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
+

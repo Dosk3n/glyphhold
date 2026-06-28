@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Entities{% endblock %}
+{% block content %}
+<section>
+  <h1>Entities</h1>
+  <form method="post" action="/dashboard/entities" class="panel stack">
+    <h2>Create entity</h2>
+    <label>Name <input name="name" required></label>
+    <label>Type <input name="type" placeholder="server, service, person"></label>
+    <label>Aliases <input name="aliases" placeholder="comma-separated"></label>
+    <button type="submit">Create entity</button>
+  </form>
+</section>
+<section>
+  <h2>Existing entities</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Aliases</th>
+        <th>Linked memories</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entity in entities %}
+      <tr>
+        <td>{{ entity.name }}</td>
+        <td>{{ entity.type or "" }}</td>
+        <td><code>{{ entity.aliases_json }}</code></td>
+        <td>{{ entity.memory_count }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4">No entities yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
+

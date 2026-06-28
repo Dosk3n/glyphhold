@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Activity{% endblock %}
+{% block content %}
+<section>
+  <h1>Activity</h1>
+  <form method="get" action="/dashboard/activity" class="filters">
+    <input name="actor" value="{{ actor }}" placeholder="Actor">
+    <input name="event_type" value="{{ event_type }}" placeholder="Event type">
+    <button type="submit">Filter</button>
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Actor</th>
+        <th>Event</th>
+        <th>Target</th>
+        <th>Success</th>
+        <th>Request ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in events %}
+      <tr>
+        <td>{{ event.created_at }}</td>
+        <td>{{ event.actor or "" }}</td>
+        <td>{{ event.event_type }}</td>
+        <td>{{ event.target_type or "" }} {{ event.target_id or "" }}</td>
+        <td>{{ "yes" if event.success else "no" }}</td>
+        <td><code>{{ event.request_id }}</code></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6">No events yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
