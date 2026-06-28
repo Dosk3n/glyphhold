@@ -193,7 +193,6 @@ Initial scopes:
 ```text
 memories:read
 memories:write
-secrets:read
 secrets:write
 secrets:reveal
 events:read
@@ -406,7 +405,8 @@ updated_at
 last_revealed_at
 ```
 
-Secret search returns metadata only.
+Secret search returns metadata only and requires `secrets:reveal`. Tomewarden
+does not expose secret names or metadata to API keys without secret access.
 
 Secret values are returned only by:
 

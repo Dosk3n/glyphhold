@@ -22,7 +22,6 @@ templates = Jinja2Templates(directory="app/dashboard/templates")
 DEFAULT_SCOPES = [
     "memories:read",
     "memories:write",
-    "secrets:read",
     "secrets:write",
     "secrets:reveal",
     "events:read",
