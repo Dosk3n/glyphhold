@@ -1,0 +1,43 @@
+from __future__ import annotations
+
+from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+
+from app.api.health import router as health_router
+from app.config import settings
+from app.core.logging import configure_logging, log_info
+from app.core.request_context import RequestContextMiddleware
+from app.storage.migrations import apply_migrations, current_schema_version
+
+
+def create_app() -> FastAPI:
+    configure_logging()
+    apply_migrations()
+
+    app = FastAPI(
+        title="Tomewarden",
+        version=settings.version,
+        description="A local, non-LLM memory and secrets service for agents.",
+    )
+    app.add_middleware(RequestContextMiddleware)
+    app.include_router(health_router)
+
+    @app.on_event("startup")
+    def log_startup() -> None:
+        log_info(
+            "app.startup",
+            event="app.startup",
+            version=settings.version,
+            schema_version=current_schema_version(),
+            secrets_enabled=settings.secrets_enabled,
+        )
+
+    @app.get("/", include_in_schema=False)
+    def root() -> RedirectResponse:
+        return RedirectResponse(url="/dashboard")
+
+    return app
+
+
+app = create_app()
+
