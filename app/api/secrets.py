@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Annotated
+from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 from pydantic import BaseModel, Field
@@ -14,11 +14,14 @@ from app.storage.repositories.events import record_event
 router = APIRouter(prefix="/api/v1/secrets", tags=["secrets"])
 
 
+SecretValueType = Literal["text", "api_key", "password", "token", "webhook_url", "username", "json"]
+
+
 class SecretCreate(BaseModel):
     name: str = Field(min_length=1)
     value: str = Field(min_length=1)
     description: str | None = None
-    value_type: str = "text"
+    value_type: SecretValueType = "text"
     service: str | None = None
     host: str | None = None
     scope: str | None = None
@@ -31,7 +34,7 @@ class SecretPatch(BaseModel):
     name: str | None = None
     value: str | None = None
     description: str | None = None
-    value_type: str | None = None
+    value_type: SecretValueType | None = None
     service: str | None = None
     host: str | None = None
     scope: str | None = None
@@ -224,4 +227,3 @@ def reveal_secret(
         purpose=payload.purpose,
     )
     return {"name": secret["name"], "value": value, "expires_in_seconds": 60}
-

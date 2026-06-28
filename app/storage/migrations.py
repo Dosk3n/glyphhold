@@ -79,24 +79,6 @@ CREATE TABLE IF NOT EXISTS memories (
     FOREIGN KEY(superseded_by) REFERENCES memories(id)
 );
 
-CREATE TABLE IF NOT EXISTS entities (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    type TEXT,
-    aliases_json TEXT NOT NULL DEFAULT '[]',
-    created_at TEXT NOT NULL,
-    updated_at TEXT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS memory_entities (
-    memory_id TEXT NOT NULL,
-    entity_id TEXT NOT NULL,
-    weight INTEGER NOT NULL DEFAULT 1,
-    PRIMARY KEY(memory_id, entity_id),
-    FOREIGN KEY(memory_id) REFERENCES memories(id) ON DELETE CASCADE,
-    FOREIGN KEY(entity_id) REFERENCES entities(id) ON DELETE CASCADE
-);
-
 CREATE TABLE IF NOT EXISTS secrets (
     id TEXT PRIMARY KEY,
     name TEXT UNIQUE NOT NULL,

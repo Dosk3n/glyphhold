@@ -53,7 +53,6 @@ class FindSimilar(BaseModel):
     title: str
     body: str
     tags: list[str] = Field(default_factory=list)
-    entities: list[str] = Field(default_factory=list)
     limit: int = Field(default=5, ge=1, le=20)
 
 
@@ -71,7 +70,6 @@ def list_memories(
     _: Annotated[ApiPrincipal, Depends(require_scope("memories:read"))],
     category: str | None = None,
     tag: str | None = None,
-    entity: str | None = None,
     include_archived: bool = False,
     limit: int = Query(default=100, ge=1, le=500),
     offset: int = Query(default=0, ge=0),
@@ -79,7 +77,6 @@ def list_memories(
     return memories.list_memories(
         category=category,
         tag=tag,
-        entity=entity,
         include_archived=include_archived,
         limit=limit,
         offset=offset,
@@ -226,7 +223,7 @@ def prepare_write(
         query=payload.title,
         result_count=len(matches),
     )
-    return {"likely_duplicates": matches, "likely_conflicts": [], "matched_entities": []}
+    return {"likely_duplicates": matches, "likely_conflicts": [], "suggested_tags": []}
 
 
 @router.post("/{memory_id}/confidence")
@@ -314,4 +311,3 @@ def list_revisions(
     if memories.get_memory(memory_id) is None:
         raise HTTPException(status_code=404, detail="Memory not found")
     return memories.list_revisions(memory_id)
-
