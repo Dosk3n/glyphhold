@@ -24,7 +24,6 @@ def list_memories(
     *,
     category: str | None = None,
     tag: str | None = None,
-    entity: str | None = None,
     include_archived: bool = False,
     limit: int = 100,
     offset: int = 0,
@@ -40,11 +39,6 @@ def list_memories(
     if tag:
         where.append("m.tags_json LIKE ?")
         values.append(f"%{tag}%")
-    if entity:
-        joins.append("LEFT JOIN memory_entities me ON me.memory_id = m.id")
-        joins.append("LEFT JOIN entities e ON e.id = me.entity_id")
-        where.append("(e.id = ? OR lower(e.name) = lower(?))")
-        values.extend([entity, entity])
     values.extend([limit, offset])
     sql = f"""
         SELECT m.*, c.name AS category_name
@@ -301,4 +295,3 @@ def find_similar(
             item["match_reasons"] = reasons
             results.append(item)
     return sorted(results, key=lambda item: item["match_score"], reverse=True)[:limit]
-

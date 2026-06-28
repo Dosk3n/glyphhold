@@ -7,7 +7,6 @@ from fastapi.staticfiles import StaticFiles
 from app.api.agent import router as agent_router
 from app.api.categories import router as categories_router
 from app.api.dashboard import router as dashboard_router
-from app.api.entities import router as entities_router
 from app.api.events import router as events_router
 from app.api.health import router as health_router
 from app.api.memories import router as memories_router
@@ -32,7 +31,6 @@ def create_app() -> FastAPI:
     app.include_router(dashboard_router)
     app.include_router(health_router)
     app.include_router(categories_router)
-    app.include_router(entities_router)
     app.include_router(memories_router)
     app.include_router(events_router)
     app.include_router(agent_router)

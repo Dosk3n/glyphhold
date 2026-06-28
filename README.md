@@ -6,7 +6,7 @@ It is designed to provide:
 
 - structured memories
 - dynamic categories
-- entities and aliases
+- tags for filtering and deterministic matching
 - encrypted env-style secrets
 - audit logs
 - conservative agent prefetch

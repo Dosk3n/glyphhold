@@ -8,6 +8,8 @@ from app.core.ids import new_id
 from app.storage.db import connection
 from app.utils.time import utc_now
 
+VALUE_TYPES = ("text", "api_key", "password", "token", "webhook_url", "username", "json")
+
 
 METADATA_COLUMNS = """
     id, name, description, encryption_version, encryption_key_id, value_type,
@@ -90,6 +92,8 @@ def create_secret(
     allowed_agents: list[str] | None = None,
     allowed_tools: list[str] | None = None,
 ) -> dict[str, Any]:
+    if value_type not in VALUE_TYPES:
+        raise ValueError(f"value_type must be one of: {', '.join(VALUE_TYPES)}")
     secret_id = new_id("sec")
     now = utc_now()
     with connection() as conn:
@@ -133,6 +137,8 @@ def update_secret(id_or_name: str, **fields: Any) -> dict[str, Any] | None:
     for key in ("name", "description", "value_type", "service", "host", "scope"):
         if key in fields and fields[key] is not None:
             updates[key] = fields[key]
+    if updates.get("value_type") is not None and updates["value_type"] not in VALUE_TYPES:
+        raise ValueError(f"value_type must be one of: {', '.join(VALUE_TYPES)}")
     if fields.get("value") is not None:
         updates["encrypted_value"] = encrypt_secret(fields["value"])
         updates["encryption_version"] = 1
@@ -173,4 +179,3 @@ def reveal_secret(id_or_name: str) -> tuple[dict[str, Any] | None, str | None]:
         )
     metadata = get_secret_metadata(secret["id"])
     return metadata, value
-

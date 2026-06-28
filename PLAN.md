@@ -219,7 +219,7 @@ Required behavior:
 Recommended v1 behavior if `TOMEWARDEN_ENCRYPTION_KEY` is missing:
 
 - App still starts.
-- Memories, categories, entities, events, and dashboard auth continue to work.
+- Memories, categories, tags, events, and dashboard auth continue to work.
 - Secret create/reveal/env endpoints return a clear configuration error.
 - Dashboard secrets page shows that secret storage is disabled until an
   encryption key is configured.
@@ -300,8 +300,6 @@ secret.reveal
 secret.env
 category.create
 category.update
-entity.create
-entity.update
 auth.failed
 request.error
 ```
@@ -331,7 +329,6 @@ Pages:
 - memories
 - memory detail and revisions
 - categories
-- entities
 - secrets
 - API keys
 - activity/audit
@@ -380,8 +377,6 @@ Memory search is deterministic:
 - exact title matching
 - category filters
 - tag matching
-- entity matching
-- alias matching
 - confidence
 - auto-prefetch level
 - archived/superseded filtering
@@ -498,11 +493,9 @@ Hermes and Nexus integrations must not access SQLite directly.
 
 - Categories.
 - Memories.
-- Entities.
-- Memory/entity links.
 - FTS5 table and triggers/repository sync.
 - Memory search endpoint.
-- Dashboard memory/category/entity pages.
+- Dashboard memory/category pages.
 - Event logging for memory actions.
 
 ### Stage 4: Memory Revisions And Write Workflow
@@ -529,7 +522,7 @@ Hermes and Nexus integrations must not access SQLite directly.
 ### Stage 6: Agent Prefetch
 
 - Deterministic scoring.
-- Entity/alias/tag/category/FTS matching.
+- Tag/category/title/FTS matching.
 - Conservative prefetch endpoint.
 - Character/token budget enforcement.
 - Prefetch event logging.

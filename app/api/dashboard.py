@@ -10,10 +10,11 @@ from app.core.request_context import get_request_id
 from app.storage.db import database_ok
 from app.storage.migrations import current_schema_version
 from app.storage.repositories import auth as auth_repo
-from app.storage.repositories import categories, entities, memories
+from app.storage.repositories import categories, memories
 from app.storage.repositories import events as events_repo
 from app.storage.repositories import secrets as secrets_repo
 from app.storage.repositories.events import record_event
+from app.storage.repositories.secrets import VALUE_TYPES
 
 router = APIRouter(tags=["dashboard"])
 templates = Jinja2Templates(directory="app/dashboard/templates")
@@ -274,29 +275,6 @@ def create_category_from_dashboard(
     return _redirect("/dashboard/categories")
 
 
-@router.get("/dashboard/entities", response_class=HTMLResponse)
-def entities_page(request: Request) -> Response:
-    user = auth.get_current_dashboard_user(request)
-    if user is None:
-        return _redirect("/login")
-    return _render(request, "entities.html", user=user, entities=entities.list_entities(), error=None)
-
-
-@router.post("/dashboard/entities", response_class=HTMLResponse)
-def create_entity_from_dashboard(
-    request: Request,
-    name: str = Form(...),
-    type: str = Form(""),
-    aliases: str = Form(""),
-) -> Response:
-    user = auth.get_current_dashboard_user(request)
-    if user is None:
-        return _redirect("/login")
-    alias_list = [item.strip() for item in aliases.split(",") if item.strip()]
-    entities.create_entity(name=name.strip(), type=type.strip() or None, aliases=alias_list)
-    return _redirect("/dashboard/entities")
-
-
 @router.get("/dashboard/memories", response_class=HTMLResponse)
 def memories_page(
     request: Request,
@@ -415,6 +393,7 @@ def secrets_page(
         service=service or "",
         host=host or "",
         scope=scope or "",
+        value_types=VALUE_TYPES,
         revealed=None,
         error=None,
     )
@@ -457,6 +436,7 @@ def create_secret_from_dashboard(
             service="",
             host="",
             scope="",
+            value_types=VALUE_TYPES,
             revealed=None,
             error=str(exc),
             status_code=400,
@@ -491,6 +471,7 @@ def reveal_secret_from_dashboard(request: Request, id_or_name: str) -> Response:
             service="",
             host="",
             scope="",
+            value_types=VALUE_TYPES,
             revealed=None,
             error=str(exc),
             status_code=400,
@@ -516,6 +497,7 @@ def reveal_secret_from_dashboard(request: Request, id_or_name: str) -> Response:
         service="",
         host="",
         scope="",
+        value_types=VALUE_TYPES,
         revealed={"name": secret["name"], "value": value},
         error=None,
     )
