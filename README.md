@@ -38,8 +38,7 @@ http://localhost:8787
 
 ## Docker
 
-Copy the example compose file and environment file when they are added for a
-real deployment:
+Copy the example compose file and environment file for a local deployment:
 
 ```bash
 cp .env.example .env
@@ -52,6 +51,63 @@ Then start the service:
 docker compose up -d
 ```
 
+Open:
+
+```text
+http://localhost:8787
+```
+
+On the first visit, Tomewarden asks you to create the dashboard username and
+password. After that, the setup page is disabled unless the database is reset.
+
+## Agent API Keys
+
+Create API keys from the dashboard.
+
+Each key has:
+
+- name
+- actor
+- scopes
+- enabled/disabled state
+
+The generated key is shown once. Tomewarden stores only a hash and a short
+prefix.
+
+Agents call the API with:
+
+```http
+Authorization: Bearer tw_live_xxxxxxxxxxxxxxxxx
+```
+
+## Public API
+
+The public API starts at `/api/v1`.
+
+Examples:
+
+```text
+GET  /api/v1/health
+GET  /api/v1/categories
+POST /api/v1/memories/search
+POST /api/v1/agent/prefetch
+POST /api/v1/secrets/SONARR_API_KEY/reveal
+```
+
+## Docker Images
+
+The project is configured to publish Docker images to GitHub Container Registry
+when version tags are pushed:
+
+```text
+ghcr.io/<github-username>/tomewarden:latest
+ghcr.io/<github-username>/tomewarden:0.1.0
+ghcr.io/<github-username>/tomewarden:0.1
+ghcr.io/<github-username>/tomewarden:sha-<commit>
+```
+
+Pin exact versions for stable deployments.
+
 ## Security Notes
 
 - Do not commit `.env`, SQLite databases, encryption keys, API keys, or exported
@@ -59,4 +115,5 @@ docker compose up -d
 - Dashboard setup happens on first browser visit.
 - Agent access uses bearer API keys created from the dashboard.
 - Secret values are encrypted at rest when `TOMEWARDEN_ENCRYPTION_KEY` is set.
-
+- If `TOMEWARDEN_ENCRYPTION_KEY` is not set, secret features are disabled while
+  memory features continue to work.

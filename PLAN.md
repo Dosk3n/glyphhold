@@ -600,3 +600,13 @@ Hermes and Nexus integrations must not access SQLite directly.
 - Exact API key format.
 - Exact password rules for first-run setup.
 
+## Decisions Made During Initial Build
+
+- Public API uses `/api/v1` from the start.
+- Dashboard uses first-run username/password setup.
+- API keys are created from the dashboard and stored as hashes.
+- Users may create one shared API key or one key per agent.
+- Docker publishing uses GitHub Container Registry through GitHub Actions.
+- GHCR image name is derived from `github.repository`, so a repo under a
+  personal account publishes under that account.
+- Secrets are disabled when `TOMEWARDEN_ENCRYPTION_KEY` is missing.
