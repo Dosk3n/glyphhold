@@ -1,0 +1,12 @@
+services:
+  tomewarden:
+    build: .
+    container_name: tomewarden
+    ports:
+      - "8787:8787"
+    volumes:
+      - ./data:/data
+    env_file:
+      - .env
+    restart: unless-stopped
+
