@@ -1,0 +1,70 @@
+# Git and metadata
+.git
+.gitignore
+.github
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+secrets/
+keys/
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Local data and databases
+data/
+*.sqlite
+*.sqlite3
+*.db
+*.db3
+*.sqlite-wal
+*.sqlite-shm
+*.db-wal
+*.db-shm
+*.bak
+*.backup
+
+# Python cache/build artifacts
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Node/frontend artifacts if added later
+node_modules/
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Docker/local overrides
+docker-compose.override.yml
+compose.override.yml
+.docker-data/
+
+# Logs and editor files
+*.log
+logs/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
