@@ -50,6 +50,9 @@ Compatibility policy:
 The project will publish Docker images to GitHub Container Registry under the
 owner's personal GitHub account.
 
+The service listens on port `5995` inside the container. The default Docker
+mapping is `5995:5995`, so users open `http://localhost:5995`.
+
 Expected image names:
 
 ```text
@@ -167,7 +170,7 @@ API key creation flow:
 Example agent config:
 
 ```text
-TOMEWARDEN_URL=http://tomewarden:8787
+TOMEWARDEN_URL=http://tomewarden:5995
 TOMEWARDEN_API_KEY=tw_live_xxxxxxxxxxxxxxxxx
 ```
 
