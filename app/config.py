@@ -24,7 +24,7 @@ class Settings:
     version: str = "0.1.0"
     db_path: Path = Path(os.getenv("TOMEWARDEN_DB_PATH", "./data/tomewarden.sqlite"))
     host: str = os.getenv("TOMEWARDEN_HOST", "0.0.0.0")
-    port: int = _env_int("TOMEWARDEN_PORT", 8787)
+    port: int = _env_int("TOMEWARDEN_PORT", 5995)
     encryption_key: str | None = os.getenv("TOMEWARDEN_ENCRYPTION_KEY") or None
     log_level: str = os.getenv("TOMEWARDEN_LOG_LEVEL", "INFO").upper()
     log_format: str = os.getenv("TOMEWARDEN_LOG_FORMAT", "pretty").lower()
@@ -39,4 +39,3 @@ class Settings:
 
 
 settings = Settings()
-

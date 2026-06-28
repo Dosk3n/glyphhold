@@ -9,6 +9,6 @@ COPY pyproject.toml README.md ./
 COPY app ./app
 RUN pip install --no-cache-dir .
 
-EXPOSE 8787
+EXPOSE 5995
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8787"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "5995"]

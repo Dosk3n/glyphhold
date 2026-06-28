@@ -27,13 +27,13 @@ the project contract, build stages, and compatibility policy.
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -e ".[dev]"
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8787
+uvicorn app.main:app --reload --host 0.0.0.0 --port 5995
 ```
 
 Open:
 
 ```text
-http://localhost:8787
+http://localhost:5995
 ```
 
 ## Docker
@@ -54,11 +54,14 @@ docker compose up -d
 Open:
 
 ```text
-http://localhost:8787
+http://localhost:5995
 ```
 
 On the first visit, Tomewarden asks you to create the dashboard username and
 password. After that, the setup page is disabled unless the database is reset.
+
+The Docker container listens on port `5995` internally and the example compose
+file maps host port `5995` to container port `5995`.
 
 ## Agent API Keys
 
