@@ -1,33 +1,76 @@
 # Glyph Hold
 
-Glyph Hold is a local, deterministic memory and secrets service for agents.
+Glyph Hold is a local memory and secrets service for AI agents.
 
-It is designed to provide:
+It gives your agents a shared place to store durable notes, decisions, project
+context, procedures, preferences, and operational secrets without sending that
+data to a hosted AI service.
 
-- structured memories
-- dynamic categories
-- tags for filtering and deterministic matching
-- encrypted env-style secrets
-- audit logs
-- conservative agent prefetch
-- a simple dashboard
-- HTTP APIs for agent integrations
+Open the dashboard, create memories and secrets, create an API key, then point
+your agents at Glyph Hold.
 
-Glyph Hold does not use LLMs, embeddings, vector databases, hosted AI APIs, or
-paid services internally.
+## Why Run It?
 
-## Current Status
+AI agents are more useful when they can remember stable context:
 
-This repository is under active early development. See [PLAN.md](PLAN.md) for
-the project contract, build stages, and compatibility policy.
+- who people are
+- how your projects are structured
+- which servers and services exist
+- what decisions have already been made
+- repeatable procedures and runbooks
+- preferences you do not want to repeat every session
+- secrets that should be revealed only when explicitly requested
 
-## Local Development
+Glyph Hold keeps that information local, deterministic, and inspectable.
+
+## What It Does
+
+- Stores memories with categories, tags, confidence, and revision history.
+- Searches memories with deterministic SQLite FTS5.
+- Provides conservative memory prefetch for agents.
+- Stores secrets encrypted at rest when an encryption key is configured.
+- Reveals secret values only through explicit reveal/env endpoints.
+- Keeps secret values out of memory prefetch.
+- Provides a browser dashboard for setup, memories, secrets, API keys, and audit
+  events.
+- Uses bearer API keys for agents and signed cookies for dashboard sessions.
+- Runs as a Docker container on port `5995`.
+
+## What It Does Not Do
+
+Glyph Hold does not use or include:
+
+- LLM calls
+- embeddings
+- vector databases
+- Ollama
+- hosted AI APIs
+- paid APIs
+
+Agents remain HTTP clients. Glyph Hold owns the SQLite database.
+
+## Status
+
+Glyph Hold is currently early alpha software. It is suitable for testing and
+local experimentation, but you should back up the mounted data directory before
+upgrading.
+
+For the project contract and compatibility policy, see [PLAN.md](PLAN.md). For
+release notes, see [RELEASE_NOTES.md](RELEASE_NOTES.md).
+
+## Quick Start
+
+Run Glyph Hold with one Docker command:
 
 ```bash
-python3.12 -m venv .venv
-. .venv/bin/activate
-pip install -e ".[dev]"
-uvicorn app.main:app --reload --host 0.0.0.0 --port 5995
+docker run -d \
+  --name glyphhold \
+  --restart unless-stopped \
+  -p 5995:5995 \
+  -v glyphhold-data:/data \
+  -e GLYPHHOLD_DB_PATH=/data/glyphhold.sqlite \
+  -e GLYPHHOLD_ENCRYPTION_KEY="$(openssl rand -hex 32)" \
+  ghcr.io/Dosk3n/glyphhold:0.1.0-alpha
 ```
 
 Open:
@@ -36,26 +79,32 @@ Open:
 http://localhost:5995
 ```
 
-Run checks before committing:
+On first run, Glyph Hold asks you to create the dashboard username and password.
+After setup, create an API key from the dashboard and use that key in your
+agent.
 
-```bash
-ruff check .
-pytest
-docker build -t glyphhold:ci .
-docker run --rm -e GLYPHHOLD_DB_PATH=/tmp/glyphhold-ci.sqlite glyphhold:ci \
-  python -c "from app.storage.migrations import apply_migrations,current_schema_version; apply_migrations(); assert current_schema_version() >= 4"
+## Docker Compose
+
+Create a `docker-compose.yml`:
+
+```yaml
+services:
+  glyphhold:
+    image: ghcr.io/Dosk3n/glyphhold:0.1.0-alpha
+    container_name: glyphhold
+    ports:
+      - "5995:5995"
+    volumes:
+      - ./data:/data
+    environment:
+      GLYPHHOLD_DB_PATH: /data/glyphhold.sqlite
+      GLYPHHOLD_ENCRYPTION_KEY: change-this-to-a-long-random-value
+      GLYPHHOLD_LOG_LEVEL: INFO
+      GLYPHHOLD_LOG_FORMAT: pretty
+    restart: unless-stopped
 ```
 
-## Docker
-
-Copy the example compose file and environment file for a local deployment:
-
-```bash
-cp .env.example .env
-cp docker-compose.example.yml docker-compose.yml
-```
-
-Then start the service:
+Start it:
 
 ```bash
 docker compose up -d
@@ -67,45 +116,45 @@ Open:
 http://localhost:5995
 ```
 
-On the first visit, Glyph Hold asks you to create the dashboard username and
-password. After that, the setup page is disabled unless the database is reset.
+You can also copy the included examples:
 
-The Docker container listens on port `5995` internally and the example compose
-file maps host port `5995` to container port `5995`.
-
-## Agent API Keys
-
-Create API keys from the dashboard.
-
-Each key has:
-
-- name
-- actor
-- scopes
-- enabled/disabled state
-
-The generated key is shown once. Glyph Hold stores only a hash and a short
-prefix.
-
-Agents call the API with:
-
-```http
-Authorization: Bearer gh_live_xxxxxxxxxxxxxxxxx
+```bash
+cp .env.example .env
+cp docker-compose.example.yml docker-compose.yml
 ```
 
-Secret scopes are deliberately simple:
+Edit `.env` before storing real secrets.
 
-- `secrets:write` lets an agent create, update, and delete secrets.
-- `secrets:reveal` lets an agent search/list secrets and reveal actual values.
-- Without a secret scope, an agent cannot see or use secrets.
+## First Run
 
-Secret values are never included in agent prefetch.
+1. Open `http://localhost:5995`.
+2. Create the first dashboard admin user.
+3. Go to **API Keys**.
+4. Create an API key for your agent.
+5. Copy the key immediately. It is shown once.
 
-## Public API
+API keys use the `gh_live_` prefix. Glyph Hold stores only a hash and a short
+non-sensitive prefix.
+
+## Connect An Agent
+
+Agents call Glyph Hold over HTTP:
+
+```text
+GLYPHHOLD_URL=http://localhost:5995
+GLYPHHOLD_API_KEY=gh_live_xxxxxxxxxxxxxxxxx
+```
+
+For another container on the same Docker network, use:
+
+```text
+GLYPHHOLD_URL=http://glyphhold:5995
+GLYPHHOLD_API_KEY=gh_live_xxxxxxxxxxxxxxxxx
+```
 
 The public API starts at `/api/v1`.
 
-Examples:
+Useful endpoints:
 
 ```text
 GET  /api/v1/health
@@ -113,42 +162,100 @@ GET  /api/v1/categories
 POST /api/v1/memories/search
 POST /api/v1/agent/prefetch
 POST /api/v1/secrets/SERVICE_API_KEY/reveal
+POST /api/v1/secrets/env
 ```
 
-## Docker Images
+## Memories
 
-The project is configured to publish Docker images to GitHub Container Registry
-when version tags are pushed:
+Memories are structured notes for agents. They can be categorized, tagged,
+searched, edited, archived, and restored from revisions.
+
+Default categories include:
+
+- people
+- servers
+- services
+- projects
+- procedures
+- preferences
+- decisions
+- facts
+- temporary
+
+Search is deterministic. There is no semantic/vector search.
+
+## Secrets
+
+Secret storage requires:
 
 ```text
-ghcr.io/Dosk3n/glyphhold:latest
-ghcr.io/Dosk3n/glyphhold:0.1.0
-ghcr.io/Dosk3n/glyphhold:0.1
-ghcr.io/Dosk3n/glyphhold:sha-<commit>
+GLYPHHOLD_ENCRYPTION_KEY=<long-random-value>
 ```
 
-Prerelease tags such as `v0.1.0-alpha` publish prerelease and SHA tags, but do
-not move `latest`.
+If no encryption key is configured, Glyph Hold still runs and memory features
+continue to work. Secret create/reveal/env actions return a clear configuration
+error until the key is set.
 
-Pin exact versions for stable deployments.
+Secret rules:
 
-## Integration Skeletons
+- Secret values are encrypted at rest.
+- Secret values are never returned by memory search.
+- Secret values are never included in agent prefetch.
+- Secret metadata and reveal access require `secrets:reveal`.
+- Secret create/update/delete requires `secrets:write`.
+- Secret values are shown only for explicit reveal actions.
 
-Thin HTTP-only integration skeletons live under `app/integrations/`:
+Use a persistent encryption key. If you lose or change the key, existing stored
+secret values cannot be decrypted.
 
-- `client` provides `GlyphHoldClient` for `/api/v1` calls.
-- `hermes` provides a prefetch provider wrapper.
-- `nexus` provides a small tool-pack wrapper.
+## Data And Backups
 
-These integrations do not access SQLite directly and do not add LLM, embedding,
-vector database, hosted AI, or paid API behavior.
+Glyph Hold stores data in SQLite. In Docker, mount `/data` and back it up.
+
+With the compose example, the database lives under:
+
+```text
+./data/glyphhold.sqlite
+```
+
+Before upgrading:
+
+1. Stop the container.
+2. Back up the `data` directory.
+3. Pull or switch to the new image tag.
+4. Start the container again.
+
+Startup applies pending migrations automatically.
+
+## Image Tags
+
+Images are published to GitHub Container Registry:
+
+```text
+ghcr.io/Dosk3n/glyphhold:0.1.0-alpha
+ghcr.io/Dosk3n/glyphhold:sha-<commit>
+ghcr.io/Dosk3n/glyphhold:latest
+```
+
+Recommended usage:
+
+- Pin an exact version such as `0.1.0-alpha` for predictable deployments.
+- Use `latest` only when you are comfortable receiving newer changes.
+- Back up `/data` before major upgrades.
+
+Prerelease tags do not move `latest`.
 
 ## Security Notes
 
+- Do not expose Glyph Hold publicly without a reverse proxy, HTTPS, and access
+  controls.
 - Do not commit `.env`, SQLite databases, encryption keys, API keys, or exported
   secrets.
 - Dashboard setup happens on first browser visit.
-- Agent access uses bearer API keys created from the dashboard.
+- Agents authenticate with bearer API keys created from the dashboard.
 - Secret values are encrypted at rest when `GLYPHHOLD_ENCRYPTION_KEY` is set.
-- If `GLYPHHOLD_ENCRYPTION_KEY` is not set, secret features are disabled while
-  memory features continue to work.
+- Secret values are not included in memory prefetch.
+
+## For Contributors
+
+Development setup, tests, and release checks are in [CONTRIBUTING.md](CONTRIBUTING.md).
