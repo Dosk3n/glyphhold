@@ -103,6 +103,20 @@ def list_api_keys() -> list[dict[str, Any]]:
         return [dict(row) for row in rows]
 
 
+def get_api_key_metadata(key_id: str) -> dict[str, Any] | None:
+    with connection() as conn:
+        row = conn.execute(
+            """
+            SELECT id, name, actor, description, key_prefix, scopes_json, enabled,
+                   created_at, updated_at, last_used_at
+            FROM api_keys
+            WHERE id = ?
+            """,
+            (key_id,),
+        ).fetchone()
+        return dict(row) if row else None
+
+
 def get_api_key_by_hash(key_hash: str) -> dict[str, Any] | None:
     with connection() as conn:
         row = conn.execute(
@@ -127,4 +141,3 @@ def set_api_key_enabled(key_id: str, enabled: bool) -> None:
             "UPDATE api_keys SET enabled = ?, updated_at = ? WHERE id = ?",
             (1 if enabled else 0, now, key_id),
         )
-

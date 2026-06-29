@@ -39,7 +39,11 @@
     </label>
     <button type="submit">Save memory</button>
   </form>
-  <form method="post" action="/dashboard/memories/{{ memory.id }}/delete" class="danger-form">
+  <form method="post" action="/dashboard/memories/{{ memory.id }}/delete" class="danger-form stack">
+    <label>
+      Type the title to delete
+      <input name="confirm_title" autocomplete="off" placeholder="{{ memory.title }}">
+    </label>
     <button type="submit" class="danger">Delete memory</button>
   </form>
 </section>
