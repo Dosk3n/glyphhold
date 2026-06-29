@@ -186,7 +186,7 @@ GET  /api/v1/health
 GET  /api/v1/categories
 POST /api/v1/memories/search
 POST /api/v1/agent/prefetch
-POST /api/v1/secrets/APPLICATION_SERVER_SERVICE_API_KEY/reveal
+POST /api/v1/secrets/CUSTOM_API_KEY_HERE/reveal
 POST /api/v1/secrets/env
 ```
 

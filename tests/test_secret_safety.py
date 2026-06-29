@@ -12,7 +12,7 @@ def test_secret_names_must_be_uppercase_env_vars(secrets_client: TestClient) -> 
     invalid_response = secrets_client.post(
         "/api/v1/secrets",
         headers=headers,
-        json={"name": "service_api_key", "value": "hidden"},
+        json={"name": "custom_api_key_here", "value": "hidden"},
     )
     assert invalid_response.status_code == 400
     assert "uppercase environment variable name" in invalid_response.json()["detail"]
@@ -21,10 +21,10 @@ def test_secret_names_must_be_uppercase_env_vars(secrets_client: TestClient) -> 
     valid_response = secrets_client.post(
         "/api/v1/secrets",
         headers=headers,
-        json={"name": "APPLICATION_SERVER_SERVICE_API_KEY", "value": "hidden"},
+        json={"name": "CUSTOM_API_KEY_HERE", "value": "hidden"},
     )
     assert valid_response.status_code == 201
-    assert valid_response.json()["name"] == "APPLICATION_SERVER_SERVICE_API_KEY"
+    assert valid_response.json()["name"] == "CUSTOM_API_KEY_HERE"
     assert "hidden" not in valid_response.text
 
 

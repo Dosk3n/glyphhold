@@ -125,7 +125,7 @@ def test_client_memory_and_secret_write_helpers(monkeypatch) -> None:
         auto_prefetch_level="high",
     ) == {"ok": True}
     assert client.create_secret(
-        name="APPLICATION_SERVER_DEPLOY_TOKEN",
+        name="CUSTOM_API_KEY_HERE",
         value="secret-value",
         value_type="token",
         scope="deploy",
@@ -155,7 +155,7 @@ def test_client_memory_and_secret_write_helpers(monkeypatch) -> None:
             "url": "http://localhost:5995/api/v1/secrets",
             "method": "POST",
             "body": {
-                "name": "APPLICATION_SERVER_DEPLOY_TOKEN",
+                "name": "CUSTOM_API_KEY_HERE",
                 "value": "secret-value",
                 "description": None,
                 "value_type": "token",
