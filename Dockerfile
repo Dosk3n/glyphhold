@@ -1,3 +1,13 @@
+FROM node:22-slim AS dashboard
+
+WORKDIR /dashboard
+
+COPY dashboard-ui/package.json dashboard-ui/package-lock.json ./
+RUN npm ci
+
+COPY dashboard-ui ./
+RUN npm run build
+
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -8,6 +18,7 @@ WORKDIR /app
 COPY pyproject.toml README.md ./
 COPY app ./app
 COPY glyphhold_client ./glyphhold_client
+COPY --from=dashboard /app/dashboard/static/dashboard ./app/dashboard/static/dashboard
 RUN pip install --no-cache-dir .
 
 EXPOSE 5995

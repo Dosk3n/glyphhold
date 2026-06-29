@@ -47,7 +47,10 @@ dist/
 
 # Node/frontend artifacts if added later
 node_modules/
+dashboard-ui/node_modules/
 .vite/
+dashboard-ui/.vite/
+app/dashboard/static/dashboard/*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -67,4 +70,3 @@ Thumbs.db
 .vscode/
 *.swp
 *.swo
-
