@@ -177,6 +177,8 @@ GLYPHHOLD_API_KEY=gh_live_xxxxxxxxxxxxxxxxx
 
 The public API starts at `/api/v1`.
 
+More connection examples are in [AGENT_CONNECTIONS.md](AGENT_CONNECTIONS.md).
+
 Useful endpoints:
 
 ```text
@@ -204,6 +206,9 @@ client = GlyphHoldClient(
 
 results = client.search_memories(query="project context")
 ```
+
+The client can also create memories, create secrets, reveal individual secrets,
+and request scoped env-style secret bundles.
 
 Future Nexus and Hermes integrations will live in separate repositories so this
 project stays focused on the Glyph Hold service.
