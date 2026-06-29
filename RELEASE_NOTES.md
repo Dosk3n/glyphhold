@@ -16,7 +16,7 @@ pin exact Docker tags for anything important.
 - Secret reveal and env bundle endpoints.
 - Conservative memory-only agent prefetch.
 - Dashboard edit/delete flows for memories and secrets.
-- Thin HTTP client, Hermes provider, and Nexus tool-pack skeletons.
+- Thin `glyphhold_client` HTTP client package.
 - CI runs ruff, pytest, Docker build, and migration smoke checks.
 
 ### Docker Images

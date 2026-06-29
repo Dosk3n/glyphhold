@@ -7,6 +7,7 @@ WORKDIR /app
 
 COPY pyproject.toml README.md ./
 COPY app ./app
+COPY glyphhold_client ./glyphhold_client
 RUN pip install --no-cache-dir .
 
 EXPOSE 5995
