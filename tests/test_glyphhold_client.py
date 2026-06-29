@@ -3,9 +3,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from app.integrations.client import GlyphHoldClient
-from app.integrations.hermes import HermesGlyphHoldProvider
-from app.integrations.nexus import NexusGlyphHoldToolPack
+from glyphhold_client import GlyphHoldClient
 
 
 class FakeResponse:
@@ -55,37 +53,45 @@ def test_client_uses_public_api_and_bearer_auth(monkeypatch) -> None:
     }
 
 
-def test_hermes_provider_returns_prefetched_memories() -> None:
-    class FakeClient:
-        def prefetch(self, *, message: str, agent: str | None = None) -> dict[str, Any]:
-            assert message == "need project context"
-            assert agent == "hermes"
-            return {"memories": [{"id": "mem_1", "title": "Project"}]}
+def test_client_prefetch_and_secret_reveal_paths(monkeypatch) -> None:
+    captured = []
 
-    provider = HermesGlyphHoldProvider(FakeClient())
+    def fake_urlopen(req, timeout):
+        captured.append(
+            {
+                "url": req.full_url,
+                "method": req.get_method(),
+                "body": json.loads(req.data.decode("utf-8")),
+            }
+        )
+        return FakeResponse({"ok": True})
 
-    assert provider.prefetch_context("need project context") == [
-        {"id": "mem_1", "title": "Project"}
+    monkeypatch.setattr("urllib.request.urlopen", fake_urlopen)
+
+    client = GlyphHoldClient("http://localhost:5995", "gh_live_test")
+
+    assert client.prefetch(message="project context", agent="codex") == {"ok": True}
+    assert client.reveal_secret("GLYPHHOLD_TOKEN", purpose="deploy") == {"ok": True}
+    assert captured == [
+        {
+            "url": "http://localhost:5995/api/v1/agent/prefetch",
+            "method": "POST",
+            "body": {
+                "agent": "codex",
+                "message": "project context",
+                "max_memories": 3,
+                "max_chars": 1200,
+                "max_tokens": 300,
+                "summaries_only": True,
+            },
+        },
+        {
+            "url": "http://localhost:5995/api/v1/secrets/GLYPHHOLD_TOKEN/reveal",
+            "method": "POST",
+            "body": {
+                "requesting_agent": None,
+                "tool": None,
+                "purpose": "deploy",
+            },
+        },
     ]
-
-
-def test_nexus_tool_pack_exposes_search_and_secret_tools() -> None:
-    class FakeClient:
-        def search_memories(self, *, query: str, limit: int = 10) -> dict[str, Any]:
-            return {"query": query, "limit": limit}
-
-        def reveal_secret(self, name: str, *, purpose: str | None = None) -> dict[str, Any]:
-            return {"name": name, "purpose": purpose}
-
-    tool_pack = NexusGlyphHoldToolPack(FakeClient())
-    tools = tool_pack.tools()
-
-    assert sorted(tools) == ["glyphhold_reveal_secret", "glyphhold_search_memories"]
-    assert tools["glyphhold_search_memories"]("alpha", limit=2) == {
-        "query": "alpha",
-        "limit": 2,
-    }
-    assert tools["glyphhold_reveal_secret"]("GLYPHHOLD_TOKEN", purpose="test") == {
-        "name": "GLYPHHOLD_TOKEN",
-        "purpose": "test",
-    }

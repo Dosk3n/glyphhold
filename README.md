@@ -165,6 +165,26 @@ POST /api/v1/secrets/SERVICE_API_KEY/reveal
 POST /api/v1/secrets/env
 ```
 
+## Python Client
+
+Glyph Hold includes a small Python HTTP client package named `glyphhold_client`.
+It is a convenience wrapper around `/api/v1` for projects that want to call
+Glyph Hold without hand-writing HTTP requests.
+
+```python
+from glyphhold_client import GlyphHoldClient
+
+client = GlyphHoldClient(
+    base_url="http://localhost:5995",
+    api_key="gh_live_xxxxxxxxxxxxxxxxx",
+)
+
+results = client.search_memories(query="project context")
+```
+
+Future Nexus and Hermes integrations will live in separate repositories so this
+project stays focused on the Glyph Hold service.
+
 ## Memories
 
 Memories are structured notes for agents. They can be categorized, tagged,

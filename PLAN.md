@@ -443,17 +443,25 @@ Prefetch never returns secret values.
 
 Integrations are thin HTTP clients.
 
-Initial structure:
+Glyph Hold includes one generic Python HTTP client package:
 
 ```text
-app/integrations/client/
-app/integrations/hermes/
-app/integrations/nexus/
+glyphhold_client/
 ```
 
-The core API must be clean and stable before integrations grow complex.
+External integrations should live in separate repositories so Glyph Hold remains
+focused on the server, dashboard, storage, API, Docker image, and generic
+client.
 
-Hermes and Nexus integrations must not access SQLite directly.
+Planned external repositories:
+
+```text
+glyphhold-nexus
+glyphhold-hermes
+```
+
+Nexus and Hermes integrations must use the HTTP API and must not access SQLite
+directly.
 
 ## Build Stages
 
@@ -542,10 +550,10 @@ Hermes and Nexus integrations must not access SQLite directly.
 
 ### Stage 8: Integrations
 
-- Python API client.
-- Hermes provider skeleton.
-- Nexus tool pack skeleton.
+- Python API client package.
 - Documentation for agent setup.
+- Separate Nexus repository plan.
+- Separate Hermes repository plan.
 
 ## First Public Milestones
 
@@ -579,7 +587,8 @@ Hermes and Nexus integrations must not access SQLite directly.
 - Prepare write.
 - Memory revisions.
 - Memory revision restore.
-- Hermes/Nexus skeletons.
+- Python API client package.
+- Nexus/Hermes split documented as separate future repositories.
 
 ### v1.0.0
 

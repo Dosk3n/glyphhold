@@ -45,7 +45,8 @@ Do not add:
 - hosted AI APIs
 - paid APIs
 
-Integrations must use the HTTP API and must not access SQLite directly.
+External integrations must use the HTTP API and must not access SQLite directly.
+Nexus and Hermes integrations should live in separate repositories.
 
 ## Repository Safety
 
