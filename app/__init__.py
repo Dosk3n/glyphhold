@@ -1,2 +1,1 @@
-"""Tomewarden application package."""
-
+"""Glyph Hold application package."""

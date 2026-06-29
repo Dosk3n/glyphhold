@@ -1,7 +1,7 @@
 services:
-  tomewarden:
+  glyphhold:
     build: .
-    container_name: tomewarden
+    container_name: glyphhold
     ports:
       - "5995:5995"
     volumes:

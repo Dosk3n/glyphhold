@@ -18,7 +18,7 @@ class SecretDecryptionError(RuntimeError):
 
 def _require_key() -> str:
     if not settings.encryption_key:
-        raise SecretStorageDisabled("Secret storage is disabled: TOMEWARDEN_ENCRYPTION_KEY is not set")
+        raise SecretStorageDisabled("Secret storage is disabled: GLYPHHOLD_ENCRYPTION_KEY is not set")
     return settings.encryption_key
 
 
@@ -42,4 +42,3 @@ def decrypt_secret(encrypted_value: bytes) -> str:
         return _fernet().decrypt(encrypted_value).decode("utf-8")
     except InvalidToken as exc:
         raise SecretDecryptionError("Secret could not be decrypted with the configured key") from exc
-

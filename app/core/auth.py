@@ -39,7 +39,7 @@ def verify_password(password: str, password_hash: str) -> bool:
 
 
 def generate_api_key() -> str:
-    return f"tw_live_{secrets.token_urlsafe(36)}"
+    return f"gh_live_{secrets.token_urlsafe(36)}"
 
 
 def hash_api_key(api_key: str) -> str:
@@ -66,7 +66,7 @@ def create_api_key(
 
 
 def _session_serializer() -> URLSafeTimedSerializer:
-    return URLSafeTimedSerializer(get_session_secret(), salt="tomewarden-dashboard-session")
+    return URLSafeTimedSerializer(get_session_secret(), salt="glyphhold-dashboard-session")
 
 
 def create_session_value(user_id: str) -> str:
@@ -119,4 +119,3 @@ def require_scope(scope: str):
         return principal
 
     return dependency
-

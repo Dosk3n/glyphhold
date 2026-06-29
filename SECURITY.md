@@ -1,12 +1,12 @@
 # Security Policy
 
-Tomewarden stores memories and encrypted secrets for local agents. Treat the
+Glyph Hold stores memories and encrypted secrets for local agents. Treat the
 database, Docker volume, API keys, and encryption key as sensitive operational
 assets.
 
 ## Supported Versions
 
-Tomewarden is currently in early development. Until `v1.0.0`, compatibility and
+Glyph Hold is currently in early development. Until `v1.0.0`, compatibility and
 security fixes are provided on the main development line.
 
 ## Reporting A Vulnerability
@@ -26,4 +26,3 @@ contact if the owner documents a preferred channel.
   metadata endpoints.
 - Secret reveal must use explicit POST endpoints.
 - Encryption keys must come from runtime configuration, not the database.
-

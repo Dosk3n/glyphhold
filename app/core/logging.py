@@ -10,7 +10,7 @@ from app.config import settings
 from app.core.redaction import redact
 
 
-class TomewardenFormatter(logging.Formatter):
+class GlyphHoldFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         event = {
             "level": record.levelname,
@@ -37,14 +37,13 @@ def configure_logging() -> None:
     root.setLevel(settings.log_level)
 
     handler = logging.StreamHandler(sys.stdout)
-    handler.setFormatter(TomewardenFormatter())
+    handler.setFormatter(GlyphHoldFormatter())
     root.addHandler(handler)
 
 
 def log_info(message: str, **fields: Any) -> None:
-    logging.getLogger("tomewarden").info(message, extra={"fields": fields})
+    logging.getLogger("glyphhold").info(message, extra={"fields": fields})
 
 
 def log_error(message: str, **fields: Any) -> None:
-    logging.getLogger("tomewarden").error(message, extra={"fields": fields})
-
+    logging.getLogger("glyphhold").error(message, extra={"fields": fields})
