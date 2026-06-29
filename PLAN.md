@@ -56,10 +56,10 @@ mapping is `5995:5995`, so users open `http://localhost:5995`.
 Expected image names:
 
 ```text
-ghcr.io/<github-username>/glyphhold:latest
-ghcr.io/<github-username>/glyphhold:0.1
-ghcr.io/<github-username>/glyphhold:0.1.0
-ghcr.io/<github-username>/glyphhold:sha-<commit>
+ghcr.io/Dosk3n/glyphhold:latest
+ghcr.io/Dosk3n/glyphhold:0.1
+ghcr.io/Dosk3n/glyphhold:0.1.0
+ghcr.io/Dosk3n/glyphhold:sha-<commit>
 ```
 
 Recommended user behavior:
@@ -560,6 +560,7 @@ Hermes and Nexus integrations must not access SQLite directly.
 - FTS search works.
 - Event log works.
 - Basic dashboard loads.
+- Python checks run in CI.
 
 ### v0.2.0-alpha
 
@@ -569,6 +570,7 @@ Hermes and Nexus integrations must not access SQLite directly.
 - Dashboard secrets UI.
 - Redaction tests.
 - Secret reveal auditing.
+- Dashboard edit/delete flows for memories and secrets.
 
 ### v0.3.0-alpha
 
@@ -576,6 +578,7 @@ Hermes and Nexus integrations must not access SQLite directly.
 - Find similar.
 - Prepare write.
 - Memory revisions.
+- Memory revision restore.
 - Hermes/Nexus skeletons.
 
 ### v1.0.0
@@ -589,12 +592,7 @@ Hermes and Nexus integrations must not access SQLite directly.
 
 ## Open Decisions
 
-- Exact GitHub username for GHCR image path.
-- Project license.
 - Whether to support multiple dashboard users in v1 or only one admin user.
-- Exact session timeout length.
-- Exact API key format.
-- Exact password rules for first-run setup.
 
 ## Decisions Made During Initial Build
 
@@ -603,6 +601,9 @@ Hermes and Nexus integrations must not access SQLite directly.
 - API keys are created from the dashboard and stored as hashes.
 - Users may create one shared API key or one key per agent.
 - Docker publishing uses GitHub Container Registry through GitHub Actions.
-- GHCR image name is derived from `github.repository`, so a repo under a
-  personal account publishes under that account.
+- GHCR image name is `ghcr.io/Dosk3n/glyphhold`.
+- Project license is MIT.
+- Dashboard sessions use signed HTTP-only cookies with a 14-day timeout.
+- API keys use the `gh_live_` prefix.
+- First-run dashboard passwords must be at least 12 characters.
 - Secrets are disabled when `GLYPHHOLD_ENCRYPTION_KEY` is missing.

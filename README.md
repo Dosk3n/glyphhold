@@ -24,7 +24,7 @@ the project contract, build stages, and compatibility policy.
 ## Local Development
 
 ```bash
-python3 -m venv .venv
+python3.12 -m venv .venv
 . .venv/bin/activate
 pip install -e ".[dev]"
 uvicorn app.main:app --reload --host 0.0.0.0 --port 5995
@@ -34,6 +34,16 @@ Open:
 
 ```text
 http://localhost:5995
+```
+
+Run checks before committing:
+
+```bash
+ruff check .
+pytest
+docker build -t glyphhold:ci .
+docker run --rm -e GLYPHHOLD_DB_PATH=/tmp/glyphhold-ci.sqlite glyphhold:ci \
+  python -c "from app.storage.migrations import apply_migrations,current_schema_version; apply_migrations(); assert current_schema_version() >= 4"
 ```
 
 ## Docker
@@ -111,13 +121,27 @@ The project is configured to publish Docker images to GitHub Container Registry
 when version tags are pushed:
 
 ```text
-ghcr.io/<github-username>/glyphhold:latest
-ghcr.io/<github-username>/glyphhold:0.1.0
-ghcr.io/<github-username>/glyphhold:0.1
-ghcr.io/<github-username>/glyphhold:sha-<commit>
+ghcr.io/Dosk3n/glyphhold:latest
+ghcr.io/Dosk3n/glyphhold:0.1.0
+ghcr.io/Dosk3n/glyphhold:0.1
+ghcr.io/Dosk3n/glyphhold:sha-<commit>
 ```
 
+Prerelease tags such as `v0.1.0-alpha` publish prerelease and SHA tags, but do
+not move `latest`.
+
 Pin exact versions for stable deployments.
+
+## Integration Skeletons
+
+Thin HTTP-only integration skeletons live under `app/integrations/`:
+
+- `client` provides `GlyphHoldClient` for `/api/v1` calls.
+- `hermes` provides a prefetch provider wrapper.
+- `nexus` provides a small tool-pack wrapper.
+
+These integrations do not access SQLite directly and do not add LLM, embedding,
+vector database, hosted AI, or paid API behavior.
 
 ## Security Notes
 
