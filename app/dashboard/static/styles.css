@@ -110,6 +110,26 @@ button {
   cursor: pointer;
 }
 
+button.danger {
+  background: var(--danger);
+}
+
+.danger-form,
+.inline-action {
+  margin-top: 12px;
+}
+
+.inline-edit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.inline-edit button {
+  align-self: end;
+}
+
 fieldset {
   margin: 0;
   padding: 12px;
