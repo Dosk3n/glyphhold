@@ -60,17 +60,22 @@ release notes, see [RELEASE_NOTES.md](RELEASE_NOTES.md).
 
 ## Quick Start
 
+For real secret storage, use a persistent encryption key. The command below
+generates one and prints it once. Save it somewhere safe before storing secrets.
+
 Run Glyph Hold with one Docker command:
 
 ```bash
+GLYPHHOLD_KEY="$(openssl rand -hex 32)" && \
 docker run -d \
   --name glyphhold \
   --restart unless-stopped \
   -p 5995:5995 \
   -v glyphhold-data:/data \
   -e GLYPHHOLD_DB_PATH=/data/glyphhold.sqlite \
-  -e GLYPHHOLD_ENCRYPTION_KEY="$(openssl rand -hex 32)" \
-  ghcr.io/dosk3n/glyphhold:0.1.0-alpha
+  -e GLYPHHOLD_ENCRYPTION_KEY="$GLYPHHOLD_KEY" \
+  ghcr.io/dosk3n/glyphhold:0.1.0-alpha && \
+printf 'Save this Glyph Hold encryption key: %s\n' "$GLYPHHOLD_KEY"
 ```
 
 Open:
@@ -101,6 +106,18 @@ services:
       GLYPHHOLD_ENCRYPTION_KEY: change-this-to-a-long-random-value
       GLYPHHOLD_LOG_LEVEL: INFO
       GLYPHHOLD_LOG_FORMAT: pretty
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5995/api/v1/health', timeout=3).read()",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     restart: unless-stopped
 ```
 
@@ -124,6 +141,12 @@ cp docker-compose.example.yml docker-compose.yml
 ```
 
 Edit `.env` before storing real secrets.
+
+Generate a persistent encryption key with:
+
+```bash
+openssl rand -hex 32
+```
 
 ## First Run
 
@@ -246,6 +269,11 @@ Before upgrading:
 4. Start the container again.
 
 Startup applies pending migrations automatically.
+
+Detailed backup and restore steps are in
+[BACKUP_AND_RESTORE.md](BACKUP_AND_RESTORE.md).
+
+Troubleshooting steps are in [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
 
 ## Image Tags
 
