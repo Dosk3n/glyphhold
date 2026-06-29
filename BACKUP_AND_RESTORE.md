@@ -3,6 +3,9 @@
 Glyph Hold stores its state in SQLite. In Docker, the database should live under
 `/data` inside the container.
 
+Back up the whole data directory or volume, not only `glyphhold.sqlite`. SQLite
+may also have `glyphhold.sqlite-wal` and `glyphhold.sqlite-shm` files.
+
 Back up both:
 
 - the SQLite data directory or Docker volume
@@ -61,6 +64,7 @@ Restore a named volume backup:
 
 ```bash
 docker stop glyphhold
+docker rm glyphhold
 docker volume rm glyphhold-data
 docker volume create glyphhold-data
 docker run --rm \
@@ -68,8 +72,10 @@ docker run --rm \
   -v "$PWD":/backup \
   busybox \
   tar -xzf /backup/glyphhold-data-backup.tgz -C /data
-docker start glyphhold
 ```
+
+Then recreate the Glyph Hold container with the same `docker run` command and
+the same `GLYPHHOLD_ENCRYPTION_KEY` value.
 
 ## Before Upgrading
 
@@ -81,3 +87,18 @@ docker start glyphhold
 6. Open `http://localhost:5995` and check `/api/v1/health`.
 
 Startup applies pending database migrations automatically.
+
+## After Restore Or Upgrade
+
+Open:
+
+```text
+http://localhost:5995/api/v1/health
+```
+
+Check that `status` is `ok`, `database` is `ok`, and `schema_version` is the
+expected version for the image you are running. Then sign in to the dashboard
+and confirm that memories, API keys, and secrets metadata are present.
+
+To verify secret restore, reveal one known non-critical secret. If it does not
+decrypt, stop Glyph Hold and restore the original `GLYPHHOLD_ENCRYPTION_KEY`.
