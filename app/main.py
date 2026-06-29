@@ -22,7 +22,7 @@ def create_app() -> FastAPI:
     apply_migrations()
 
     app = FastAPI(
-        title="Tomewarden",
+        title="Glyph Hold",
         version=settings.version,
         description="A local, non-LLM memory and secrets service for agents.",
     )

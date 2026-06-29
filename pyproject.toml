@@ -1,5 +1,5 @@
 [project]
-name = "tomewarden"
+name = "glyphhold"
 version = "0.1.0"
 description = "A local, non-LLM memory and secrets service for agents."
 readme = "README.md"
@@ -28,4 +28,3 @@ target-version = "py312"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
-

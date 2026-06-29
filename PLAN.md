@@ -1,6 +1,6 @@
-# Tomewarden Project Plan
+# Glyph Hold Project Plan
 
-Tomewarden is a local, deterministic memory and secrets service for agents. It
+Glyph Hold is a local, deterministic memory and secrets service for agents. It
 owns shared memories and shared secrets; agents are HTTP clients.
 
 The service must be safe to publish on GitHub, easy to run in Docker, and
@@ -10,8 +10,8 @@ designed so users can pull newer images without breaking existing data.
 
 - Local-first and self-hosted.
 - No LLM calls, embeddings, hosted AI APIs, vector databases, Ollama, or paid
-  services inside Tomewarden.
-- SQLite is owned only by the Tomewarden service.
+  services inside Glyph Hold.
+- SQLite is owned only by the Glyph Hold service.
 - Agents, dashboards, plugins, and integrations use the HTTP API.
 - Secrets are operationally separate from memories.
 - Secret values are never returned except from explicit reveal/env endpoints.
@@ -56,10 +56,10 @@ mapping is `5995:5995`, so users open `http://localhost:5995`.
 Expected image names:
 
 ```text
-ghcr.io/<github-username>/tomewarden:latest
-ghcr.io/<github-username>/tomewarden:0.1
-ghcr.io/<github-username>/tomewarden:0.1.0
-ghcr.io/<github-username>/tomewarden:sha-<commit>
+ghcr.io/<github-username>/glyphhold:latest
+ghcr.io/<github-username>/glyphhold:0.1
+ghcr.io/<github-username>/glyphhold:0.1.0
+ghcr.io/<github-username>/glyphhold:sha-<commit>
 ```
 
 Recommended user behavior:
@@ -95,12 +95,12 @@ Commit examples and templates instead:
 Important environment variables:
 
 ```text
-TOMEWARDEN_DB_PATH=/data/tomewarden.sqlite
-TOMEWARDEN_ENCRYPTION_KEY=<long-random-value>
-TOMEWARDEN_LOG_LEVEL=INFO
-TOMEWARDEN_LOG_FORMAT=pretty
-TOMEWARDEN_EVENT_RETENTION_DAYS=90
-TOMEWARDEN_MAX_EVENT_ROWS=100000
+GLYPHHOLD_DB_PATH=/data/glyphhold.sqlite
+GLYPHHOLD_ENCRYPTION_KEY=<long-random-value>
+GLYPHHOLD_LOG_LEVEL=INFO
+GLYPHHOLD_LOG_FORMAT=pretty
+GLYPHHOLD_EVENT_RETENTION_DAYS=90
+GLYPHHOLD_MAX_EVENT_ROWS=100000
 ```
 
 Dashboard bootstrap should not require a preconfigured admin password. First-run
@@ -114,10 +114,10 @@ First-run flow:
 
 1. User starts the Docker container.
 2. User opens the dashboard.
-3. Tomewarden checks whether any dashboard admin user exists.
+3. Glyph Hold checks whether any dashboard admin user exists.
 4. If no admin exists, the dashboard shows a setup page.
 5. User enters username, password, and confirm password.
-6. Tomewarden stores the username and a password hash.
+6. Glyph Hold stores the username and a password hash.
 7. Setup mode is disabled permanently unless the database is reset.
 8. User is redirected to the normal login page.
 
@@ -162,16 +162,16 @@ API key creation flow:
 
 1. Dashboard user opens API Keys page.
 2. User creates a key with name, actor, description, and scopes.
-3. Tomewarden generates a long random key.
+3. Glyph Hold generates a long random key.
 4. The key is shown once.
-5. Tomewarden stores only a hash and a non-sensitive prefix.
+5. Glyph Hold stores only a hash and a non-sensitive prefix.
 6. User copies the key into the agent's environment/config.
 
 Example agent config:
 
 ```text
-TOMEWARDEN_URL=http://tomewarden:5995
-TOMEWARDEN_API_KEY=tw_live_xxxxxxxxxxxxxxxxx
+GLYPHHOLD_URL=http://glyphhold:5995
+GLYPHHOLD_API_KEY=gh_live_xxxxxxxxxxxxxxxxx
 ```
 
 API key table should include:
@@ -212,13 +212,13 @@ Secret values are encrypted at rest.
 
 Required behavior:
 
-- Encryption key comes from `TOMEWARDEN_ENCRYPTION_KEY`.
+- Encryption key comes from `GLYPHHOLD_ENCRYPTION_KEY`.
 - Encryption key is never stored in SQLite.
 - Encryption key is never printed or logged.
 - Secret values are never logged.
 - Secret values are masked in the dashboard by default.
 
-Recommended v1 behavior if `TOMEWARDEN_ENCRYPTION_KEY` is missing:
+Recommended v1 behavior if `GLYPHHOLD_ENCRYPTION_KEY` is missing:
 
 - App still starts.
 - Memories, categories, tags, events, and dashboard auth continue to work.
@@ -270,7 +270,7 @@ Rules:
 
 ## Logging And Audit
 
-Tomewarden has two logging layers:
+Glyph Hold has two logging layers:
 
 - app logs to stdout/stderr for Docker logs
 - internal event log in SQLite for dashboard inspection
@@ -408,7 +408,7 @@ updated_at
 last_revealed_at
 ```
 
-Secret search returns metadata only and requires `secrets:reveal`. Tomewarden
+Secret search returns metadata only and requires `secrets:reveal`. Glyph Hold
 does not expose secret names or metadata to API keys without secret access.
 
 Secret values are returned only by:
@@ -605,4 +605,4 @@ Hermes and Nexus integrations must not access SQLite directly.
 - Docker publishing uses GitHub Container Registry through GitHub Actions.
 - GHCR image name is derived from `github.repository`, so a repo under a
   personal account publishes under that account.
-- Secrets are disabled when `TOMEWARDEN_ENCRYPTION_KEY` is missing.
+- Secrets are disabled when `GLYPHHOLD_ENCRYPTION_KEY` is missing.

@@ -1,6 +1,6 @@
-# Tomewarden
+# Glyph Hold
 
-Tomewarden is a local, deterministic memory and secrets service for agents.
+Glyph Hold is a local, deterministic memory and secrets service for agents.
 
 It is designed to provide:
 
@@ -13,7 +13,7 @@ It is designed to provide:
 - a simple dashboard
 - HTTP APIs for agent integrations
 
-Tomewarden does not use LLMs, embeddings, vector databases, hosted AI APIs, or
+Glyph Hold does not use LLMs, embeddings, vector databases, hosted AI APIs, or
 paid services internally.
 
 ## Current Status
@@ -57,7 +57,7 @@ Open:
 http://localhost:5995
 ```
 
-On the first visit, Tomewarden asks you to create the dashboard username and
+On the first visit, Glyph Hold asks you to create the dashboard username and
 password. After that, the setup page is disabled unless the database is reset.
 
 The Docker container listens on port `5995` internally and the example compose
@@ -74,13 +74,13 @@ Each key has:
 - scopes
 - enabled/disabled state
 
-The generated key is shown once. Tomewarden stores only a hash and a short
+The generated key is shown once. Glyph Hold stores only a hash and a short
 prefix.
 
 Agents call the API with:
 
 ```http
-Authorization: Bearer tw_live_xxxxxxxxxxxxxxxxx
+Authorization: Bearer gh_live_xxxxxxxxxxxxxxxxx
 ```
 
 Secret scopes are deliberately simple:
@@ -111,10 +111,10 @@ The project is configured to publish Docker images to GitHub Container Registry
 when version tags are pushed:
 
 ```text
-ghcr.io/<github-username>/tomewarden:latest
-ghcr.io/<github-username>/tomewarden:0.1.0
-ghcr.io/<github-username>/tomewarden:0.1
-ghcr.io/<github-username>/tomewarden:sha-<commit>
+ghcr.io/<github-username>/glyphhold:latest
+ghcr.io/<github-username>/glyphhold:0.1.0
+ghcr.io/<github-username>/glyphhold:0.1
+ghcr.io/<github-username>/glyphhold:sha-<commit>
 ```
 
 Pin exact versions for stable deployments.
@@ -125,6 +125,6 @@ Pin exact versions for stable deployments.
   secrets.
 - Dashboard setup happens on first browser visit.
 - Agent access uses bearer API keys created from the dashboard.
-- Secret values are encrypted at rest when `TOMEWARDEN_ENCRYPTION_KEY` is set.
-- If `TOMEWARDEN_ENCRYPTION_KEY` is not set, secret features are disabled while
+- Secret values are encrypted at rest when `GLYPHHOLD_ENCRYPTION_KEY` is set.
+- If `GLYPHHOLD_ENCRYPTION_KEY` is not set, secret features are disabled while
   memory features continue to work.
