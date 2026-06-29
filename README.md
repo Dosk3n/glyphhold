@@ -70,7 +70,7 @@ docker run -d \
   -v glyphhold-data:/data \
   -e GLYPHHOLD_DB_PATH=/data/glyphhold.sqlite \
   -e GLYPHHOLD_ENCRYPTION_KEY="$(openssl rand -hex 32)" \
-  ghcr.io/Dosk3n/glyphhold:0.1.0-alpha
+  ghcr.io/dosk3n/glyphhold:0.1.0-alpha
 ```
 
 Open:
@@ -90,7 +90,7 @@ Create a `docker-compose.yml`:
 ```yaml
 services:
   glyphhold:
-    image: ghcr.io/Dosk3n/glyphhold:0.1.0-alpha
+    image: ghcr.io/dosk3n/glyphhold:0.1.0-alpha
     container_name: glyphhold
     ports:
       - "5995:5995"
@@ -252,9 +252,9 @@ Startup applies pending migrations automatically.
 Images are published to GitHub Container Registry:
 
 ```text
-ghcr.io/Dosk3n/glyphhold:0.1.0-alpha
-ghcr.io/Dosk3n/glyphhold:sha-<commit>
-ghcr.io/Dosk3n/glyphhold:latest
+ghcr.io/dosk3n/glyphhold:0.1.0-alpha
+ghcr.io/dosk3n/glyphhold:sha-<commit>
+ghcr.io/dosk3n/glyphhold:latest
 ```
 
 Recommended usage:

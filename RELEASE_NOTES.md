@@ -24,8 +24,8 @@ pin exact Docker tags for anything important.
 Expected image tags:
 
 ```text
-ghcr.io/Dosk3n/glyphhold:0.1.0-alpha
-ghcr.io/Dosk3n/glyphhold:sha-<commit>
+ghcr.io/dosk3n/glyphhold:0.1.0-alpha
+ghcr.io/dosk3n/glyphhold:sha-<commit>
 ```
 
 Prerelease tags do not move `latest`.
