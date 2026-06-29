@@ -67,7 +67,11 @@
         <td>{{ key.last_used_at or "" }}</td>
         <td>
           {% if key.enabled %}
-          <form method="post" action="/dashboard/api-keys/{{ key.id }}/disable">
+          <form method="post" action="/dashboard/api-keys/{{ key.id }}/disable" class="stack">
+            <label>
+              Type the name to disable
+              <input name="confirm_name" autocomplete="off" placeholder="{{ key.name }}">
+            </label>
             <button type="submit">Disable</button>
           </form>
           {% else %}

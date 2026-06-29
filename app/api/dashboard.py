@@ -82,6 +82,69 @@ def _secret_rows(
     return rows
 
 
+def _render_api_keys_page(
+    request: Request,
+    *,
+    created_key: dict | None = None,
+    error: str | None = None,
+    status_code: int = 200,
+) -> HTMLResponse:
+    return _render(
+        request,
+        "api_keys.html",
+        api_keys=auth_repo.list_api_keys(),
+        default_scopes=DEFAULT_SCOPES,
+        created_key=created_key,
+        error=error,
+        status_code=status_code,
+    )
+
+
+def _render_memory_detail(
+    request: Request,
+    memory: dict,
+    *,
+    error: str | None = None,
+    status_code: int = 200,
+) -> HTMLResponse:
+    memory["tags_text"] = _tags_text(memory.get("tags_json"))
+    return _render(
+        request,
+        "memory_detail.html",
+        memory=memory,
+        categories=categories.list_categories(),
+        revisions=memories.list_revisions(memory["id"]),
+        error=error,
+        status_code=status_code,
+    )
+
+
+def _render_secrets_page(
+    request: Request,
+    *,
+    query: str | None = None,
+    service: str | None = None,
+    host: str | None = None,
+    scope: str | None = None,
+    revealed: dict | None = None,
+    error: str | None = None,
+    status_code: int = 200,
+) -> HTMLResponse:
+    return _render(
+        request,
+        "secrets.html",
+        secrets=_secret_rows(query=query, service=service, host=host, scope=scope),
+        query=query or "",
+        service=service or "",
+        host=host or "",
+        scope=scope or "",
+        value_types=VALUE_TYPES,
+        revealed=revealed,
+        error=error,
+        status_code=status_code,
+    )
+
+
 @router.get("/setup", response_class=HTMLResponse)
 def setup_form(request: Request) -> Response:
     if auth_repo.has_admin_user():
@@ -187,15 +250,7 @@ def api_keys_page(request: Request) -> Response:
     user = auth.get_current_dashboard_user(request)
     if user is None:
         return _redirect("/login")
-    return _render(
-        request,
-        "api_keys.html",
-        user=user,
-        api_keys=auth_repo.list_api_keys(),
-        default_scopes=DEFAULT_SCOPES,
-        created_key=None,
-        error=None,
-    )
+    return _render_api_keys_page(request)
 
 
 @router.post("/dashboard/api-keys", response_class=HTMLResponse)
@@ -213,13 +268,8 @@ def create_api_key(
     name = name.strip()
     actor = actor.strip()
     if not name or not actor:
-        return _render(
+        return _render_api_keys_page(
             request,
-            "api_keys.html",
-            user=user,
-            api_keys=auth_repo.list_api_keys(),
-            default_scopes=DEFAULT_SCOPES,
-            created_key=None,
             error="Name and actor are required.",
             status_code=400,
         )
@@ -232,30 +282,58 @@ def create_api_key(
         scopes=selected_scopes,
     )
     created_key = {"id": key_id, "value": api_key}
-    return _render(
-        request,
-        "api_keys.html",
-        user=user,
-        api_keys=auth_repo.list_api_keys(),
-        default_scopes=DEFAULT_SCOPES,
-        created_key=created_key,
-        error=None,
-    )
+    return _render_api_keys_page(request, created_key=created_key)
 
 
-@router.post("/dashboard/api-keys/{key_id}/disable")
-def disable_api_key(request: Request, key_id: str) -> RedirectResponse:
-    if auth.get_current_dashboard_user(request) is None:
+@router.post("/dashboard/api-keys/{key_id}/disable", response_class=HTMLResponse)
+def disable_api_key(
+    request: Request,
+    key_id: str,
+    confirm_name: str = Form(""),
+) -> Response:
+    user = auth.get_current_dashboard_user(request)
+    if user is None:
         return _redirect("/login")
+    key = auth_repo.get_api_key_metadata(key_id)
+    if key is None:
+        return _redirect("/dashboard/api-keys")
+    if confirm_name.strip() != key["name"]:
+        return _render_api_keys_page(
+            request,
+            error=f'Type "{key["name"]}" to disable that API key.',
+            status_code=400,
+        )
     auth_repo.set_api_key_enabled(key_id, False)
+    record_event(
+        request_id=get_request_id(request),
+        event_type="api_key.disable",
+        actor=user["username"],
+        target_type="api_key",
+        target_id=key_id,
+        action="disable",
+        success=True,
+        message=key["name"],
+    )
     return _redirect("/dashboard/api-keys")
 
 
 @router.post("/dashboard/api-keys/{key_id}/enable")
 def enable_api_key(request: Request, key_id: str) -> RedirectResponse:
-    if auth.get_current_dashboard_user(request) is None:
+    user = auth.get_current_dashboard_user(request)
+    if user is None:
         return _redirect("/login")
+    key = auth_repo.get_api_key_metadata(key_id)
     auth_repo.set_api_key_enabled(key_id, True)
+    record_event(
+        request_id=get_request_id(request),
+        event_type="api_key.enable",
+        actor=user["username"],
+        target_type="api_key",
+        target_id=key_id,
+        action="enable",
+        success=True,
+        message=key["name"] if key else None,
+    )
     return _redirect("/dashboard/api-keys")
 
 
@@ -360,16 +438,7 @@ def memory_detail(request: Request, memory_id: str) -> Response:
     memory = memories.get_memory(memory_id)
     if memory is None:
         return _redirect("/dashboard/memories")
-    memory["tags_text"] = _tags_text(memory.get("tags_json"))
-    return _render(
-        request,
-        "memory_detail.html",
-        user=user,
-        memory=memory,
-        categories=categories.list_categories(),
-        revisions=memories.list_revisions(memory_id),
-        error=None,
-    )
+    return _render_memory_detail(request, memory)
 
 
 @router.post("/dashboard/memories/{memory_id}/archive")
@@ -414,17 +483,7 @@ def update_memory_from_dashboard(
         memory = memories.get_memory(memory_id)
         if memory is None:
             return _redirect("/dashboard/memories")
-        memory["tags_text"] = _tags_text(memory.get("tags_json"))
-        return _render(
-            request,
-            "memory_detail.html",
-            user=user,
-            memory=memory,
-            categories=categories.list_categories(),
-            revisions=memories.list_revisions(memory_id),
-            error=str(exc),
-            status_code=400,
-        )
+        return _render_memory_detail(request, memory, error=str(exc), status_code=400)
     if memory is None:
         return _redirect("/dashboard/memories")
     record_event(
@@ -441,11 +500,25 @@ def update_memory_from_dashboard(
     return _redirect(f"/dashboard/memories/{memory_id}")
 
 
-@router.post("/dashboard/memories/{memory_id}/delete")
-def delete_memory_from_dashboard(request: Request, memory_id: str) -> RedirectResponse:
+@router.post("/dashboard/memories/{memory_id}/delete", response_class=HTMLResponse)
+def delete_memory_from_dashboard(
+    request: Request,
+    memory_id: str,
+    confirm_title: str = Form(""),
+) -> Response:
     user = auth.get_current_dashboard_user(request)
     if user is None:
         return _redirect("/login")
+    memory = memories.get_memory(memory_id)
+    if memory is None:
+        return _redirect("/dashboard/memories")
+    if confirm_title.strip() != memory["title"]:
+        return _render_memory_detail(
+            request,
+            memory,
+            error=f'Type "{memory["title"]}" to delete this memory.',
+            status_code=400,
+        )
     deleted = memories.delete_memory(memory_id)
     record_event(
         request_id=get_request_id(request),
@@ -517,18 +590,12 @@ def secrets_page(
     user = auth.get_current_dashboard_user(request)
     if user is None:
         return _redirect("/login")
-    return _render(
+    return _render_secrets_page(
         request,
-        "secrets.html",
-        user=user,
-        secrets=_secret_rows(query=query, service=service, host=host, scope=scope),
-        query=query or "",
-        service=service or "",
-        host=host or "",
-        scope=scope or "",
-        value_types=VALUE_TYPES,
-        revealed=None,
-        error=None,
+        query=query,
+        service=service,
+        host=host,
+        scope=scope,
     )
 
 
@@ -560,17 +627,8 @@ def create_secret_from_dashboard(
             tags=tag_list,
         )
     except Exception as exc:
-        return _render(
+        return _render_secrets_page(
             request,
-            "secrets.html",
-            user=user,
-            secrets=_secret_rows(),
-            query="",
-            service="",
-            host="",
-            scope="",
-            value_types=VALUE_TYPES,
-            revealed=None,
             error=str(exc),
             status_code=400,
         )
@@ -618,17 +676,8 @@ def update_secret_from_dashboard(
     try:
         secret = secrets_repo.update_secret(id_or_name, **fields)
     except Exception as exc:
-        return _render(
+        return _render_secrets_page(
             request,
-            "secrets.html",
-            user=user,
-            secrets=_secret_rows(),
-            query="",
-            service="",
-            host="",
-            scope="",
-            value_types=VALUE_TYPES,
-            revealed=None,
             error=str(exc),
             status_code=400,
         )
@@ -647,11 +696,24 @@ def update_secret_from_dashboard(
     return _redirect("/dashboard/secrets")
 
 
-@router.post("/dashboard/secrets/{id_or_name}/delete")
-def delete_secret_from_dashboard(request: Request, id_or_name: str) -> RedirectResponse:
+@router.post("/dashboard/secrets/{id_or_name}/delete", response_class=HTMLResponse)
+def delete_secret_from_dashboard(
+    request: Request,
+    id_or_name: str,
+    confirm_name: str = Form(""),
+) -> Response:
     user = auth.get_current_dashboard_user(request)
     if user is None:
         return _redirect("/login")
+    secret = secrets_repo.get_secret_metadata(id_or_name)
+    if secret is None:
+        return _redirect("/dashboard/secrets")
+    if confirm_name.strip() != secret["name"]:
+        return _render_secrets_page(
+            request,
+            error=f'Type "{secret["name"]}" to delete this secret.',
+            status_code=400,
+        )
     deleted = secrets_repo.delete_secret(id_or_name)
     record_event(
         request_id=get_request_id(request),
@@ -673,17 +735,8 @@ def reveal_secret_from_dashboard(request: Request, id_or_name: str) -> Response:
     try:
         secret, value = secrets_repo.reveal_secret(id_or_name)
     except Exception as exc:
-        return _render(
+        return _render_secrets_page(
             request,
-            "secrets.html",
-            user=user,
-            secrets=_secret_rows(),
-            query="",
-            service="",
-            host="",
-            scope="",
-            value_types=VALUE_TYPES,
-            revealed=None,
             error=str(exc),
             status_code=400,
         )
@@ -699,16 +752,7 @@ def reveal_secret_from_dashboard(request: Request, id_or_name: str) -> Response:
         success=True,
         purpose="dashboard reveal",
     )
-    return _render(
+    return _render_secrets_page(
         request,
-        "secrets.html",
-        user=user,
-        secrets=_secret_rows(),
-        query="",
-        service="",
-        host="",
-        scope="",
-        value_types=VALUE_TYPES,
         revealed={"name": secret["name"], "value": value},
-        error=None,
     )
