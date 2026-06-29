@@ -50,11 +50,15 @@ If setup still does not appear, check:
 
 ## Lost Dashboard Password
 
-Alpha releases do not include a password reset screen yet.
+Use the admin command inside the running container:
 
-If you cannot sign in, stop the container, back up the data directory, and start
-with a new empty database. This removes dashboard users, API keys, memories,
-secrets, and audit events.
+```bash
+docker exec -it glyphhold glyphhold-admin reset-password --username admin
+```
+
+The command prompts for the new password. It changes only the dashboard admin
+password and does not remove memories, secrets, API keys, categories, or audit
+events.
 
 ## Secret Storage Is Disabled
 
@@ -84,7 +88,7 @@ If the original key is lost, existing stored secret values cannot be recovered.
 Use the lowercase image name:
 
 ```text
-ghcr.io/dosk3n/glyphhold:0.1.0-beta
+ghcr.io/dosk3n/glyphhold:0.2.0-beta
 ```
 
 Prerelease tags do not move `latest`, so pin the exact version shown in the
