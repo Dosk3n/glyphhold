@@ -128,9 +128,9 @@ def _save_revision(
         INSERT INTO memory_revisions (
             id, memory_id, title, summary, body, tags_json, metadata_json, confidence,
             auto_prefetch_level, archived, superseded_by, changed_by, change_reason,
-            created_at
+            created_at, category_id, source
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             revision_id,
@@ -147,6 +147,8 @@ def _save_revision(
             changed_by,
             change_reason,
             utc_now(),
+            memory["category_id"],
+            memory["source"],
         ),
     )
     return revision_id
@@ -259,6 +261,62 @@ def list_revisions(memory_id: str) -> list[dict[str, Any]]:
             (memory_id,),
         ).fetchall()
         return [dict(row) for row in rows]
+
+
+def get_revision(memory_id: str, revision_id: str) -> dict[str, Any] | None:
+    with connection() as conn:
+        row = conn.execute(
+            """
+            SELECT *
+            FROM memory_revisions
+            WHERE memory_id = ? AND id = ?
+            """,
+            (memory_id, revision_id),
+        ).fetchone()
+        return dict(row) if row else None
+
+
+def restore_revision(
+    memory_id: str,
+    revision_id: str,
+    *,
+    changed_by: str | None = None,
+    change_reason: str | None = None,
+) -> tuple[dict[str, Any] | None, str | None]:
+    existing = get_memory(memory_id)
+    if existing is None:
+        return None, None
+    revision = get_revision(memory_id, revision_id)
+    if revision is None:
+        return None, None
+
+    restored = {
+        "category_id": revision.get("category_id") or existing["category_id"],
+        "title": revision["title"],
+        "summary": revision["summary"],
+        "body": revision["body"],
+        "tags_json": revision["tags_json"],
+        "metadata_json": revision["metadata_json"],
+        "source": revision.get("source") or existing["source"],
+        "confidence": revision["confidence"],
+        "auto_prefetch_level": revision["auto_prefetch_level"],
+        "archived": revision["archived"],
+        "superseded_by": revision["superseded_by"],
+        "updated_at": utc_now(),
+    }
+    assignments = ", ".join(f"{key} = ?" for key in restored)
+    values = list(restored.values())
+    values.append(memory_id)
+
+    with connection() as conn:
+        restore_revision_id = _save_revision(
+            conn,
+            existing,
+            changed_by=changed_by,
+            change_reason=change_reason or f"restore:{revision_id}",
+        )
+        conn.execute(f"UPDATE memories SET {assignments} WHERE id = ?", values)
+    return get_memory(memory_id), restore_revision_id
 
 
 def find_similar(

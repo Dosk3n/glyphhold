@@ -459,6 +459,34 @@ def delete_memory_from_dashboard(request: Request, memory_id: str) -> RedirectRe
     return _redirect("/dashboard/memories")
 
 
+@router.post("/dashboard/memories/{memory_id}/revisions/{revision_id}/restore")
+def restore_memory_revision_from_dashboard(
+    request: Request,
+    memory_id: str,
+    revision_id: str,
+) -> RedirectResponse:
+    user = auth.get_current_dashboard_user(request)
+    if user is None:
+        return _redirect("/login")
+    memory, restore_revision_id = memories.restore_revision(
+        memory_id,
+        revision_id,
+        changed_by=user["username"],
+        change_reason="dashboard restore",
+    )
+    record_event(
+        request_id=get_request_id(request),
+        event_type="memory.restore",
+        actor=user["username"],
+        target_type="memory",
+        target_id=memory_id,
+        action="restore",
+        success=memory is not None,
+        metadata={"revision_id": revision_id, "restore_revision_id": restore_revision_id},
+    )
+    return _redirect(f"/dashboard/memories/{memory_id}")
+
+
 @router.get("/dashboard/activity", response_class=HTMLResponse)
 def activity_page(
     request: Request,

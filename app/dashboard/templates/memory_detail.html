@@ -52,6 +52,7 @@
         <th>Changed by</th>
         <th>Reason</th>
         <th>Title</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -61,9 +62,14 @@
         <td>{{ revision.changed_by or "" }}</td>
         <td>{{ revision.change_reason or "" }}</td>
         <td>{{ revision.title }}</td>
+        <td>
+          <form method="post" action="/dashboard/memories/{{ memory.id }}/revisions/{{ revision.id }}/restore">
+            <button type="submit">Restore</button>
+          </form>
+        </td>
       </tr>
       {% else %}
-      <tr><td colspan="4">No revisions yet.</td></tr>
+      <tr><td colspan="5">No revisions yet.</td></tr>
       {% endfor %}
     </tbody>
   </table>
