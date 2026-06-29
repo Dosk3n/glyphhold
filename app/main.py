@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.api.agent import router as agent_router
 from app.api.categories import router as categories_router
 from app.api.dashboard import router as dashboard_router
+from app.api.dashboard_json import router as dashboard_json_router
+from app.api.dashboard_spa import router as dashboard_spa_router
 from app.api.events import router as events_router
 from app.api.health import router as health_router
 from app.api.memories import router as memories_router
@@ -28,6 +29,13 @@ def create_app() -> FastAPI:
     )
     app.add_middleware(RequestContextMiddleware)
     app.mount("/static", StaticFiles(directory="app/dashboard/static"), name="static")
+    app.mount(
+        "/dashboard-assets",
+        StaticFiles(directory="app/dashboard/static/dashboard"),
+        name="dashboard-assets",
+    )
+    app.include_router(dashboard_json_router)
+    app.include_router(dashboard_spa_router)
     app.include_router(dashboard_router)
     app.include_router(health_router)
     app.include_router(categories_router)
@@ -45,10 +53,6 @@ def create_app() -> FastAPI:
             schema_version=current_schema_version(),
             secrets_enabled=settings.secrets_enabled,
         )
-
-    @app.get("/", include_in_schema=False)
-    def root() -> RedirectResponse:
-        return RedirectResponse(url="/dashboard")
 
     return app
 

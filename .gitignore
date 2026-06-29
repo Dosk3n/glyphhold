@@ -68,3 +68,6 @@ Thumbs.db
 *.swp
 *.swo
 
+# Built dashboard assets
+app/dashboard/static/dashboard/*
+!app/dashboard/static/dashboard/.gitkeep

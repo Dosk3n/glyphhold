@@ -5,13 +5,24 @@ to run Glyph Hold, use the Docker instructions in [README.md](README.md).
 
 ## Local Development
 
-Glyph Hold requires Python 3.12 or newer.
+Glyph Hold requires Python 3.12 or newer and Node 22 or newer.
 
 ```bash
 python3.12 -m venv .venv
 . .venv/bin/activate
 pip install -e ".[dev]"
+cd dashboard-ui
+npm ci
+npm run build
+cd ..
 uvicorn app.main:app --reload --host 0.0.0.0 --port 5995
+```
+
+For active dashboard work, run Vite in another terminal:
+
+```bash
+cd dashboard-ui
+npm run dev
 ```
 
 Open:
@@ -27,6 +38,7 @@ Run these before committing:
 ```bash
 ruff check .
 pytest
+cd dashboard-ui && npm ci && npm run typecheck && npm run build && cd ..
 docker build -t glyphhold:ci .
 docker run --rm -e GLYPHHOLD_DB_PATH=/tmp/glyphhold-ci.sqlite glyphhold:ci \
   python -c "from app.storage.migrations import apply_migrations,current_schema_version; apply_migrations(); assert current_schema_version() >= 4"

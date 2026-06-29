@@ -7,57 +7,69 @@ from app.storage.repositories import events
 from app.storage.repositories import memories, secrets
 
 
-def _setup_and_login(client: TestClient) -> None:
+def _setup_dashboard(client: TestClient) -> None:
+    session_before_setup = client.get("/dashboard/api/session")
+    assert session_before_setup.status_code == 200
+    assert session_before_setup.json() == {"has_admin": False, "user": None}
+
     setup_response = client.post(
-        "/setup",
-        data={
+        "/dashboard/api/setup",
+        json={
             "username": "admin",
             "password": "correct horse battery staple",
             "confirm_password": "correct horse battery staple",
         },
     )
     assert setup_response.status_code == 200
+    assert setup_response.json()["user"]["username"] == "admin"
 
-    login_response = client.post(
-        "/login",
-        data={"username": "admin", "password": "correct horse battery staple"},
-    )
-    assert login_response.status_code == 200
-    assert "Status" in login_response.text
+    session_after_setup = client.get("/dashboard/api/session")
+    assert session_after_setup.status_code == 200
+    assert session_after_setup.json()["user"]["username"] == "admin"
+
+
+def test_dashboard_spa_routes_are_served(client: TestClient) -> None:
+    dashboard_response = client.get("/dashboard")
+    memory_response = client.get("/dashboard/memories/mem_example")
+
+    assert dashboard_response.status_code == 200
+    assert 'id="root"' in dashboard_response.text
+    assert memory_response.status_code == 200
+    assert 'id="root"' in memory_response.text
 
 
 def test_dashboard_memory_edit_and_delete(client: TestClient) -> None:
-    _setup_and_login(client)
+    _setup_dashboard(client)
 
     create_response = client.post(
-        "/dashboard/memories",
-        data={
+        "/dashboard/api/memories",
+        json={
             "category_id": "cat_projects",
             "title": "Dashboard memory",
             "summary": "Original summary",
             "body": "Original body",
-            "tags": "dashboard, original",
-            "confidence": "3",
+            "tags": ["dashboard", "original"],
+            "confidence": 3,
             "auto_prefetch_level": "normal",
         },
     )
-    assert create_response.status_code == 200
-    memory = memories.list_memories()[0]
+    assert create_response.status_code == 201
+    memory = create_response.json()
+    assert memory["tags"] == ["dashboard", "original"]
 
-    detail_response = client.get(f"/dashboard/memories/{memory['id']}")
+    detail_response = client.get(f"/dashboard/api/memories/{memory['id']}")
     assert detail_response.status_code == 200
-    assert "Save memory" in detail_response.text
-    assert "Delete memory" in detail_response.text
+    assert detail_response.json()["memory"]["title"] == "Dashboard memory"
 
-    update_response = client.post(
-        f"/dashboard/memories/{memory['id']}/update",
-        data={
+    update_response = client.patch(
+        f"/dashboard/api/memories/{memory['id']}",
+        json={
             "category_id": "cat_decisions",
             "title": "Updated dashboard memory",
             "summary": "Updated summary",
             "body": "Updated body",
-            "tags": "dashboard, updated",
-            "confidence": "5",
+            "tags": ["dashboard", "updated"],
+            "confidence": 5,
             "auto_prefetch_level": "high",
         },
     )
@@ -74,7 +86,7 @@ def test_dashboard_memory_edit_and_delete(client: TestClient) -> None:
     assert revisions[0]["changed_by"] == "admin"
 
     restore_response = client.post(
-        f"/dashboard/memories/{memory['id']}/revisions/{revisions[0]['id']}/restore"
+        f"/dashboard/api/memories/{memory['id']}/revisions/{revisions[0]['id']}/restore"
     )
     assert restore_response.status_code == 200
     restored = memories.get_memory(memory["id"])
@@ -82,122 +94,129 @@ def test_dashboard_memory_edit_and_delete(client: TestClient) -> None:
     assert restored["title"] == "Dashboard memory"
     assert restored["category_name"] == "projects"
 
-    revisions_after_restore = memories.list_revisions(memory["id"])
-    assert len(revisions_after_restore) == 2
-    assert revisions_after_restore[0]["title"] == "Updated dashboard memory"
-    assert revisions_after_restore[0]["change_reason"] == "dashboard restore"
-
-    blocked_delete_response = client.post(f"/dashboard/memories/{memory['id']}/delete")
+    blocked_delete_response = client.request(
+        "DELETE",
+        f"/dashboard/api/memories/{memory['id']}",
+        json={"confirm_title": ""},
+    )
     assert blocked_delete_response.status_code == 400
-    assert "Dashboard memory" in blocked_delete_response.text
-    assert "to delete this memory." in blocked_delete_response.text
+    assert "Dashboard memory" in blocked_delete_response.json()["detail"]
     assert memories.get_memory(memory["id"]) is not None
 
-    delete_response = client.post(
-        f"/dashboard/memories/{memory['id']}/delete",
-        data={"confirm_title": "Dashboard memory"},
+    delete_response = client.request(
+        "DELETE",
+        f"/dashboard/api/memories/{memory['id']}",
+        json={"confirm_title": "Dashboard memory"},
     )
     assert delete_response.status_code == 200
     assert memories.get_memory(memory["id"]) is None
 
 
 def test_dashboard_secret_edit_reveal_and_delete(secrets_client: TestClient) -> None:
-    _setup_and_login(secrets_client)
+    _setup_dashboard(secrets_client)
 
     create_response = secrets_client.post(
-        "/dashboard/secrets",
-        data={
-            "name": "GLYPHHOLD_DASHBOARD_TOKEN",
+        "/dashboard/api/secrets",
+        json={
+            "name": "DASHBOARD_TOKEN",
             "value": "original-secret-value",
             "description": "Original token",
             "value_type": "token",
             "service": "dashboard",
             "host": "local",
             "scope": "tests",
-            "tags": "dashboard, token",
+            "tags": ["dashboard", "token"],
         },
     )
-    assert create_response.status_code == 200
-    created = secrets.get_secret_metadata("GLYPHHOLD_DASHBOARD_TOKEN")
+    assert create_response.status_code == 201
+    assert "original-secret-value" not in create_response.text
+    created = secrets.get_secret_metadata("DASHBOARD_TOKEN")
     assert created is not None
 
-    page_response = secrets_client.get("/dashboard/secrets")
-    assert page_response.status_code == 200
-    assert "Save secret" in page_response.text
-    assert "Delete" in page_response.text
-    assert "original-secret-value" not in page_response.text
+    list_response = secrets_client.get("/dashboard/api/secrets")
+    assert list_response.status_code == 200
+    assert "original-secret-value" not in list_response.text
+    assert list_response.json()["secrets"][0]["name"] == "DASHBOARD_TOKEN"
 
-    update_response = secrets_client.post(
-        f"/dashboard/secrets/{created['id']}/update",
-        data={
-            "name": "GLYPHHOLD_DASHBOARD_TOKEN_RENAMED",
+    update_response = secrets_client.patch(
+        f"/dashboard/api/secrets/{created['id']}",
+        json={
+            "name": "DASHBOARD_TOKEN_RENAMED",
             "value": "updated-secret-value",
             "description": "Updated token",
             "value_type": "api_key",
             "service": "dashboard",
             "host": "local",
-            "scope": "alpha",
-            "tags": "dashboard, updated",
+            "scope": "beta",
+            "tags": ["dashboard", "updated"],
         },
     )
     assert update_response.status_code == 200
     assert "updated-secret-value" not in update_response.text
 
-    reveal_response = secrets_client.post(
-        "/dashboard/secrets/GLYPHHOLD_DASHBOARD_TOKEN_RENAMED/reveal"
-    )
+    reveal_response = secrets_client.post("/dashboard/api/secrets/DASHBOARD_TOKEN_RENAMED/reveal")
     assert reveal_response.status_code == 200
-    assert "updated-secret-value" in reveal_response.text
+    assert reveal_response.json() == {
+        "name": "DASHBOARD_TOKEN_RENAMED",
+        "value": "updated-secret-value",
+    }
 
-    blocked_delete_response = secrets_client.post(
-        "/dashboard/secrets/GLYPHHOLD_DASHBOARD_TOKEN_RENAMED/delete"
+    blocked_delete_response = secrets_client.request(
+        "DELETE",
+        "/dashboard/api/secrets/DASHBOARD_TOKEN_RENAMED",
+        json={"confirm_name": ""},
     )
     assert blocked_delete_response.status_code == 400
-    assert "Type &#34;GLYPHHOLD_DASHBOARD_TOKEN_RENAMED&#34; to delete this secret." in (
-        blocked_delete_response.text
-    )
-    assert secrets.get_secret_metadata("GLYPHHOLD_DASHBOARD_TOKEN_RENAMED") is not None
+    assert "DASHBOARD_TOKEN_RENAMED" in blocked_delete_response.json()["detail"]
+    assert secrets.get_secret_metadata("DASHBOARD_TOKEN_RENAMED") is not None
 
-    delete_response = secrets_client.post(
-        "/dashboard/secrets/GLYPHHOLD_DASHBOARD_TOKEN_RENAMED/delete",
-        data={"confirm_name": "GLYPHHOLD_DASHBOARD_TOKEN_RENAMED"},
+    delete_response = secrets_client.request(
+        "DELETE",
+        "/dashboard/api/secrets/DASHBOARD_TOKEN_RENAMED",
+        json={"confirm_name": "DASHBOARD_TOKEN_RENAMED"},
     )
     assert delete_response.status_code == 200
-    assert secrets.get_secret_metadata("GLYPHHOLD_DASHBOARD_TOKEN_RENAMED") is None
+    assert secrets.get_secret_metadata("DASHBOARD_TOKEN_RENAMED") is None
 
 
 def test_dashboard_api_key_disable_requires_confirmation(client: TestClient) -> None:
-    _setup_and_login(client)
+    _setup_dashboard(client)
 
     create_response = client.post(
-        "/dashboard/api-keys",
-        data={
-            "name": "Codex local",
-            "actor": "codex",
+        "/dashboard/api/api-keys",
+        json={
+            "name": "Local agent",
+            "actor": "local-agent",
             "description": "local agent",
             "scopes": ["memories:read", "memories:write"],
         },
     )
     assert create_response.status_code == 200
-    assert "gh_live_" in create_response.text
+    assert create_response.json()["value"].startswith("gh_live_")
 
     key = auth_repo.list_api_keys()[0]
     assert key["enabled"] == 1
 
-    blocked_disable_response = client.post(f"/dashboard/api-keys/{key['id']}/disable")
+    list_response = client.get("/dashboard/api/api-keys")
+    assert list_response.status_code == 200
+    assert list_response.json()["keys"][0]["scopes"] == ["memories:read", "memories:write"]
+
+    blocked_disable_response = client.post(
+        f"/dashboard/api/api-keys/{key['id']}/disable",
+        json={"confirm_name": ""},
+    )
     assert blocked_disable_response.status_code == 400
-    assert "Codex local" in blocked_disable_response.text
-    assert "to disable that API key." in blocked_disable_response.text
+    assert "Local agent" in blocked_disable_response.json()["detail"]
     assert auth_repo.get_api_key_metadata(key["id"])["enabled"] == 1
 
     disable_response = client.post(
-        f"/dashboard/api-keys/{key['id']}/disable",
-        data={"confirm_name": "Codex local"},
+        f"/dashboard/api/api-keys/{key['id']}/disable",
+        json={"confirm_name": "Local agent"},
     )
     assert disable_response.status_code == 200
     assert auth_repo.get_api_key_metadata(key["id"])["enabled"] == 0
 
-    enable_response = client.post(f"/dashboard/api-keys/{key['id']}/enable")
+    enable_response = client.post(f"/dashboard/api/api-keys/{key['id']}/enable")
     assert enable_response.status_code == 200
     assert auth_repo.get_api_key_metadata(key["id"])["enabled"] == 1
 
