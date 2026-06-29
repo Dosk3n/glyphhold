@@ -60,6 +60,8 @@ def _secret_error(exc: Exception) -> HTTPException:
         return HTTPException(status_code=503, detail=str(exc))
     if isinstance(exc, SecretDecryptionError):
         return HTTPException(status_code=500, detail=str(exc))
+    if isinstance(exc, PermissionError):
+        return HTTPException(status_code=403, detail=str(exc))
     return HTTPException(status_code=400, detail=str(exc))
 
 
@@ -116,9 +118,22 @@ def reveal_env(
     values = {}
     try:
         for secret in selected:
-            _, value = secrets.reveal_secret(secret["id"])
+            _, value = secrets.reveal_secret(
+                secret["id"],
+                requesting_agent=payload.requesting_agent,
+            )
             values[secret["name"]] = value
     except Exception as exc:
+        record_event(
+            request_id=get_request_id(request),
+            event_type="secret.env",
+            actor=payload.requesting_agent or principal.actor,
+            target_type="secret",
+            action="env",
+            success=False,
+            purpose=payload.purpose,
+            metadata={"scope": payload.scope},
+        )
         raise _secret_error(exc) from exc
     record_event(
         request_id=get_request_id(request),
@@ -199,8 +214,23 @@ def reveal_secret(
     principal: Annotated[ApiPrincipal, Depends(require_scope("secrets:reveal"))],
 ) -> dict:
     try:
-        secret, value = secrets.reveal_secret(id_or_name)
+        secret, value = secrets.reveal_secret(
+            id_or_name,
+            requesting_agent=payload.requesting_agent,
+            tool=payload.tool,
+        )
     except Exception as exc:
+        record_event(
+            request_id=get_request_id(request),
+            event_type="secret.reveal",
+            actor=payload.requesting_agent or principal.actor,
+            tool=payload.tool,
+            target_type="secret",
+            target_id=id_or_name,
+            action="reveal",
+            success=False,
+            purpose=payload.purpose,
+        )
         raise _secret_error(exc) from exc
     if secret is None or value is None:
         record_event(

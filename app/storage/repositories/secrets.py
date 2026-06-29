@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from typing import Any
 
 from app.core.encryption import decrypt_secret, encrypt_secret, encryption_key_id
@@ -9,6 +10,7 @@ from app.storage.db import connection
 from app.utils.time import utc_now
 
 VALUE_TYPES = ("text", "api_key", "password", "token", "webhook_url", "username", "json")
+SECRET_NAME_RE = re.compile(r"^GLYPHHOLD_[A-Z0-9_]+$")
 
 
 METADATA_COLUMNS = """
@@ -20,6 +22,37 @@ METADATA_COLUMNS = """
 
 def _json(value: Any, default: Any) -> str:
     return json.dumps(default if value is None else value, sort_keys=True)
+
+
+def _json_list(value: str | None) -> list[str]:
+    try:
+        parsed = json.loads(value or "[]")
+    except json.JSONDecodeError:
+        return []
+    if not isinstance(parsed, list):
+        return []
+    return [str(item) for item in parsed]
+
+
+def validate_secret_name(name: str) -> str:
+    normalized = name.strip()
+    if not SECRET_NAME_RE.fullmatch(normalized):
+        raise ValueError("secret name must be an uppercase GLYPHHOLD_* environment variable name")
+    return normalized
+
+
+def _check_reveal_allowed(
+    secret: dict[str, Any],
+    *,
+    requesting_agent: str | None = None,
+    tool: str | None = None,
+) -> None:
+    allowed_agents = _json_list(secret.get("allowed_agents_json"))
+    allowed_tools = _json_list(secret.get("allowed_tools_json"))
+    if allowed_agents and requesting_agent not in allowed_agents:
+        raise PermissionError("secret reveal denied for this agent")
+    if allowed_tools and tool not in allowed_tools:
+        raise PermissionError("secret reveal denied for this tool")
 
 
 def list_secrets(
@@ -92,6 +125,7 @@ def create_secret(
     allowed_agents: list[str] | None = None,
     allowed_tools: list[str] | None = None,
 ) -> dict[str, Any]:
+    name = validate_secret_name(name)
     if value_type not in VALUE_TYPES:
         raise ValueError(f"value_type must be one of: {', '.join(VALUE_TYPES)}")
     secret_id = new_id("sec")
@@ -137,6 +171,8 @@ def update_secret(id_or_name: str, **fields: Any) -> dict[str, Any] | None:
     for key in ("name", "description", "value_type", "service", "host", "scope"):
         if key in fields and fields[key] is not None:
             updates[key] = fields[key]
+    if "name" in updates:
+        updates["name"] = validate_secret_name(updates["name"])
     if updates.get("value_type") is not None and updates["value_type"] not in VALUE_TYPES:
         raise ValueError(f"value_type must be one of: {', '.join(VALUE_TYPES)}")
     if fields.get("value") is not None:
@@ -166,10 +202,16 @@ def delete_secret(id_or_name: str) -> bool:
         return cursor.rowcount > 0
 
 
-def reveal_secret(id_or_name: str) -> tuple[dict[str, Any] | None, str | None]:
+def reveal_secret(
+    id_or_name: str,
+    *,
+    requesting_agent: str | None = None,
+    tool: str | None = None,
+) -> tuple[dict[str, Any] | None, str | None]:
     secret = _get_secret_with_value(id_or_name)
     if secret is None:
         return None, None
+    _check_reveal_allowed(secret, requesting_agent=requesting_agent, tool=tool)
     value = decrypt_secret(secret["encrypted_value"])
     now = utc_now()
     with connection() as conn:
