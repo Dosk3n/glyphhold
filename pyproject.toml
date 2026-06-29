@@ -14,6 +14,9 @@ dependencies = [
     "uvicorn[standard]>=0.34.0",
 ]
 
+[project.scripts]
+glyphhold-admin = "app.admin_cli:main"
+
 [project.optional-dependencies]
 dev = [
     "httpx>=0.28.0",

@@ -28,6 +28,43 @@ def _setup_dashboard(client: TestClient) -> None:
     assert session_after_setup.json()["user"]["username"] == "admin"
 
 
+def test_dashboard_setup_and_login_state_errors(client: TestClient) -> None:
+    login_before_setup = client.post(
+        "/dashboard/api/login",
+        json={"username": "admin", "password": "correct horse battery staple"},
+    )
+    assert login_before_setup.status_code == 404
+    assert login_before_setup.json()["detail"] == "Dashboard setup is required"
+
+    short_setup = client.post(
+        "/dashboard/api/setup",
+        json={"username": "admin", "password": "short", "confirm_password": "short"},
+    )
+    assert short_setup.status_code == 400
+    assert short_setup.json()["detail"] == "Password must be at least 12 characters."
+
+    _setup_dashboard(client)
+
+    duplicate_setup = client.post(
+        "/dashboard/api/setup",
+        json={
+            "username": "second",
+            "password": "correct horse battery staple",
+            "confirm_password": "correct horse battery staple",
+        },
+    )
+    assert duplicate_setup.status_code == 409
+    assert duplicate_setup.json()["detail"] == "Dashboard user already exists"
+
+    client.post("/dashboard/api/logout")
+    bad_login = client.post(
+        "/dashboard/api/login",
+        json={"username": "admin", "password": "wrong password"},
+    )
+    assert bad_login.status_code == 401
+    assert bad_login.json()["detail"] == "Invalid username or password."
+
+
 def test_dashboard_spa_routes_are_served(client: TestClient) -> None:
     dashboard_response = client.get("/dashboard")
     memory_response = client.get("/dashboard/memories/mem_example")

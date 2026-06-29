@@ -46,6 +46,33 @@ def get_dashboard_user_by_id(user_id: str) -> dict[str, Any] | None:
         return dict(row) if row else None
 
 
+def list_admin_users() -> list[dict[str, Any]]:
+    with connection() as conn:
+        rows = conn.execute(
+            """
+            SELECT id, username, is_admin, created_at, updated_at, last_login_at
+            FROM dashboard_users
+            WHERE is_admin = 1
+            ORDER BY created_at ASC
+            """
+        ).fetchall()
+        return [dict(row) for row in rows]
+
+
+def update_dashboard_password(username: str, password_hash: str) -> bool:
+    now = utc_now()
+    with connection() as conn:
+        cursor = conn.execute(
+            """
+            UPDATE dashboard_users
+            SET password_hash = ?, updated_at = ?
+            WHERE username = ? AND is_admin = 1
+            """,
+            (password_hash, now, username),
+        )
+        return cursor.rowcount > 0
+
+
 def mark_dashboard_login(user_id: str) -> None:
     now = utc_now()
     with connection() as conn:
