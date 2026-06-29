@@ -14,7 +14,7 @@ def test_health_reports_database_and_schema(client: TestClient) -> None:
         "status": "ok",
         "version": "0.1.0",
         "database": "ok",
-        "schema_version": 3,
+        "schema_version": 4,
         "secrets_enabled": False,
     }
 
@@ -89,7 +89,28 @@ def test_memory_lifecycle_search_prefetch_and_revisions(client: TestClient) -> N
     revisions = revisions_response.json()
     assert len(revisions) == 1
     assert revisions[0]["title"] == "Glyph Hold roadmap"
+    assert revisions[0]["category_id"] == "cat_projects"
     assert revisions[0]["changed_by"] == "memory-agent"
+
+    restore_response = client.post(
+        f"/api/v1/memories/{memory['id']}/revisions/{revisions[0]['id']}/restore",
+        headers=headers,
+        json={"change_reason": "restore original roadmap"},
+    )
+    assert restore_response.status_code == 200
+    restored = restore_response.json()
+    assert restored["title"] == "Glyph Hold roadmap"
+    assert restored["category_id"] == "cat_projects"
+
+    revisions_after_restore_response = client.get(
+        f"/api/v1/memories/{memory['id']}/revisions",
+        headers=headers,
+    )
+    assert revisions_after_restore_response.status_code == 200
+    revisions_after_restore = revisions_after_restore_response.json()
+    assert len(revisions_after_restore) == 2
+    assert revisions_after_restore[0]["title"] == "Glyph Hold alpha roadmap"
+    assert revisions_after_restore[0]["change_reason"] == "restore original roadmap"
 
     prefetch_response = client.post(
         "/api/v1/agent/prefetch",

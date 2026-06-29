@@ -65,6 +65,10 @@ class SupersedeRequest(BaseModel):
     superseded_by: str
 
 
+class RestoreRevisionRequest(BaseModel):
+    change_reason: str | None = None
+
+
 @router.get("")
 def list_memories(
     _: Annotated[ApiPrincipal, Depends(require_scope("memories:read"))],
@@ -311,3 +315,32 @@ def list_revisions(
     if memories.get_memory(memory_id) is None:
         raise HTTPException(status_code=404, detail="Memory not found")
     return memories.list_revisions(memory_id)
+
+
+@router.post("/{memory_id}/revisions/{revision_id}/restore")
+def restore_revision(
+    memory_id: str,
+    revision_id: str,
+    payload: RestoreRevisionRequest,
+    request: Request,
+    principal: Annotated[ApiPrincipal, Depends(require_scope("memories:write"))],
+) -> dict:
+    memory, restore_revision_id = memories.restore_revision(
+        memory_id,
+        revision_id,
+        changed_by=principal.actor,
+        change_reason=payload.change_reason,
+    )
+    if memory is None:
+        raise HTTPException(status_code=404, detail="Memory or revision not found")
+    record_event(
+        request_id=get_request_id(request),
+        event_type="memory.restore",
+        actor=principal.actor,
+        target_type="memory",
+        target_id=memory["id"],
+        action="restore",
+        success=True,
+        metadata={"revision_id": revision_id, "restore_revision_id": restore_revision_id},
+    )
+    return memory

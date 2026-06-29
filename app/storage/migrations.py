@@ -206,6 +206,14 @@ VALUES
     ('cat_temporary', 'temporary', 'Temporary or short-lived context.', 0, 1, 1, strftime('%Y-%m-%dT%H:%M:%fZ', 'now'), strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
 """,
     ),
+    Migration(
+        version=4,
+        name="memory_revision_restore_fields",
+        sql="""
+ALTER TABLE memory_revisions ADD COLUMN category_id TEXT;
+ALTER TABLE memory_revisions ADD COLUMN source TEXT;
+""",
+    ),
 )
 
 

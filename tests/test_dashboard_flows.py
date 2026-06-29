@@ -71,6 +71,20 @@ def test_dashboard_memory_edit_and_delete(client: TestClient) -> None:
     assert revisions[0]["title"] == "Dashboard memory"
     assert revisions[0]["changed_by"] == "admin"
 
+    restore_response = client.post(
+        f"/dashboard/memories/{memory['id']}/revisions/{revisions[0]['id']}/restore"
+    )
+    assert restore_response.status_code == 200
+    restored = memories.get_memory(memory["id"])
+    assert restored is not None
+    assert restored["title"] == "Dashboard memory"
+    assert restored["category_name"] == "projects"
+
+    revisions_after_restore = memories.list_revisions(memory["id"])
+    assert len(revisions_after_restore) == 2
+    assert revisions_after_restore[0]["title"] == "Updated dashboard memory"
+    assert revisions_after_restore[0]["change_reason"] == "dashboard restore"
+
     delete_response = client.post(f"/dashboard/memories/{memory['id']}/delete")
     assert delete_response.status_code == 200
     assert memories.get_memory(memory["id"]) is None
