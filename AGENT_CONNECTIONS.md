@@ -77,13 +77,14 @@ curl -s "$GLYPHHOLD_URL/api/v1/agent/prefetch" \
 Reveal one secret explicitly:
 
 ```bash
-curl -s "$GLYPHHOLD_URL/api/v1/secrets/GLYPHHOLD_DEPLOY_TOKEN/reveal" \
+curl -s "$GLYPHHOLD_URL/api/v1/secrets/PEPPER_SERVER_DEPLOY_TOKEN/reveal" \
   -H "Authorization: Bearer $GLYPHHOLD_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"requesting_agent":"codex","purpose":"deployment"}'
 ```
 
-Secret names must be uppercase `GLYPHHOLD_*` environment variable names.
+Secret names must be uppercase environment variable names, such as
+`PEPPER_SERVER_SONARR_API_KEY`.
 
 ## Python Client
 
@@ -114,7 +115,7 @@ context = client.prefetch(
 )
 
 secret = client.reveal_secret(
-    "GLYPHHOLD_DEPLOY_TOKEN",
+    "PEPPER_SERVER_DEPLOY_TOKEN",
     requesting_agent="codex",
     purpose="deployment",
 )

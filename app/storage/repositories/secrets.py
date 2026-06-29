@@ -10,7 +10,7 @@ from app.storage.db import connection
 from app.utils.time import utc_now
 
 VALUE_TYPES = ("text", "api_key", "password", "token", "webhook_url", "username", "json")
-SECRET_NAME_RE = re.compile(r"^GLYPHHOLD_[A-Z0-9_]+$")
+SECRET_NAME_RE = re.compile(r"^[A-Z_][A-Z0-9_]*$")
 
 
 METADATA_COLUMNS = """
@@ -37,7 +37,7 @@ def _json_list(value: str | None) -> list[str]:
 def validate_secret_name(name: str) -> str:
     normalized = name.strip()
     if not SECRET_NAME_RE.fullmatch(normalized):
-        raise ValueError("secret name must be an uppercase GLYPHHOLD_* environment variable name")
+        raise ValueError("secret name must be an uppercase environment variable name")
     return normalized
 
 

@@ -6,25 +6,25 @@ from app.core.redaction import redact
 from tests.conftest import make_api_key_headers
 
 
-def test_secret_names_must_be_glyphhold_env_vars(secrets_client: TestClient) -> None:
+def test_secret_names_must_be_uppercase_env_vars(secrets_client: TestClient) -> None:
     headers = make_api_key_headers(scopes=["secrets:write"], actor="secret-writer")
 
     invalid_response = secrets_client.post(
         "/api/v1/secrets",
         headers=headers,
-        json={"name": "SONARR_API_KEY", "value": "hidden"},
+        json={"name": "sonarr_api_key", "value": "hidden"},
     )
     assert invalid_response.status_code == 400
-    assert "GLYPHHOLD_*" in invalid_response.json()["detail"]
+    assert "uppercase environment variable name" in invalid_response.json()["detail"]
     assert "hidden" not in invalid_response.text
 
     valid_response = secrets_client.post(
         "/api/v1/secrets",
         headers=headers,
-        json={"name": "GLYPHHOLD_SONARR_API_KEY", "value": "hidden"},
+        json={"name": "PEPPER_SERVER_SONARR_API_KEY", "value": "hidden"},
     )
     assert valid_response.status_code == 201
-    assert valid_response.json()["name"] == "GLYPHHOLD_SONARR_API_KEY"
+    assert valid_response.json()["name"] == "PEPPER_SERVER_SONARR_API_KEY"
     assert "hidden" not in valid_response.text
 
 
