@@ -3,6 +3,7 @@
 {% block content %}
 <section class="panel wide">
   <h1>{{ memory.title }}</h1>
+  {% if error %}<div class="alert">{{ error }}</div>{% endif %}
   <dl>
     <dt>Category</dt><dd>{{ memory.category_name }}</dd>
     <dt>Confidence</dt><dd>{{ memory.confidence }}</dd>
@@ -11,6 +12,36 @@
     <dt>Summary</dt><dd>{{ memory.summary or "" }}</dd>
     <dt>Body</dt><dd><pre>{{ memory.body }}</pre></dd>
   </dl>
+</section>
+<section class="panel wide">
+  <h2>Edit memory</h2>
+  <form method="post" action="/dashboard/memories/{{ memory.id }}/update" class="stack">
+    <label>
+      Category
+      <select name="category_id" required>
+        {% for category in categories %}
+        <option value="{{ category.id }}" {% if category.id == memory.category_id %}selected{% endif %}>{{ category.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Title <input name="title" value="{{ memory.title }}" required></label>
+    <label>Summary <input name="summary" value="{{ memory.summary or '' }}"></label>
+    <label>Body <textarea name="body" required>{{ memory.body }}</textarea></label>
+    <label>Tags <input name="tags" value="{{ memory.tags_text }}" placeholder="comma-separated"></label>
+    <label>Confidence <input name="confidence" type="number" min="1" max="5" value="{{ memory.confidence }}"></label>
+    <label>
+      Auto-prefetch
+      <select name="auto_prefetch_level">
+        {% for level in ["never", "low", "normal", "high", "pinned"] %}
+        <option value="{{ level }}" {% if level == memory.auto_prefetch_level %}selected{% endif %}>{{ level }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <button type="submit">Save memory</button>
+  </form>
+  <form method="post" action="/dashboard/memories/{{ memory.id }}/delete" class="danger-form">
+    <button type="submit" class="danger">Delete memory</button>
+  </form>
 </section>
 <section>
   <h2>Revisions</h2>
@@ -38,4 +69,3 @@
   </table>
 </section>
 {% endblock %}
-

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+
 from fastapi import APIRouter, Form, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from fastapi.templating import Jinja2Templates
@@ -55,6 +57,29 @@ def _render(
         _dashboard_context(request, **extra),
         status_code=status_code,
     )
+
+
+def _tags_text(tags_json: str | None) -> str:
+    try:
+        tags = json.loads(tags_json or "[]")
+    except json.JSONDecodeError:
+        return ""
+    if not isinstance(tags, list):
+        return ""
+    return ", ".join(str(tag) for tag in tags)
+
+
+def _secret_rows(
+    *,
+    query: str | None = None,
+    service: str | None = None,
+    host: str | None = None,
+    scope: str | None = None,
+) -> list[dict]:
+    rows = secrets_repo.list_secrets(query=query, service=service, host=host, scope=scope)
+    for row in rows:
+        row["tags_text"] = _tags_text(row.get("tags_json"))
+    return rows
 
 
 @router.get("/setup", response_class=HTMLResponse)
@@ -335,12 +360,15 @@ def memory_detail(request: Request, memory_id: str) -> Response:
     memory = memories.get_memory(memory_id)
     if memory is None:
         return _redirect("/dashboard/memories")
+    memory["tags_text"] = _tags_text(memory.get("tags_json"))
     return _render(
         request,
         "memory_detail.html",
         user=user,
         memory=memory,
+        categories=categories.list_categories(),
         revisions=memories.list_revisions(memory_id),
+        error=None,
     )
 
 
@@ -350,6 +378,84 @@ def archive_memory_from_dashboard(request: Request, memory_id: str) -> RedirectR
     if user is None:
         return _redirect("/login")
     memories.archive_memory(memory_id, changed_by=user["username"])
+    return _redirect("/dashboard/memories")
+
+
+@router.post("/dashboard/memories/{memory_id}/update", response_class=HTMLResponse)
+def update_memory_from_dashboard(
+    request: Request,
+    memory_id: str,
+    category_id: str = Form(...),
+    title: str = Form(...),
+    summary: str = Form(""),
+    body: str = Form(...),
+    tags: str = Form(""),
+    confidence: int = Form(3),
+    auto_prefetch_level: str = Form("normal"),
+) -> Response:
+    user = auth.get_current_dashboard_user(request)
+    if user is None:
+        return _redirect("/login")
+    tag_list = [item.strip() for item in tags.split(",") if item.strip()]
+    try:
+        memory, revision_id = memories.update_memory(
+            memory_id,
+            category_id=category_id,
+            title=title.strip(),
+            summary=summary.strip() or None,
+            body=body.strip(),
+            tags=tag_list,
+            confidence=confidence,
+            auto_prefetch_level=auto_prefetch_level,
+            changed_by=user["username"],
+            change_reason="dashboard edit",
+        )
+    except Exception as exc:
+        memory = memories.get_memory(memory_id)
+        if memory is None:
+            return _redirect("/dashboard/memories")
+        memory["tags_text"] = _tags_text(memory.get("tags_json"))
+        return _render(
+            request,
+            "memory_detail.html",
+            user=user,
+            memory=memory,
+            categories=categories.list_categories(),
+            revisions=memories.list_revisions(memory_id),
+            error=str(exc),
+            status_code=400,
+        )
+    if memory is None:
+        return _redirect("/dashboard/memories")
+    record_event(
+        request_id=get_request_id(request),
+        event_type="memory.update",
+        actor=user["username"],
+        target_type="memory",
+        target_id=memory["id"],
+        action="update",
+        success=True,
+        message=memory["title"],
+        metadata={"revision_id": revision_id},
+    )
+    return _redirect(f"/dashboard/memories/{memory_id}")
+
+
+@router.post("/dashboard/memories/{memory_id}/delete")
+def delete_memory_from_dashboard(request: Request, memory_id: str) -> RedirectResponse:
+    user = auth.get_current_dashboard_user(request)
+    if user is None:
+        return _redirect("/login")
+    deleted = memories.delete_memory(memory_id)
+    record_event(
+        request_id=get_request_id(request),
+        event_type="memory.delete",
+        actor=user["username"],
+        target_type="memory",
+        target_id=memory_id,
+        action="delete",
+        success=deleted,
+    )
     return _redirect("/dashboard/memories")
 
 
@@ -387,7 +493,7 @@ def secrets_page(
         request,
         "secrets.html",
         user=user,
-        secrets=secrets_repo.list_secrets(query=query, service=service, host=host, scope=scope),
+        secrets=_secret_rows(query=query, service=service, host=host, scope=scope),
         query=query or "",
         service=service or "",
         host=host or "",
@@ -430,7 +536,7 @@ def create_secret_from_dashboard(
             request,
             "secrets.html",
             user=user,
-            secrets=secrets_repo.list_secrets(),
+            secrets=_secret_rows(),
             query="",
             service="",
             host="",
@@ -453,6 +559,84 @@ def create_secret_from_dashboard(
     return _redirect("/dashboard/secrets")
 
 
+@router.post("/dashboard/secrets/{id_or_name}/update", response_class=HTMLResponse)
+def update_secret_from_dashboard(
+    request: Request,
+    id_or_name: str,
+    name: str = Form(...),
+    value: str = Form(""),
+    description: str = Form(""),
+    value_type: str = Form("text"),
+    service: str = Form(""),
+    host: str = Form(""),
+    scope: str = Form(""),
+    tags: str = Form(""),
+) -> Response:
+    user = auth.get_current_dashboard_user(request)
+    if user is None:
+        return _redirect("/login")
+    tag_list = [item.strip() for item in tags.split(",") if item.strip()]
+    fields = {
+        "name": name.strip(),
+        "description": description.strip() or None,
+        "value_type": value_type.strip() or "text",
+        "service": service.strip() or None,
+        "host": host.strip() or None,
+        "scope": scope.strip() or None,
+        "tags": tag_list,
+    }
+    if value:
+        fields["value"] = value
+    try:
+        secret = secrets_repo.update_secret(id_or_name, **fields)
+    except Exception as exc:
+        return _render(
+            request,
+            "secrets.html",
+            user=user,
+            secrets=_secret_rows(),
+            query="",
+            service="",
+            host="",
+            scope="",
+            value_types=VALUE_TYPES,
+            revealed=None,
+            error=str(exc),
+            status_code=400,
+        )
+    if secret is None:
+        return _redirect("/dashboard/secrets")
+    record_event(
+        request_id=get_request_id(request),
+        event_type="secret.update",
+        actor=user["username"],
+        target_type="secret",
+        target_id=secret["name"],
+        action="update",
+        success=True,
+        message=secret["name"],
+    )
+    return _redirect("/dashboard/secrets")
+
+
+@router.post("/dashboard/secrets/{id_or_name}/delete")
+def delete_secret_from_dashboard(request: Request, id_or_name: str) -> RedirectResponse:
+    user = auth.get_current_dashboard_user(request)
+    if user is None:
+        return _redirect("/login")
+    deleted = secrets_repo.delete_secret(id_or_name)
+    record_event(
+        request_id=get_request_id(request),
+        event_type="secret.delete",
+        actor=user["username"],
+        target_type="secret",
+        target_id=id_or_name,
+        action="delete",
+        success=deleted,
+    )
+    return _redirect("/dashboard/secrets")
+
+
 @router.post("/dashboard/secrets/{id_or_name}/reveal", response_class=HTMLResponse)
 def reveal_secret_from_dashboard(request: Request, id_or_name: str) -> Response:
     user = auth.get_current_dashboard_user(request)
@@ -465,7 +649,7 @@ def reveal_secret_from_dashboard(request: Request, id_or_name: str) -> Response:
             request,
             "secrets.html",
             user=user,
-            secrets=secrets_repo.list_secrets(),
+            secrets=_secret_rows(),
             query="",
             service="",
             host="",
@@ -491,7 +675,7 @@ def reveal_secret_from_dashboard(request: Request, id_or_name: str) -> Response:
         request,
         "secrets.html",
         user=user,
-        secrets=secrets_repo.list_secrets(),
+        secrets=_secret_rows(),
         query="",
         service="",
         host="",
