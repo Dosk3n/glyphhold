@@ -84,7 +84,7 @@ If the original key is lost, existing stored secret values cannot be recovered.
 Use the lowercase image name:
 
 ```text
-ghcr.io/dosk3n/glyphhold:0.1.0-alpha
+ghcr.io/dosk3n/glyphhold:0.1.0-beta
 ```
 
 Prerelease tags do not move `latest`, so pin the exact version shown in the
