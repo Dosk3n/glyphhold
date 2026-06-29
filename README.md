@@ -51,9 +51,9 @@ Agents remain HTTP clients. Glyph Hold owns the SQLite database.
 
 ## Status
 
-Glyph Hold is currently early alpha software. It is suitable for testing and
-local experimentation, but you should back up the mounted data directory before
-upgrading.
+Glyph Hold is currently beta software. It is suitable for local agent memory
+use, but you should keep backups of the mounted data directory and encryption
+key before upgrading.
 
 For the project contract and compatibility policy, see [PLAN.md](PLAN.md). For
 release notes, see [RELEASE_NOTES.md](RELEASE_NOTES.md).
@@ -74,7 +74,7 @@ docker run -d \
   -v glyphhold-data:/data \
   -e GLYPHHOLD_DB_PATH=/data/glyphhold.sqlite \
   -e GLYPHHOLD_ENCRYPTION_KEY="$GLYPHHOLD_KEY" \
-  ghcr.io/dosk3n/glyphhold:0.1.0-alpha && \
+  ghcr.io/dosk3n/glyphhold:0.1.0-beta && \
 printf 'Save this Glyph Hold encryption key: %s\n' "$GLYPHHOLD_KEY"
 ```
 
@@ -95,7 +95,7 @@ Create a `docker-compose.yml`:
 ```yaml
 services:
   glyphhold:
-    image: ghcr.io/dosk3n/glyphhold:0.1.0-alpha
+    image: ghcr.io/dosk3n/glyphhold:0.1.0-beta
     container_name: glyphhold
     ports:
       - "5995:5995"
@@ -286,14 +286,14 @@ Troubleshooting steps are in [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
 Images are published to GitHub Container Registry:
 
 ```text
-ghcr.io/dosk3n/glyphhold:0.1.0-alpha
+ghcr.io/dosk3n/glyphhold:0.1.0-beta
 ghcr.io/dosk3n/glyphhold:sha-<commit>
 ghcr.io/dosk3n/glyphhold:latest
 ```
 
 Recommended usage:
 
-- Pin an exact version such as `0.1.0-alpha` for predictable deployments.
+- Pin an exact version such as `0.1.0-beta` for predictable deployments.
 - Use `latest` only when you are comfortable receiving newer changes.
 - Back up `/data` before major upgrades.
 
