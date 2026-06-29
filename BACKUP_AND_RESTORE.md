@@ -102,3 +102,7 @@ and confirm that memories, API keys, and secrets metadata are present.
 
 To verify secret restore, reveal one known non-critical secret. If it does not
 decrypt, stop Glyph Hold and restore the original `GLYPHHOLD_ENCRYPTION_KEY`.
+
+Glyph Hold's automated tests cover this restore rule: copied SQLite data files
+with the same encryption key can reveal existing secrets; the same files with a
+different key cannot.

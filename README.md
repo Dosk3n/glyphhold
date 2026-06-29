@@ -74,7 +74,7 @@ docker run -d \
   -v glyphhold-data:/data \
   -e GLYPHHOLD_DB_PATH=/data/glyphhold.sqlite \
   -e GLYPHHOLD_ENCRYPTION_KEY="$GLYPHHOLD_KEY" \
-  ghcr.io/dosk3n/glyphhold:0.1.0-beta && \
+  ghcr.io/dosk3n/glyphhold:0.2.0-beta && \
 printf 'Save this Glyph Hold encryption key: %s\n' "$GLYPHHOLD_KEY"
 ```
 
@@ -95,7 +95,7 @@ Create a `docker-compose.yml`:
 ```yaml
 services:
   glyphhold:
-    image: ghcr.io/dosk3n/glyphhold:0.1.0-beta
+    image: ghcr.io/dosk3n/glyphhold:0.2.0-beta
     container_name: glyphhold
     ports:
       - "5995:5995"
@@ -158,6 +158,18 @@ openssl rand -hex 32
 
 API keys use the `gh_live_` prefix. Glyph Hold stores only a hash and a short
 non-sensitive prefix.
+
+## Reset The Dashboard Password
+
+If you lose the dashboard password, reset it from inside the running container:
+
+```bash
+docker exec -it glyphhold glyphhold-admin reset-password --username admin
+```
+
+The command prompts for a new password without printing it to the terminal. It
+updates only the dashboard admin password. Memories, secrets, API keys,
+categories, and audit history are not removed.
 
 ## Connect An Agent
 
@@ -271,8 +283,9 @@ Before upgrading:
 
 1. Stop the container.
 2. Back up the `data` directory.
-3. Pull or switch to the new image tag.
-4. Start the container again.
+3. Back up the `GLYPHHOLD_ENCRYPTION_KEY` value separately.
+4. Pull or switch to the new image tag.
+5. Start the container again.
 
 Startup applies pending migrations automatically.
 
@@ -286,14 +299,14 @@ Troubleshooting steps are in [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
 Images are published to GitHub Container Registry:
 
 ```text
-ghcr.io/dosk3n/glyphhold:0.1.0-beta
+ghcr.io/dosk3n/glyphhold:0.2.0-beta
 ghcr.io/dosk3n/glyphhold:sha-<commit>
 ghcr.io/dosk3n/glyphhold:latest
 ```
 
 Recommended usage:
 
-- Pin an exact version such as `0.1.0-beta` for predictable deployments.
+- Pin an exact version such as `0.2.0-beta` for predictable deployments.
 - Use `latest` only when you are comfortable receiving newer changes.
 - Back up `/data` before major upgrades.
 
@@ -309,7 +322,3 @@ Prerelease tags do not move `latest`.
 - Agents authenticate with bearer API keys created from the dashboard.
 - Secret values are encrypted at rest when `GLYPHHOLD_ENCRYPTION_KEY` is set.
 - Secret values are not included in memory prefetch.
-
-## For Contributors
-
-Development setup, tests, and release checks are in [CONTRIBUTING.md](CONTRIBUTING.md).

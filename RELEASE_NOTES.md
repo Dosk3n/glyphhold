@@ -1,5 +1,43 @@
 # Glyph Hold Release Notes
 
+## v0.2.0-beta
+
+This beta focuses on operational readiness for people running Glyph Hold as a
+local Docker service.
+
+### Highlights
+
+- Added `glyphhold-admin reset-password` for dashboard password recovery from
+  inside the container.
+- Added tests proving SQLite backup/restore keeps memories and secret metadata,
+  and that secret values require the original `GLYPHHOLD_ENCRYPTION_KEY`.
+- Added safe audit events for missing or invalid agent API-key authentication.
+- Refined the dashboard resource layouts for memories, secrets, and API keys.
+- Updated user docs for password reset, backup, restore, and pinned Docker
+  image usage.
+
+### Docker Images
+
+Expected image tags:
+
+```text
+ghcr.io/dosk3n/glyphhold:0.2.0-beta
+ghcr.io/dosk3n/glyphhold:sha-<commit>
+```
+
+Prerelease tags do not move `latest`.
+
+### Pre-Tag Checklist
+
+- `ruff check .`
+- `pytest`
+- `npm run typecheck`
+- `npm run build`
+- `docker build -t glyphhold:ci .`
+- `docker run --rm -e GLYPHHOLD_DB_PATH=/tmp/glyphhold-ci.sqlite glyphhold:ci python -c "from app.storage.migrations import apply_migrations,current_schema_version; apply_migrations(); assert current_schema_version() >= 4"`
+- Review README, `.env.example`, and Docker Compose example.
+- Create and push tag `v0.2.0-beta`.
+
 ## v0.1.0-beta
 
 Glyph Hold is now in beta. It is intended for local agent memory and secret
