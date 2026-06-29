@@ -159,6 +159,15 @@ function Badge({ children, tone = "neutral" }: { children: React.ReactNode; tone
   return <span className={`badge ${tone}`}>{children}</span>;
 }
 
+function ResultCount({ count, noun }: { count: number; noun: string }) {
+  return (
+    <span className="result-count">
+      {count} {noun}
+      {count === 1 ? "" : "s"}
+    </span>
+  );
+}
+
 function EmptyState({
   title,
   body,
@@ -533,10 +542,64 @@ function MemoriesPage({ navigate }: { navigate: (path: string) => void }) {
         body="Create searchable context that agents can retrieve deterministically."
       />
       {error && <div className="alert">{error}</div>}
-      <section className="work-grid">
-        <form className="panel stack" onSubmit={create}>
+      <section className="resource-grid">
+        <div className="panel resource-panel">
           <div className="panel-heading">
-            <h2>Create memory</h2>
+            <div>
+              <h2>Memory library</h2>
+              <p>Search, review, and open stored context.</p>
+            </div>
+            <ResultCount count={memoriesList.length} noun="memory" />
+          </div>
+          <form className="filters resource-filters" onSubmit={search}>
+            <div className="searchbox">
+              <Search size={16} />
+              <input value={query} placeholder="Search memories" onChange={(e) => setQuery(e.target.value)} />
+            </div>
+            <select value={category} onChange={(e) => setCategory(e.target.value)}>
+              <option value="">All categories</option>
+              {categories.map((item) => (
+                <option key={item.id} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+            <Button icon={Search} tone="secondary">
+              Search
+            </Button>
+          </form>
+          {memoriesList.length === 0 ? (
+            <EmptyState title="No memories found" body="Create a memory or adjust the current search." />
+          ) : (
+            <div className="list-table resource-list">
+              {memoriesList.map((memory) => (
+                <button
+                  key={memory.id}
+                  className="list-row resource-row"
+                  onClick={() => navigate(`/dashboard/memories/${memory.id}`)}
+                >
+                  <div className="row-main">
+                    <strong>{memory.title}</strong>
+                    <span>{memory.summary || memory.body.slice(0, 180)}</span>
+                  </div>
+                  <div className="row-meta">
+                    <Badge>{memory.category_name}</Badge>
+                    <Badge tone={memory.auto_prefetch_level === "pinned" ? "success" : "neutral"}>
+                      {memory.auto_prefetch_level}
+                    </Badge>
+                    <span>{memory.updated_at}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        <form className="panel stack side-panel compact-form" onSubmit={create}>
+          <div className="panel-heading">
+            <div>
+              <h2>Create memory</h2>
+              <p>Add durable context for agents.</p>
+            </div>
           </div>
           <Field label="Category">
             <select
@@ -563,6 +626,7 @@ function MemoriesPage({ navigate }: { navigate: (path: string) => void }) {
           </Field>
           <Field label="Body">
             <textarea
+              className="compact-textarea"
               value={form.body}
               onChange={(e) => setForm({ ...form, body: e.target.value })}
               required
@@ -600,53 +664,6 @@ function MemoriesPage({ navigate }: { navigate: (path: string) => void }) {
           </Field>
           <Button icon={Plus}>Create memory</Button>
         </form>
-        <div className="panel">
-          <div className="panel-heading">
-            <h2>Memory library</h2>
-          </div>
-          <form className="filters" onSubmit={search}>
-            <div className="searchbox">
-              <Search size={16} />
-              <input value={query} placeholder="Search memories" onChange={(e) => setQuery(e.target.value)} />
-            </div>
-            <select value={category} onChange={(e) => setCategory(e.target.value)}>
-              <option value="">All categories</option>
-              {categories.map((item) => (
-                <option key={item.id} value={item.name}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-            <Button icon={Search} tone="secondary">
-              Search
-            </Button>
-          </form>
-          {memoriesList.length === 0 ? (
-            <EmptyState title="No memories found" body="Create a memory or adjust the current search." />
-          ) : (
-            <div className="list-table">
-              {memoriesList.map((memory) => (
-                <button
-                  key={memory.id}
-                  className="list-row"
-                  onClick={() => navigate(`/dashboard/memories/${memory.id}`)}
-                >
-                  <div>
-                    <strong>{memory.title}</strong>
-                    <span>{memory.summary || memory.body.slice(0, 160)}</span>
-                  </div>
-                  <div className="row-meta">
-                    <Badge>{memory.category_name}</Badge>
-                    <Badge tone={memory.auto_prefetch_level === "pinned" ? "success" : "neutral"}>
-                      {memory.auto_prefetch_level}
-                    </Badge>
-                    <span>{memory.updated_at}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
       </section>
     </>
   );
@@ -927,10 +944,86 @@ function SecretsPage() {
       />
       {!enabled && <div className="alert">Secret storage is disabled until an encryption key is configured.</div>}
       {error && <div className="alert">{error}</div>}
-      <section className="work-grid">
-        <form className="panel stack" onSubmit={create}>
+      <section className="resource-grid">
+        <div className="panel resource-panel">
           <div className="panel-heading">
-            <h2>Create secret</h2>
+            <div>
+              <h2>Secret vault</h2>
+              <p>Search metadata and reveal values only when needed.</p>
+            </div>
+            <ResultCount count={secrets.length} noun="secret" />
+          </div>
+          <form
+            className="filters resource-filters secret-filters"
+            onSubmit={(event) => {
+              event.preventDefault();
+              load().catch((err) => setError(err.message));
+            }}
+          >
+            <div className="searchbox">
+              <Search size={16} />
+              <input
+                value={filters.query}
+                placeholder="Search metadata"
+                onChange={(e) => setFilters({ ...filters, query: e.target.value })}
+              />
+            </div>
+            <input placeholder="Service" value={filters.service} onChange={(e) => setFilters({ ...filters, service: e.target.value })} />
+            <input placeholder="Host" value={filters.host} onChange={(e) => setFilters({ ...filters, host: e.target.value })} />
+            <Button tone="secondary" icon={Search}>
+              Filter
+            </Button>
+          </form>
+          {secrets.length === 0 ? (
+            <EmptyState title="No secrets found" body="Create a secret or adjust the current metadata filters." icon={Lock} />
+          ) : (
+            <div className="secret-list">
+              {secrets.map((secret) => (
+                <article className="secret-row" key={secret.id}>
+                  <div className="secret-summary">
+                    <code>{secret.name}</code>
+                    <span>{secret.description || "No description"}</span>
+                  </div>
+                  <dl className="secret-meta">
+                    <div>
+                      <dt>Type</dt>
+                      <dd>{secret.value_type}</dd>
+                    </div>
+                    <div>
+                      <dt>Service</dt>
+                      <dd>{secret.service || "Any"}</dd>
+                    </div>
+                    <div>
+                      <dt>Scope</dt>
+                      <dd>{secret.scope || "Global"}</dd>
+                    </div>
+                    <div>
+                      <dt>Last revealed</dt>
+                      <dd>{secret.last_revealed_at || "Never"}</dd>
+                    </div>
+                  </dl>
+                  <div className="row-actions">
+                    <Button tone="secondary" icon={Eye} onClick={() => reveal(secret)}>
+                      Reveal
+                    </Button>
+                    <Button tone="ghost" icon={Pencil} onClick={() => setEditing(secret)}>
+                      Edit
+                    </Button>
+                    <Button tone="danger" icon={Trash2} onClick={() => setConfirmDelete(secret)}>
+                      Delete
+                    </Button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+        <form className="panel stack side-panel compact-form" onSubmit={create}>
+          <div className="panel-heading">
+            <div>
+              <h2>Create secret</h2>
+              <p>Encrypted values stay out of logs and prefetch.</p>
+            </div>
           </div>
           <Field label="Name">
             <input
@@ -980,77 +1073,6 @@ function SecretsPage() {
             Create secret
           </Button>
         </form>
-        <div className="panel">
-          <div className="panel-heading">
-            <h2>Secret vault</h2>
-          </div>
-          <form
-            className="filters"
-            onSubmit={(event) => {
-              event.preventDefault();
-              load().catch((err) => setError(err.message));
-            }}
-          >
-            <div className="searchbox">
-              <Search size={16} />
-              <input
-                value={filters.query}
-                placeholder="Search metadata"
-                onChange={(e) => setFilters({ ...filters, query: e.target.value })}
-              />
-            </div>
-            <input placeholder="Service" value={filters.service} onChange={(e) => setFilters({ ...filters, service: e.target.value })} />
-            <input placeholder="Host" value={filters.host} onChange={(e) => setFilters({ ...filters, host: e.target.value })} />
-            <Button tone="secondary" icon={Search}>
-              Filter
-            </Button>
-          </form>
-          {secrets.length === 0 ? (
-            <EmptyState title="No secrets found" body="Create a secret or adjust the current metadata filters." icon={Lock} />
-          ) : (
-            <div className="data-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Service</th>
-                    <th>Scope</th>
-                    <th>Last revealed</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {secrets.map((secret) => (
-                    <tr key={secret.id}>
-                      <td>
-                        <code>{secret.name}</code>
-                        <small>{secret.description || ""}</small>
-                      </td>
-                      <td>{secret.value_type}</td>
-                      <td>{secret.service || ""}</td>
-                      <td>{secret.scope || ""}</td>
-                      <td>{secret.last_revealed_at || ""}</td>
-                      <td>
-                        <div className="table-actions">
-                          <Button tone="secondary" icon={Eye} onClick={() => reveal(secret)}>
-                            Reveal
-                          </Button>
-                          <Button tone="ghost" icon={Pencil} onClick={() => setEditing(secret)}>
-                            Edit
-                          </Button>
-                          <Button tone="danger" icon={Trash2} onClick={() => setConfirmDelete(secret)}>
-                            Delete
-                          </Button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
       </section>
       {revealed && (
         <Modal title={revealed.name} onClose={() => setRevealed(null)}>
