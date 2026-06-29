@@ -18,8 +18,7 @@ tags for anything important.
 - Dashboard typed confirmations for destructive memory, secret, and API key
   actions.
 - Encrypted secrets when `GLYPHHOLD_ENCRYPTION_KEY` is configured.
-- Secret names are enforced as uppercase `GLYPHHOLD_*` environment variable
-  names.
+- Secret names are enforced as uppercase environment variable names.
 - Optional secret reveal restrictions for allowed agents and tools.
 - Secret reveal and env bundle endpoints.
 - Conservative memory-only agent prefetch.

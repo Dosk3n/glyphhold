@@ -186,7 +186,7 @@ GET  /api/v1/health
 GET  /api/v1/categories
 POST /api/v1/memories/search
 POST /api/v1/agent/prefetch
-POST /api/v1/secrets/GLYPHHOLD_SERVICE_API_KEY/reveal
+POST /api/v1/secrets/APPLICATION_SERVER_SERVICE_API_KEY/reveal
 POST /api/v1/secrets/env
 ```
 
@@ -246,7 +246,7 @@ error until the key is set.
 
 Secret rules:
 
-- Secret names must be uppercase `GLYPHHOLD_*` environment variable names.
+- Secret names must be uppercase environment variable names.
 - Secret values are encrypted at rest.
 - Secret values are never returned by memory search.
 - Secret values are never included in agent prefetch.
