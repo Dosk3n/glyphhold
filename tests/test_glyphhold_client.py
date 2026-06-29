@@ -95,3 +95,85 @@ def test_client_prefetch_and_secret_reveal_paths(monkeypatch) -> None:
             },
         },
     ]
+
+
+def test_client_memory_and_secret_write_helpers(monkeypatch) -> None:
+    captured = []
+
+    def fake_urlopen(req, timeout):
+        captured.append(
+            {
+                "url": req.full_url,
+                "method": req.get_method(),
+                "body": json.loads(req.data.decode("utf-8")),
+            }
+        )
+        return FakeResponse({"ok": True})
+
+    monkeypatch.setattr("urllib.request.urlopen", fake_urlopen)
+
+    client = GlyphHoldClient("http://localhost:5995", "gh_live_test")
+
+    assert client.create_memory(
+        category_id="cat_projects",
+        title="Project fact",
+        summary="Short summary",
+        body="Longer body",
+        tags=["project"],
+        source="agent",
+        confidence=4,
+        auto_prefetch_level="high",
+    ) == {"ok": True}
+    assert client.create_secret(
+        name="GLYPHHOLD_DEPLOY_TOKEN",
+        value="secret-value",
+        value_type="token",
+        scope="deploy",
+        allowed_agents=["codex"],
+    ) == {"ok": True}
+    assert client.reveal_env(scope="deploy", requesting_agent="codex", purpose="deployment") == {
+        "ok": True
+    }
+
+    assert captured == [
+        {
+            "url": "http://localhost:5995/api/v1/memories",
+            "method": "POST",
+            "body": {
+                "category_id": "cat_projects",
+                "title": "Project fact",
+                "summary": "Short summary",
+                "body": "Longer body",
+                "tags": ["project"],
+                "metadata": {},
+                "source": "agent",
+                "confidence": 4,
+                "auto_prefetch_level": "high",
+            },
+        },
+        {
+            "url": "http://localhost:5995/api/v1/secrets",
+            "method": "POST",
+            "body": {
+                "name": "GLYPHHOLD_DEPLOY_TOKEN",
+                "value": "secret-value",
+                "description": None,
+                "value_type": "token",
+                "service": None,
+                "host": None,
+                "scope": "deploy",
+                "tags": [],
+                "allowed_agents": ["codex"],
+                "allowed_tools": [],
+            },
+        },
+        {
+            "url": "http://localhost:5995/api/v1/secrets/env",
+            "method": "POST",
+            "body": {
+                "scope": "deploy",
+                "requesting_agent": "codex",
+                "purpose": "deployment",
+            },
+        },
+    ]

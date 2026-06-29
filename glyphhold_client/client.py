@@ -62,6 +62,35 @@ class GlyphHoldClient:
     def list_categories(self) -> list[dict[str, Any]]:
         return self._request("GET", "/api/v1/categories")
 
+    def create_memory(
+        self,
+        *,
+        category_id: str,
+        title: str,
+        body: str,
+        summary: str | None = None,
+        tags: list[str] | None = None,
+        metadata: dict[str, Any] | None = None,
+        source: str | None = None,
+        confidence: int = 3,
+        auto_prefetch_level: str = "normal",
+    ) -> dict[str, Any]:
+        return self._request(
+            "POST",
+            "/api/v1/memories",
+            payload={
+                "category_id": category_id,
+                "title": title,
+                "summary": summary,
+                "body": body,
+                "tags": tags or [],
+                "metadata": metadata or {},
+                "source": source,
+                "confidence": confidence,
+                "auto_prefetch_level": auto_prefetch_level,
+            },
+        )
+
     def search_memories(
         self,
         *,
@@ -104,6 +133,37 @@ class GlyphHoldClient:
             },
         )
 
+    def create_secret(
+        self,
+        *,
+        name: str,
+        value: str,
+        description: str | None = None,
+        value_type: str = "text",
+        service: str | None = None,
+        host: str | None = None,
+        scope: str | None = None,
+        tags: list[str] | None = None,
+        allowed_agents: list[str] | None = None,
+        allowed_tools: list[str] | None = None,
+    ) -> dict[str, Any]:
+        return self._request(
+            "POST",
+            "/api/v1/secrets",
+            payload={
+                "name": name,
+                "value": value,
+                "description": description,
+                "value_type": value_type,
+                "service": service,
+                "host": host,
+                "scope": scope,
+                "tags": tags or [],
+                "allowed_agents": allowed_agents or [],
+                "allowed_tools": allowed_tools or [],
+            },
+        )
+
     def reveal_secret(
         self,
         name: str,
@@ -118,6 +178,23 @@ class GlyphHoldClient:
             payload={
                 "requesting_agent": requesting_agent,
                 "tool": tool,
+                "purpose": purpose,
+            },
+        )
+
+    def reveal_env(
+        self,
+        *,
+        scope: str | None = None,
+        requesting_agent: str | None = None,
+        purpose: str | None = None,
+    ) -> dict[str, Any]:
+        return self._request(
+            "POST",
+            "/api/v1/secrets/env",
+            payload={
+                "scope": scope,
+                "requesting_agent": requesting_agent,
                 "purpose": purpose,
             },
         )
