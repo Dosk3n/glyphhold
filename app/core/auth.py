@@ -13,7 +13,9 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 
 from app.config import settings
+from app.core.request_context import get_request_id
 from app.storage.repositories import auth as auth_repo
+from app.storage.repositories.events import record_event
 from app.storage.repositories.settings import get_session_secret
 
 password_hasher = PasswordHasher()
@@ -98,13 +100,28 @@ def require_dashboard_user(request: Request) -> dict:
 
 
 def get_api_principal(
+    request: Request,
     credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(bearer_scheme)],
 ) -> ApiPrincipal:
     if credentials is None:
+        record_event(
+            request_id=get_request_id(request),
+            event_type="api_key.auth_failed",
+            action="authenticate",
+            success=False,
+            message="Missing bearer API key",
+        )
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Missing bearer API key")
 
     record = auth_repo.get_api_key_by_hash(hash_api_key(credentials.credentials))
     if record is None:
+        record_event(
+            request_id=get_request_id(request),
+            event_type="api_key.auth_failed",
+            action="authenticate",
+            success=False,
+            message="Invalid bearer API key",
+        )
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid API key")
 
     auth_repo.touch_api_key(record["id"])

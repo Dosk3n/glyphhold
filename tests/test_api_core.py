@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from fastapi.testclient import TestClient
 
+from app.storage.repositories import events
 from tests.conftest import make_api_key_headers
 
 
@@ -40,6 +41,24 @@ def test_api_key_scope_enforcement(client: TestClient) -> None:
         },
     )
     assert create_response.status_code == 403
+
+
+def test_api_key_auth_failures_are_logged_safely(client: TestClient) -> None:
+    missing_response = client.get("/api/v1/categories")
+    assert missing_response.status_code == 401
+
+    invalid_response = client.get(
+        "/api/v1/categories",
+        headers={"Authorization": "Bearer gh_live_DO_NOT_LOG_THIS_SECRET_VALUE"},
+    )
+    assert invalid_response.status_code == 401
+
+    auth_events = events.list_events(event_type="api_key.auth_failed", limit=10)
+    assert len(auth_events) == 2
+    rendered_events = "\n".join(str(event) for event in auth_events)
+    assert "Missing bearer API key" in rendered_events
+    assert "Invalid bearer API key" in rendered_events
+    assert "gh_live_DO_NOT_LOG_THIS_SECRET_VALUE" not in rendered_events
 
 
 def test_memory_lifecycle_search_prefetch_and_revisions(client: TestClient) -> None:
