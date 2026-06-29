@@ -1221,10 +1221,77 @@ function ApiKeysPage() {
           </Button>
         </div>
       )}
-      <section className="work-grid">
-        <form className="panel stack" onSubmit={create}>
+      <section className="resource-grid">
+        <div className="panel resource-panel">
           <div className="panel-heading">
-            <h2>Create key</h2>
+            <div>
+              <h2>Existing keys</h2>
+              <p>Review active and disabled agent credentials.</p>
+            </div>
+            <ResultCount count={keys.length} noun="key" />
+          </div>
+          {keys.length === 0 ? (
+            <EmptyState title="No API keys" body="Create a key before connecting an agent." icon={KeyRound} />
+          ) : (
+            <div className="api-key-list">
+              {keys.map((key) => (
+                <article className={`api-key-row ${key.enabled ? "" : "disabled"}`} key={key.id}>
+                  <div className="api-key-main">
+                    <div>
+                      <strong>{key.name}</strong>
+                      <span>{key.description || "No description"}</span>
+                    </div>
+                    <Badge tone={key.enabled ? "success" : "danger"}>
+                      {key.enabled ? "enabled" : "disabled"}
+                    </Badge>
+                  </div>
+                  <dl className="api-key-meta">
+                    <div>
+                      <dt>Actor</dt>
+                      <dd>{key.actor}</dd>
+                    </div>
+                    <div>
+                      <dt>Prefix</dt>
+                      <dd>
+                        <code>{key.key_prefix}</code>
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Created</dt>
+                      <dd>{key.created_at}</dd>
+                    </div>
+                    <div>
+                      <dt>Last used</dt>
+                      <dd>{key.last_used_at || "Never"}</dd>
+                    </div>
+                  </dl>
+                  <div className="tag-row">
+                    {key.scopes.map((scope) => (
+                      <Badge key={scope}>{scope}</Badge>
+                    ))}
+                  </div>
+                  <div className="row-actions">
+                    {key.enabled ? (
+                      <Button tone="danger" onClick={() => setConfirmDisable(key)}>
+                        Disable
+                      </Button>
+                    ) : (
+                      <Button tone="secondary" onClick={() => enable(key)}>
+                        Enable
+                      </Button>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+        <form className="panel stack side-panel compact-form" onSubmit={create}>
+          <div className="panel-heading">
+            <div>
+              <h2>Create key</h2>
+              <p>Use scoped keys for agents and integrations.</p>
+            </div>
           </div>
           <Field label="Name">
             <input value={form.name} placeholder="Local agent" onChange={(e) => setForm({ ...form, name: e.target.value })} required />
@@ -1249,63 +1316,6 @@ function ApiKeysPage() {
           </div>
           <Button icon={Plus}>Create API key</Button>
         </form>
-        <div className="panel">
-          <div className="panel-heading">
-            <h2>Existing keys</h2>
-          </div>
-          {keys.length === 0 ? (
-            <EmptyState title="No API keys" body="Create a key before connecting an agent." icon={KeyRound} />
-          ) : (
-            <div className="data-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Actor</th>
-                    <th>Prefix</th>
-                    <th>Status</th>
-                    <th>Scopes</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {keys.map((key) => (
-                    <tr key={key.id}>
-                      <td>{key.name}</td>
-                      <td>{key.actor}</td>
-                      <td>
-                        <code>{key.key_prefix}</code>
-                      </td>
-                      <td>
-                        <Badge tone={key.enabled ? "success" : "danger"}>
-                          {key.enabled ? "enabled" : "disabled"}
-                        </Badge>
-                      </td>
-                      <td>
-                        <div className="tag-row">
-                          {key.scopes.map((scope) => (
-                            <Badge key={scope}>{scope}</Badge>
-                          ))}
-                        </div>
-                      </td>
-                      <td>
-                        {key.enabled ? (
-                          <Button tone="danger" onClick={() => setConfirmDisable(key)}>
-                            Disable
-                          </Button>
-                        ) : (
-                          <Button tone="secondary" onClick={() => enable(key)}>
-                            Enable
-                          </Button>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
       </section>
       {confirmDisable && (
         <ConfirmModal
