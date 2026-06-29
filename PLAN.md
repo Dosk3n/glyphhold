@@ -56,10 +56,10 @@ mapping is `5995:5995`, so users open `http://localhost:5995`.
 Expected image names:
 
 ```text
-ghcr.io/Dosk3n/glyphhold:latest
-ghcr.io/Dosk3n/glyphhold:0.1
-ghcr.io/Dosk3n/glyphhold:0.1.0
-ghcr.io/Dosk3n/glyphhold:sha-<commit>
+ghcr.io/dosk3n/glyphhold:latest
+ghcr.io/dosk3n/glyphhold:0.1
+ghcr.io/dosk3n/glyphhold:0.1.0
+ghcr.io/dosk3n/glyphhold:sha-<commit>
 ```
 
 Recommended user behavior:
@@ -610,7 +610,7 @@ directly.
 - API keys are created from the dashboard and stored as hashes.
 - Users may create one shared API key or one key per agent.
 - Docker publishing uses GitHub Container Registry through GitHub Actions.
-- GHCR image name is `ghcr.io/Dosk3n/glyphhold`.
+- GHCR image name is `ghcr.io/dosk3n/glyphhold`.
 - Project license is MIT.
 - Dashboard sessions use signed HTTP-only cookies with a 14-day timeout.
 - API keys use the `gh_live_` prefix.
