@@ -273,7 +273,7 @@ code {
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(210px, 1.18fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(240px, 1.18fr);
   gap: 18px;
   margin-bottom: 24px;
 }
@@ -324,6 +324,14 @@ code {
   position: relative;
   align-self: center;
   color: #f3f7fb;
+}
+
+.status-card {
+  cursor: default;
+}
+
+.status-card:hover {
+  border-color: var(--line);
 }
 
 .runtime-card {

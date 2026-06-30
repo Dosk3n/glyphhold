@@ -403,7 +403,6 @@ function OverviewPage({ navigate }: { navigate: (path: string) => void }) {
     { label: "Memories", value: data.memory_count, icon: BookOpen, path: "/dashboard/memories" },
     { label: "Secrets", value: data.secret_count, icon: Lock, path: "/dashboard/secrets" },
     { label: "API Keys", value: data.api_key_count, icon: KeyRound, path: "/dashboard/api-keys" },
-    { label: "Schema", value: data.schema_version, icon: Database, path: "/dashboard/activity" },
   ];
 
   return (
@@ -425,7 +424,7 @@ function OverviewPage({ navigate }: { navigate: (path: string) => void }) {
             </button>
           );
         })}
-        <button className="stat-card runtime-card" onClick={() => navigate("/dashboard/activity")}>
+        <div className="stat-card runtime-card status-card">
           <Activity size={22} />
           <span>Runtime</span>
           <dl className="runtime-list">
@@ -450,8 +449,7 @@ function OverviewPage({ navigate }: { navigate: (path: string) => void }) {
               </dd>
             </div>
           </dl>
-          <ChevronRight size={18} />
-        </button>
+        </div>
       </section>
       <section className="panel activity-panel">
           <div className="panel-heading">
