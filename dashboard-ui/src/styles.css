@@ -631,6 +631,22 @@ textarea:focus {
   min-width: 0;
 }
 
+.resource-row .row-main strong,
+.resource-row .row-main span {
+  display: -webkit-box;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+}
+
+.resource-row .row-main strong {
+  -webkit-line-clamp: 2;
+}
+
+.resource-row .row-main span {
+  -webkit-line-clamp: 2;
+}
+
 .list-row:hover {
   border-color: rgba(90, 168, 255, 0.38);
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.24);
@@ -744,6 +760,7 @@ th {
 .secret-list {
   display: grid;
   gap: 10px;
+  min-width: 0;
 }
 
 .secret-row {
@@ -751,6 +768,9 @@ th {
   grid-template-columns: minmax(220px, 0.9fr) minmax(360px, 1.2fr) auto;
   gap: 18px;
   align-items: center;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   padding: 15px;
   background: rgba(8, 14, 23, 0.5);
   border: 1px solid var(--line);
@@ -765,23 +785,36 @@ th {
 .secret-summary {
   display: grid;
   gap: 5px;
+  width: 100%;
   min-width: 0;
 }
 
 .secret-summary code {
+  display: block;
+  overflow: hidden;
   font-size: 13px;
   font-weight: 800;
+  overflow-wrap: anywhere;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .secret-summary span {
+  display: -webkit-box;
+  overflow: hidden;
   color: var(--muted);
   font-size: 13px;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .secret-meta {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
+  width: 100%;
+  min-width: 0;
   margin: 0;
 }
 
@@ -801,6 +834,7 @@ th {
   margin: 0;
   overflow: hidden;
   font-size: 13px;
+  overflow-wrap: anywhere;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -1098,6 +1132,8 @@ th {
 
   .row-actions {
     justify-content: stretch;
+    flex-wrap: wrap;
+    min-width: 0;
   }
 
   .row-actions .btn {
