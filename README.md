@@ -6,6 +6,11 @@ It gives your agents a shared place to store durable notes, decisions, project
 context, procedures, preferences, and operational secrets without sending that
 data to a hosted AI service.
 
+> **Beta live test:** As of 30 June 2026, Glyph Hold is being used by the
+> maintainer in a live personal environment for 1 to 2 weeks of real-world beta
+> testing. The next version will be shaped by issues and workflow friction found
+> during that period.
+
 Open the dashboard, create memories and secrets, create an API key, then point
 your agents at Glyph Hold.
 
