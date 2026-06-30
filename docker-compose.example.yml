@@ -1,6 +1,6 @@
 services:
   glyphhold:
-    image: ghcr.io/dosk3n/glyphhold:0.2.0-beta
+    image: ghcr.io/dosk3n/glyphhold:latest
     container_name: glyphhold
     ports:
       - "5995:5995"

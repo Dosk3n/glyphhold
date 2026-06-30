@@ -1,5 +1,46 @@
 # Glyph Hold Release Notes
 
+## v1.0.0
+
+Glyph Hold v1.0.0 is the first stable release for self-hosted agent memory and
+secrets.
+
+### Highlights
+
+- Promoted the Docker image and runtime version to `1.0.0`.
+- Redesigned the dashboard overview with a darker, wider, more polished layout.
+- Simplified overview status cards by keeping user-facing counts and runtime
+  state visible while removing internal schema details.
+- Improved memory and secret list rows so long titles, descriptions, metadata,
+  and unbroken identifiers truncate cleanly on desktop and mobile.
+- Kept the core v1 contract focused on local SQLite storage, deterministic
+  search, encrypted secrets, dashboard setup, API keys, and the `/api/v1` HTTP
+  API.
+
+### Docker Images
+
+Expected image tags:
+
+```text
+ghcr.io/dosk3n/glyphhold:1.0.0
+ghcr.io/dosk3n/glyphhold:1.0
+ghcr.io/dosk3n/glyphhold:sha-<commit>
+ghcr.io/dosk3n/glyphhold:latest
+```
+
+The `latest` tag moves to this release.
+
+### Pre-Tag Checklist
+
+- `ruff check .`
+- `pytest`
+- `npm run typecheck`
+- `npm run build`
+- `docker build -t glyphhold:ci .`
+- `docker run --rm -e GLYPHHOLD_DB_PATH=/tmp/glyphhold-ci.sqlite glyphhold:ci python -c "from app.storage.migrations import apply_migrations,current_schema_version; apply_migrations(); assert current_schema_version() >= 4"`
+- Review README and Docker Compose example.
+- Create and push tag `v1.0.0`.
+
 ## v0.2.0-beta
 
 This beta focuses on operational readiness for people running Glyph Hold as a

@@ -16,7 +16,7 @@ def test_dockerfile_has_runtime_healthcheck() -> None:
 def test_compose_example_uses_published_image_and_healthcheck() -> None:
     compose = (ROOT / "docker-compose.example.yml").read_text()
 
-    assert "ghcr.io/dosk3n/glyphhold:0.2.0-beta" in compose
+    assert "ghcr.io/dosk3n/glyphhold:latest" in compose
     assert "ghcr.io/Dosk3n" not in compose
     assert "healthcheck:" in compose
     assert "127.0.0.1:5995/api/v1/health" in compose
