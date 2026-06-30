@@ -402,7 +402,7 @@ function OverviewPage({ navigate }: { navigate: (path: string) => void }) {
   const stats = [
     { label: "Memories", value: data.memory_count, icon: BookOpen, path: "/dashboard/memories" },
     { label: "Secrets", value: data.secret_count, icon: Lock, path: "/dashboard/secrets" },
-    { label: "API keys", value: data.api_key_count, icon: KeyRound, path: "/dashboard/api-keys" },
+    { label: "API Keys", value: data.api_key_count, icon: KeyRound, path: "/dashboard/api-keys" },
     { label: "Schema", value: data.schema_version, icon: Database, path: "/dashboard/activity" },
   ];
 
@@ -425,38 +425,42 @@ function OverviewPage({ navigate }: { navigate: (path: string) => void }) {
             </button>
           );
         })}
-      </section>
-      <section className="two-column">
-        <div className="panel">
-          <div className="panel-heading">
-            <h2>Runtime</h2>
-          </div>
-          <dl className="detail-grid">
-            <dt>Version</dt>
-            <dd>{data.version}</dd>
-            <dt>Database</dt>
-            <dd>
-              <Badge tone={data.database_status === "ok" ? "success" : "danger"}>
-                {data.database_status}
-              </Badge>
-            </dd>
-            <dt>Secrets</dt>
-            <dd>
-              <Badge tone={data.secrets_enabled ? "success" : "warning"}>
-                {data.secrets_enabled ? "enabled" : "disabled"}
-              </Badge>
-            </dd>
+        <button className="stat-card runtime-card" onClick={() => navigate("/dashboard/activity")}>
+          <Activity size={22} />
+          <span>Runtime</span>
+          <dl className="runtime-list">
+            <div>
+              <dt>Version</dt>
+              <dd>{data.version}</dd>
+            </div>
+            <div>
+              <dt>Database</dt>
+              <dd>
+                <Badge tone={data.database_status === "ok" ? "success" : "danger"}>
+                  {data.database_status}
+                </Badge>
+              </dd>
+            </div>
+            <div>
+              <dt>Secrets</dt>
+              <dd>
+                <Badge tone={data.secrets_enabled ? "success" : "warning"}>
+                  {data.secrets_enabled ? "enabled" : "disabled"}
+                </Badge>
+              </dd>
+            </div>
           </dl>
-        </div>
-        <div className="panel">
+          <ChevronRight size={18} />
+        </button>
+      </section>
+      <section className="panel activity-panel">
           <div className="panel-heading">
-            <h2>Recent activity</h2>
+            <h2>Recent Activity</h2>
             <Button tone="ghost" onClick={() => navigate("/dashboard/activity")}>
               View all
             </Button>
           </div>
           <EventList events={data.recent_events || []} compact />
-        </div>
       </section>
     </>
   );
