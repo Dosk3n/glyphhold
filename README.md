@@ -6,11 +6,6 @@ It gives your agents a shared place to store durable notes, decisions, project
 context, procedures, preferences, and operational secrets without sending that
 data to a hosted AI service.
 
-> **Beta live test:** As of 30 June 2026, Glyph Hold is being used by the
-> maintainer in a live personal environment for 1 to 2 weeks of real-world beta
-> testing. The next version will be shaped by issues and workflow friction found
-> during that period.
-
 Open the dashboard, create memories and secrets, create an API key, then point
 your agents at Glyph Hold.
 
@@ -56,9 +51,8 @@ Agents remain HTTP clients. Glyph Hold owns the SQLite database.
 
 ## Status
 
-Glyph Hold is currently beta software. It is suitable for local agent memory
-use, but you should keep backups of the mounted data directory and encryption
-key before upgrading.
+Glyph Hold is suitable for self-hosted agent memory and secrets. Keep backups of
+the mounted data directory and encryption key before upgrading.
 
 For the project contract and compatibility policy, see [PLAN.md](PLAN.md). For
 release notes, see [RELEASE_NOTES.md](RELEASE_NOTES.md).
@@ -79,7 +73,7 @@ docker run -d \
   -v glyphhold-data:/data \
   -e GLYPHHOLD_DB_PATH=/data/glyphhold.sqlite \
   -e GLYPHHOLD_ENCRYPTION_KEY="$GLYPHHOLD_KEY" \
-  ghcr.io/dosk3n/glyphhold:0.2.0-beta && \
+  ghcr.io/dosk3n/glyphhold:latest && \
 printf 'Save this Glyph Hold encryption key: %s\n' "$GLYPHHOLD_KEY"
 ```
 
@@ -100,7 +94,7 @@ Create a `docker-compose.yml`:
 ```yaml
 services:
   glyphhold:
-    image: ghcr.io/dosk3n/glyphhold:0.2.0-beta
+    image: ghcr.io/dosk3n/glyphhold:latest
     container_name: glyphhold
     ports:
       - "5995:5995"
@@ -304,18 +298,17 @@ Troubleshooting steps are in [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
 Images are published to GitHub Container Registry:
 
 ```text
-ghcr.io/dosk3n/glyphhold:0.2.0-beta
+ghcr.io/dosk3n/glyphhold:1.0.0
+ghcr.io/dosk3n/glyphhold:1.0
 ghcr.io/dosk3n/glyphhold:sha-<commit>
 ghcr.io/dosk3n/glyphhold:latest
 ```
 
 Recommended usage:
 
-- Pin an exact version such as `0.2.0-beta` for predictable deployments.
+- Pin an exact version such as `1.0.0` for predictable deployments.
 - Use `latest` only when you are comfortable receiving newer changes.
 - Back up `/data` before major upgrades.
-
-Prerelease tags do not move `latest`.
 
 ## Security Notes
 
