@@ -765,13 +765,13 @@ th {
 
 .secret-row {
   display: grid;
-  grid-template-columns: minmax(220px, 0.8fr) minmax(360px, 1.1fr) minmax(110px, 0.25fr) auto;
-  gap: 18px;
+  grid-template-columns: minmax(190px, 0.8fr) minmax(280px, 1.1fr) minmax(100px, auto) minmax(296px, auto);
+  gap: 12px;
   align-items: center;
   width: 100%;
   min-width: 0;
   max-width: 100%;
-  padding: 15px;
+  padding: 14px;
   background: rgba(8, 14, 23, 0.5);
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -843,6 +843,28 @@ th {
   display: flex;
   justify-content: flex-start;
   min-width: 0;
+}
+
+.secret-row .row-actions {
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  flex: initial;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  justify-self: stretch;
+}
+
+.secret-row .row-actions .btn {
+  min-height: 34px;
+  padding: 7px 10px;
+  border-radius: 9px;
+  font-size: 14px;
+}
+
+.secret-row .row-actions .btn svg {
+  width: 14px;
+  height: 14px;
 }
 
 .access-restrictions {
@@ -1050,6 +1072,29 @@ th {
 @media (max-width: 1320px) {
   .stats-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1500px) {
+  .resource-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .side-panel {
+    position: static;
+  }
+
+  .resource-panel {
+    min-height: 0;
+  }
+
+  .secret-row {
+    grid-template-columns: minmax(190px, 0.8fr) minmax(280px, 1.1fr) minmax(100px, auto) minmax(296px, auto);
+  }
+
+  .secret-row .row-actions {
+    grid-column: auto;
+    justify-content: flex-end;
   }
 }
 
