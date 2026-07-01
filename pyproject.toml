@@ -1,6 +1,6 @@
 [project]
 name = "glyphhold"
-version = "1.0.0"
+version = "1.0.1"
 description = "A local, non-LLM memory and secrets service for agents."
 readme = "README.md"
 requires-python = ">=3.12"
