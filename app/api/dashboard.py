@@ -733,7 +733,7 @@ def reveal_secret_from_dashboard(request: Request, id_or_name: str) -> Response:
     if user is None:
         return _redirect("/login")
     try:
-        secret, value = secrets_repo.reveal_secret(id_or_name)
+        secret, value = secrets_repo.reveal_secret(id_or_name, bypass_restrictions=True)
     except Exception as exc:
         return _render_secrets_page(
             request,

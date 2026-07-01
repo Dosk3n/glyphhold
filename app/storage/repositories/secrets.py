@@ -207,11 +207,13 @@ def reveal_secret(
     *,
     requesting_agent: str | None = None,
     tool: str | None = None,
+    bypass_restrictions: bool = False,
 ) -> tuple[dict[str, Any] | None, str | None]:
     secret = _get_secret_with_value(id_or_name)
     if secret is None:
         return None, None
-    _check_reveal_allowed(secret, requesting_agent=requesting_agent, tool=tool)
+    if not bypass_restrictions:
+        _check_reveal_allowed(secret, requesting_agent=requesting_agent, tool=tool)
     value = decrypt_secret(secret["encrypted_value"])
     now = utc_now()
     with connection() as conn:

@@ -562,7 +562,7 @@ def delete_secret(request: Request, id_or_name: str, payload: ConfirmNameRequest
 def reveal_secret(request: Request, id_or_name: str) -> dict:
     user = _dashboard_user(request)
     try:
-        secret, value = secrets_repo.reveal_secret(id_or_name)
+        secret, value = secrets_repo.reveal_secret(id_or_name, bypass_restrictions=True)
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     if secret is None:
