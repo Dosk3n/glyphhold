@@ -610,11 +610,15 @@ def create_secret_from_dashboard(
     host: str = Form(""),
     scope: str = Form(""),
     tags: str = Form(""),
+    allowed_agents: str = Form(""),
+    allowed_tools: str = Form(""),
 ) -> Response:
     user = auth.get_current_dashboard_user(request)
     if user is None:
         return _redirect("/login")
     tag_list = [item.strip() for item in tags.split(",") if item.strip()]
+    allowed_agent_list = [item.strip() for item in allowed_agents.split(",") if item.strip()]
+    allowed_tool_list = [item.strip() for item in allowed_tools.split(",") if item.strip()]
     try:
         secret = secrets_repo.create_secret(
             name=name.strip(),
@@ -625,6 +629,8 @@ def create_secret_from_dashboard(
             host=host.strip() or None,
             scope=scope.strip() or None,
             tags=tag_list,
+            allowed_agents=allowed_agent_list,
+            allowed_tools=allowed_tool_list,
         )
     except Exception as exc:
         return _render_secrets_page(
@@ -657,11 +663,15 @@ def update_secret_from_dashboard(
     host: str = Form(""),
     scope: str = Form(""),
     tags: str = Form(""),
+    allowed_agents: str = Form(""),
+    allowed_tools: str = Form(""),
 ) -> Response:
     user = auth.get_current_dashboard_user(request)
     if user is None:
         return _redirect("/login")
     tag_list = [item.strip() for item in tags.split(",") if item.strip()]
+    allowed_agent_list = [item.strip() for item in allowed_agents.split(",") if item.strip()]
+    allowed_tool_list = [item.strip() for item in allowed_tools.split(",") if item.strip()]
     fields = {
         "name": name.strip(),
         "description": description.strip() or None,
@@ -670,6 +680,8 @@ def update_secret_from_dashboard(
         "host": host.strip() or None,
         "scope": scope.strip() or None,
         "tags": tag_list,
+        "allowed_agents": allowed_agent_list,
+        "allowed_tools": allowed_tool_list,
     }
     if value:
         fields["value"] = value

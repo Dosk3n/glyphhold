@@ -163,6 +163,8 @@ def test_dashboard_secret_edit_reveal_and_delete(secrets_client: TestClient) -> 
             "host": "local",
             "scope": "tests",
             "tags": ["dashboard", "token"],
+            "allowed_agents": ["codex"],
+            "allowed_tools": ["glyphhold_mcp"],
         },
     )
     assert create_response.status_code == 201
@@ -174,6 +176,10 @@ def test_dashboard_secret_edit_reveal_and_delete(secrets_client: TestClient) -> 
     assert list_response.status_code == 200
     assert "original-secret-value" not in list_response.text
     assert list_response.json()["secrets"][0]["name"] == "DASHBOARD_TOKEN"
+    assert list_response.json()["secrets"][0]["allowed_agents"] == ["codex"]
+    assert list_response.json()["secrets"][0]["allowed_agents_text"] == "codex"
+    assert list_response.json()["secrets"][0]["allowed_tools"] == ["glyphhold_mcp"]
+    assert list_response.json()["secrets"][0]["allowed_tools_text"] == "glyphhold_mcp"
 
     update_response = secrets_client.patch(
         f"/dashboard/api/secrets/{created['id']}",
@@ -186,10 +192,14 @@ def test_dashboard_secret_edit_reveal_and_delete(secrets_client: TestClient) -> 
             "host": "local",
             "scope": "beta",
             "tags": ["dashboard", "updated"],
+            "allowed_agents": [],
+            "allowed_tools": [],
         },
     )
     assert update_response.status_code == 200
     assert "updated-secret-value" not in update_response.text
+    assert update_response.json()["allowed_agents"] == []
+    assert update_response.json()["allowed_tools"] == []
 
     reveal_response = secrets_client.post("/dashboard/api/secrets/DASHBOARD_TOKEN_RENAMED/reveal")
     assert reveal_response.status_code == 200
