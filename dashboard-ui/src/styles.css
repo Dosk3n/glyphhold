@@ -765,7 +765,7 @@ th {
 
 .secret-row {
   display: grid;
-  grid-template-columns: minmax(220px, 0.9fr) minmax(360px, 1.2fr) auto;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(360px, 1.1fr) minmax(110px, 0.25fr) auto;
   gap: 18px;
   align-items: center;
   width: 100%;
@@ -837,6 +837,32 @@ th {
   overflow-wrap: anywhere;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.restriction-summary {
+  display: flex;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+.access-restrictions {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(175, 190, 143, 0.1);
+}
+
+.access-restrictions strong {
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.access-restrictions p {
+  margin: -4px 0 2px;
+  color: var(--muted);
+  font-size: 13px;
 }
 
 .api-key-list {

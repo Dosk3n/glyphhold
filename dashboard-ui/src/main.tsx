@@ -64,6 +64,10 @@ type Secret = {
   scope?: string | null;
   tags?: string[];
   tags_text?: string;
+  allowed_agents?: string[];
+  allowed_agents_text?: string;
+  allowed_tools?: string[];
+  allowed_tools_text?: string;
   updated_at: string;
   last_revealed_at?: string | null;
 };
@@ -118,6 +122,10 @@ function splitTags(value: string): string[] {
     .split(",")
     .map((item) => item.trim())
     .filter(Boolean);
+}
+
+function joinList(value?: string[] | null): string {
+  return (value || []).join(", ");
 }
 
 function Field({
@@ -870,6 +878,8 @@ function SecretsPage() {
     host: "",
     scope: "",
     tags: "",
+    allowed_agents: "",
+    allowed_tools: "",
   });
 
   async function load() {
@@ -892,9 +902,22 @@ function SecretsPage() {
     try {
       await api("/dashboard/api/secrets", {
         method: "POST",
-        body: JSON.stringify({ ...form, tags: splitTags(form.tags) }),
+        body: JSON.stringify({
+          ...form,
+          tags: splitTags(form.tags),
+          allowed_agents: splitTags(form.allowed_agents),
+          allowed_tools: splitTags(form.allowed_tools),
+        }),
       });
-      setForm({ ...form, name: "", value: "", description: "", tags: "" });
+      setForm({
+        ...form,
+        name: "",
+        value: "",
+        description: "",
+        tags: "",
+        allowed_agents: "",
+        allowed_tools: "",
+      });
       await load();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Create failed");
@@ -904,27 +927,39 @@ function SecretsPage() {
   async function saveEdit(event: FormEvent) {
     event.preventDefault();
     if (!editing) return;
+    setError("");
     const data = new FormData(event.target as HTMLFormElement);
-    await api(`/dashboard/api/secrets/${editing.id}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        name: data.get("name"),
-        value: data.get("value") || null,
-        description: data.get("description") || null,
-        value_type: data.get("value_type"),
-        service: data.get("service") || null,
-        host: data.get("host") || null,
-        scope: data.get("scope") || null,
-        tags: splitTags(String(data.get("tags") || "")),
-      }),
-    });
-    setEditing(null);
-    await load();
+    try {
+      await api(`/dashboard/api/secrets/${editing.id}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          name: data.get("name"),
+          value: data.get("value") || null,
+          description: data.get("description") || null,
+          value_type: data.get("value_type"),
+          service: data.get("service") || null,
+          host: data.get("host") || null,
+          scope: data.get("scope") || null,
+          tags: splitTags(String(data.get("tags") || "")),
+          allowed_agents: splitTags(String(data.get("allowed_agents") || "")),
+          allowed_tools: splitTags(String(data.get("allowed_tools") || "")),
+        }),
+      });
+      setEditing(null);
+      await load();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Save failed");
+    }
   }
 
   async function reveal(secret: Secret) {
-    setRevealed(await api(`/dashboard/api/secrets/${secret.id}/reveal`, { method: "POST" }));
-    await load();
+    setError("");
+    try {
+      setRevealed(await api(`/dashboard/api/secrets/${secret.id}/reveal`, { method: "POST" }));
+      await load();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Reveal failed");
+    }
   }
 
   async function remove(confirmName: string) {
@@ -1004,6 +1039,11 @@ function SecretsPage() {
                       <dd>{secret.last_revealed_at || "Never"}</dd>
                     </div>
                   </dl>
+                  <div className="restriction-summary">
+                    <Badge tone={(secret.allowed_agents?.length || secret.allowed_tools?.length) ? "warning" : "success"}>
+                      {(secret.allowed_agents?.length || secret.allowed_tools?.length) ? "restricted" : "unrestricted"}
+                    </Badge>
+                  </div>
                   <div className="row-actions">
                     <Button tone="secondary" icon={Eye} onClick={() => reveal(secret)}>
                       Reveal
@@ -1071,6 +1111,24 @@ function SecretsPage() {
           <Field label="Tags">
             <input value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })} />
           </Field>
+          <div className="access-restrictions">
+            <strong>Agent reveal restrictions</strong>
+            <p>Leave these empty to let any agent with reveal scope request this secret.</p>
+            <Field label="Allowed agents" hint="Optional, comma-separated agent names.">
+              <input
+                value={form.allowed_agents}
+                placeholder="codex, hermes"
+                onChange={(e) => setForm({ ...form, allowed_agents: e.target.value })}
+              />
+            </Field>
+            <Field label="Allowed tools" hint="Optional, comma-separated tool names.">
+              <input
+                value={form.allowed_tools}
+                placeholder="glyphhold_mcp"
+                onChange={(e) => setForm({ ...form, allowed_tools: e.target.value })}
+              />
+            </Field>
+          </div>
           <Button icon={Plus} disabled={!enabled}>
             Create secret
           </Button>
@@ -1133,6 +1191,16 @@ function SecretsPage() {
             <Field label="Tags">
               <input name="tags" defaultValue={editing.tags_text || ""} />
             </Field>
+            <div className="access-restrictions">
+              <strong>Agent reveal restrictions</strong>
+              <p>Leave these empty to let any agent with reveal scope request this secret.</p>
+              <Field label="Allowed agents" hint="Optional, comma-separated agent names.">
+                <input name="allowed_agents" defaultValue={editing.allowed_agents_text || joinList(editing.allowed_agents)} />
+              </Field>
+              <Field label="Allowed tools" hint="Optional, comma-separated tool names.">
+                <input name="allowed_tools" defaultValue={editing.allowed_tools_text || joinList(editing.allowed_tools)} />
+              </Field>
+            </div>
             <Button icon={Pencil}>Save secret</Button>
           </form>
         </Modal>

@@ -78,6 +78,8 @@ class SecretCreateRequest(BaseModel):
     host: str | None = None
     scope: str | None = None
     tags: list[str] = Field(default_factory=list)
+    allowed_agents: list[str] = Field(default_factory=list)
+    allowed_tools: list[str] = Field(default_factory=list)
 
 
 class SecretUpdateRequest(BaseModel):
@@ -89,6 +91,8 @@ class SecretUpdateRequest(BaseModel):
     host: str | None = None
     scope: str | None = None
     tags: list[str] = Field(default_factory=list)
+    allowed_agents: list[str] = Field(default_factory=list)
+    allowed_tools: list[str] = Field(default_factory=list)
 
 
 def _dashboard_user(request: Request) -> dict:
@@ -135,6 +139,10 @@ def _secret_row(row: dict[str, Any]) -> dict[str, Any]:
     item = dict(row)
     item["tags"] = _parse_json_list(item.get("tags_json"))
     item["tags_text"] = ", ".join(item["tags"])
+    item["allowed_agents"] = _parse_json_list(item.get("allowed_agents_json"))
+    item["allowed_agents_text"] = ", ".join(item["allowed_agents"])
+    item["allowed_tools"] = _parse_json_list(item.get("allowed_tools_json"))
+    item["allowed_tools_text"] = ", ".join(item["allowed_tools"])
     return item
 
 
@@ -488,6 +496,8 @@ def create_secret(request: Request, payload: SecretCreateRequest) -> dict:
             host=(payload.host or "").strip() or None,
             scope=(payload.scope or "").strip() or None,
             tags=payload.tags,
+            allowed_agents=payload.allowed_agents,
+            allowed_tools=payload.allowed_tools,
         )
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
@@ -515,6 +525,8 @@ def update_secret(request: Request, id_or_name: str, payload: SecretUpdateReques
         "host": (payload.host or "").strip() or None,
         "scope": (payload.scope or "").strip() or None,
         "tags": payload.tags,
+        "allowed_agents": payload.allowed_agents,
+        "allowed_tools": payload.allowed_tools,
     }
     if payload.value:
         fields["value"] = payload.value
