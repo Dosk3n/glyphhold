@@ -88,8 +88,8 @@ If the original key is lost, existing stored secret values cannot be recovered.
 Use the lowercase image name:
 
 ```text
-ghcr.io/dosk3n/glyphhold:0.2.0-beta
+ghcr.io/dosk3n/glyphhold:latest
 ```
 
-Prerelease tags do not move `latest`, so pin the exact version shown in the
-README.
+Use `latest` for the current stable image, or pin an exact release tag from
+GitHub Releases for predictable deployments.
