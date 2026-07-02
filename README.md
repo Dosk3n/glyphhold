@@ -54,8 +54,8 @@ Agents remain HTTP clients. Glyph Hold owns the SQLite database.
 Glyph Hold is suitable for self-hosted agent memory and secrets. Keep backups of
 the mounted data directory and encryption key before upgrading.
 
-For the project contract and compatibility policy, see [PLAN.md](PLAN.md). For
-release notes, see [RELEASE_NOTES.md](RELEASE_NOTES.md).
+For planned improvements, see [ROADMAP.md](ROADMAP.md). GitHub Releases contain
+the release notes for published versions.
 
 ## Quick Start
 
@@ -221,8 +221,8 @@ results = client.search_memories(query="project context")
 The client can also create memories, create secrets, reveal individual secrets,
 and request scoped env-style secret bundles.
 
-Future Nexus and Hermes integrations will live in separate repositories so this
-project stays focused on the Glyph Hold service.
+Agent integrations live in separate repositories so this project stays focused
+on the Glyph Hold service.
 
 ## Memories
 
@@ -298,15 +298,15 @@ Troubleshooting steps are in [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
 Images are published to GitHub Container Registry:
 
 ```text
-ghcr.io/dosk3n/glyphhold:1.0.0
-ghcr.io/dosk3n/glyphhold:1.0
+ghcr.io/dosk3n/glyphhold:<version>
+ghcr.io/dosk3n/glyphhold:<major>.<minor>
 ghcr.io/dosk3n/glyphhold:sha-<commit>
 ghcr.io/dosk3n/glyphhold:latest
 ```
 
 Recommended usage:
 
-- Pin an exact version such as `1.0.0` for predictable deployments.
+- Pin an exact release tag for predictable deployments.
 - Use `latest` only when you are comfortable receiving newer changes.
 - Back up `/data` before major upgrades.
 
