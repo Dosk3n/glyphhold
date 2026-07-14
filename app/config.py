@@ -21,7 +21,7 @@ def _env_int(name: str, default: int) -> int:
 
 @dataclass(frozen=True)
 class Settings:
-    version: str = "1.1.0"
+    version: str = "1.0.3"
     db_path: Path = Path(os.getenv("GLYPHHOLD_DB_PATH", "./data/glyphhold.sqlite"))
     host: str = os.getenv("GLYPHHOLD_HOST", "0.0.0.0")
     port: int = _env_int("GLYPHHOLD_PORT", 5995)
