@@ -9,6 +9,7 @@ from fastapi.testclient import TestClient
 from app.config import settings
 from app.core.encryption import SecretDecryptionError
 from app.storage.repositories import memories, secrets
+from tests.conftest import dashboard_csrf_headers
 
 
 def _setup_dashboard(client: TestClient) -> None:
@@ -19,6 +20,7 @@ def _setup_dashboard(client: TestClient) -> None:
             "password": "correct horse battery staple",
             "confirm_password": "correct horse battery staple",
         },
+        headers=dashboard_csrf_headers(client),
     )
     assert response.status_code == 200
 
@@ -50,6 +52,7 @@ def test_backup_restore_keeps_data_and_requires_original_encryption_key(
             "body": "This memory should survive a file restore.",
             "tags": ["backup"],
         },
+        headers=dashboard_csrf_headers(secrets_client),
     )
     assert memory_response.status_code == 201
 
@@ -60,6 +63,7 @@ def test_backup_restore_keeps_data_and_requires_original_encryption_key(
             "value": "restored-secret-value",
             "description": "Backup restore secret",
         },
+        headers=dashboard_csrf_headers(secrets_client),
     )
     assert secret_response.status_code == 201
 

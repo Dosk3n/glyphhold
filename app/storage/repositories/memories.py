@@ -9,15 +9,64 @@ from app.storage.db import connection
 from app.utils.time import utc_now
 
 VALID_PREFETCH_LEVELS = {"never", "low", "normal", "high", "pinned"}
+STOP_WORDS = {
+    "a",
+    "about",
+    "an",
+    "and",
+    "are",
+    "as",
+    "at",
+    "be",
+    "by",
+    "for",
+    "from",
+    "how",
+    "i",
+    "in",
+    "is",
+    "it",
+    "of",
+    "on",
+    "or",
+    "that",
+    "the",
+    "this",
+    "to",
+    "was",
+    "what",
+    "when",
+    "where",
+    "who",
+    "with",
+}
 
 
 def _json(value: Any, default: Any) -> str:
     return json.dumps(default if value is None else value, sort_keys=True)
 
 
-def _fts_query(query: str) -> str:
-    tokens = re.findall(r"[A-Za-z0-9_]+", query.lower())
-    return " OR ".join(f"{token}*" for token in tokens)
+def _terms(value: str) -> list[str]:
+    return [
+        token
+        for token in re.findall(r"[A-Za-z0-9_]+", value.lower())
+        if token not in STOP_WORDS
+    ]
+
+
+def _fts_query(query: str, *, operator: str = "OR") -> str:
+    return f" {operator} ".join(f"{token}*" for token in _terms(query))
+
+
+def _normalize_tags(tags: list[str] | None) -> list[str]:
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for raw_tag in tags or []:
+        tag = raw_tag.strip().lower()
+        if tag and tag not in seen:
+            normalized.append(tag)
+            seen.add(tag)
+    return normalized
 
 
 def list_memories(
@@ -37,8 +86,10 @@ def list_memories(
         where.append("(c.id = ? OR c.name = ?)")
         values.extend([category, category])
     if tag:
-        where.append("m.tags_json LIKE ?")
-        values.append(f"%{tag}%")
+        where.append(
+            "EXISTS (SELECT 1 FROM json_each(m.tags_json) WHERE lower(json_each.value) = lower(?))"
+        )
+        values.append(tag.strip())
     values.extend([limit, offset])
     sql = f"""
         SELECT m.*, c.name AS category_name
@@ -101,7 +152,7 @@ def create_memory(
                 title,
                 summary,
                 body,
-                _json(tags, []),
+                _json(_normalize_tags(tags), []),
                 _json(metadata, {}),
                 source,
                 confidence,
@@ -166,11 +217,22 @@ def update_memory(
         return None, None
 
     updates: dict[str, Any] = {}
-    for key in ("category_id", "title", "summary", "body", "source", "confidence", "auto_prefetch_level", "archived", "superseded_by"):
-        if key in fields and fields[key] is not None:
+    nullable_fields = {"summary", "source", "superseded_by"}
+    for key in (
+        "category_id",
+        "title",
+        "summary",
+        "body",
+        "source",
+        "confidence",
+        "auto_prefetch_level",
+        "archived",
+        "superseded_by",
+    ):
+        if key in fields and (fields[key] is not None or key in nullable_fields):
             updates[key] = fields[key]
     if fields.get("tags") is not None:
-        updates["tags_json"] = _json(fields["tags"], [])
+        updates["tags_json"] = _json(_normalize_tags(fields["tags"]), [])
     if fields.get("metadata") is not None:
         updates["metadata_json"] = _json(fields["metadata"], {})
     if not updates:
@@ -222,8 +284,10 @@ def search_memories(
     category: str | None = None,
     include_archived: bool = False,
     limit: int = 10,
+    auto_prefetch_only: bool = False,
 ) -> list[dict[str, Any]]:
-    fts = _fts_query(query)
+    fts_and = _fts_query(query, operator="AND")
+    fts_or = _fts_query(query, operator="OR")
     values: list[Any] = []
     where = []
     if not include_archived:
@@ -231,11 +295,14 @@ def search_memories(
     if category:
         where.append("(c.id = ? OR c.name = ?)")
         values.extend([category, category])
+    if auto_prefetch_only:
+        where.append("c.allow_auto_prefetch = 1")
 
     with connection() as conn:
-        if fts:
+        if fts_or:
             sql = f"""
-                SELECT m.*, c.name AS category_name, bm25(memories_fts) AS fts_rank
+                SELECT m.*, c.name AS category_name,
+                       bm25(memories_fts, 8.0, 4.0, 1.0, 6.0) AS fts_rank
                 FROM memories_fts
                 JOIN memories m ON m.rowid = memories_fts.rowid
                 JOIN memory_categories c ON c.id = m.category_id
@@ -243,10 +310,39 @@ def search_memories(
                 ORDER BY fts_rank
                 LIMIT ?
             """
-            rows = conn.execute(sql, [fts, *values, limit]).fetchall()
+            rows = []
+            seen: set[str] = set()
+            for fts in dict.fromkeys([fts_and, fts_or]):
+                if not fts or len(rows) >= limit:
+                    continue
+                matches = conn.execute(sql, [fts, *values, limit]).fetchall()
+                for row in matches:
+                    if row["id"] not in seen:
+                        rows.append(row)
+                        seen.add(row["id"])
+                    if len(rows) >= limit:
+                        break
             return [dict(row) for row in rows]
 
         return list_memories(category=category, include_archived=include_archived, limit=limit)
+
+
+def list_pinned_memories(*, limit: int = 100) -> list[dict[str, Any]]:
+    with connection() as conn:
+        rows = conn.execute(
+            """
+            SELECT m.*, c.name AS category_name
+            FROM memories m
+            JOIN memory_categories c ON c.id = m.category_id
+            WHERE m.archived = 0
+              AND m.auto_prefetch_level = 'pinned'
+              AND c.allow_auto_prefetch = 1
+            ORDER BY m.updated_at DESC
+            LIMIT ?
+            """,
+            (limit,),
+        ).fetchall()
+        return [dict(row) for row in rows]
 
 
 def list_revisions(memory_id: str) -> list[dict[str, Any]]:
@@ -329,22 +425,29 @@ def find_similar(
 ) -> list[dict[str, Any]]:
     candidates = search_memories(query=f"{title} {body}", category=category, limit=max(limit * 4, 10))
     tag_set = {tag.lower() for tag in tags or []}
-    title_terms = set(re.findall(r"[A-Za-z0-9_]+", title.lower()))
+    title_terms = set(_terms(title))
+    body_terms = set(_terms(body))
     results = []
     for memory in candidates:
         reasons = []
         score = 0.0
-        memory_title_terms = set(re.findall(r"[A-Za-z0-9_]+", memory["title"].lower()))
+        memory_title_terms = set(_terms(memory["title"]))
         overlap = title_terms & memory_title_terms
         if overlap:
             score += min(0.45, 0.15 * len(overlap))
             reasons.append(f"title terms: {', '.join(sorted(overlap))}")
+        candidate_terms = set(_terms(f"{memory.get('summary') or ''} {memory['body']}"))
+        body_overlap = body_terms & candidate_terms
+        if body_overlap:
+            body_ratio = len(body_overlap) / max(1, min(len(body_terms), len(candidate_terms)))
+            score += min(0.35, 0.35 * body_ratio)
+            reasons.append(f"content overlap: {len(body_overlap)} terms")
         memory_tags = {tag.lower() for tag in json.loads(memory["tags_json"] or "[]")}
         tag_overlap = tag_set & memory_tags
         if tag_overlap:
             score += min(0.35, 0.12 * len(tag_overlap))
             reasons.append(f"tags: {', '.join(sorted(tag_overlap))}")
-        if category and memory.get("category_name") == category:
+        if category and category in {memory.get("category_id"), memory.get("category_name")}:
             score += 0.15
             reasons.append(f"category: {category}")
         if score > 0:

@@ -65,7 +65,7 @@ def update_dashboard_password(username: str, password_hash: str) -> bool:
         cursor = conn.execute(
             """
             UPDATE dashboard_users
-            SET password_hash = ?, updated_at = ?
+            SET password_hash = ?, session_version = session_version + 1, updated_at = ?
             WHERE username = ? AND is_admin = 1
             """,
             (password_hash, now, username),

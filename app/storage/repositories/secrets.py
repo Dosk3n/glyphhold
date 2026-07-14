@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+import sqlite3
 from typing import Any
 
 from app.core.encryption import decrypt_secret, encrypt_secret, encryption_key_id
@@ -32,6 +33,17 @@ def _json_list(value: str | None) -> list[str]:
     if not isinstance(parsed, list):
         return []
     return [str(item) for item in parsed]
+
+
+def _normalize_tags(tags: list[str] | None) -> list[str]:
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for raw_tag in tags or []:
+        tag = raw_tag.strip().lower()
+        if tag and tag not in seen:
+            normalized.append(tag)
+            seen.add(tag)
+    return normalized
 
 
 def validate_secret_name(name: str) -> str:
@@ -130,33 +142,36 @@ def create_secret(
         raise ValueError(f"value_type must be one of: {', '.join(VALUE_TYPES)}")
     secret_id = new_id("sec")
     now = utc_now()
-    with connection() as conn:
-        conn.execute(
-            """
+    try:
+        with connection() as conn:
+            conn.execute(
+                """
             INSERT INTO secrets (
                 id, name, description, encrypted_value, encryption_version,
                 encryption_key_id, value_type, service, host, scope, tags_json,
                 allowed_agents_json, allowed_tools_json, created_at, updated_at
             )
             VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-            (
-                secret_id,
-                name,
-                description,
-                encrypt_secret(value),
-                encryption_key_id(),
-                value_type,
-                service,
-                host,
-                scope,
-                _json(tags, []),
-                _json(allowed_agents, []),
-                _json(allowed_tools, []),
-                now,
-                now,
-            ),
-        )
+                """,
+                (
+                    secret_id,
+                    name,
+                    description,
+                    encrypt_secret(value),
+                    encryption_key_id(),
+                    value_type,
+                    service,
+                    host,
+                    scope,
+                    _json(_normalize_tags(tags), []),
+                    _json(allowed_agents, []),
+                    _json(allowed_tools, []),
+                    now,
+                    now,
+                ),
+            )
+    except sqlite3.IntegrityError as exc:
+        raise ValueError(f'A secret named "{name}" already exists') from exc
     secret = get_secret_metadata(secret_id)
     assert secret is not None
     return secret
@@ -168,8 +183,9 @@ def update_secret(id_or_name: str, **fields: Any) -> dict[str, Any] | None:
         return None
 
     updates: dict[str, Any] = {}
+    nullable_fields = {"description", "service", "host", "scope"}
     for key in ("name", "description", "value_type", "service", "host", "scope"):
-        if key in fields and fields[key] is not None:
+        if key in fields and (fields[key] is not None or key in nullable_fields):
             updates[key] = fields[key]
     if "name" in updates:
         updates["name"] = validate_secret_name(updates["name"])
@@ -180,7 +196,7 @@ def update_secret(id_or_name: str, **fields: Any) -> dict[str, Any] | None:
         updates["encryption_version"] = 1
         updates["encryption_key_id"] = encryption_key_id()
     if fields.get("tags") is not None:
-        updates["tags_json"] = _json(fields["tags"], [])
+        updates["tags_json"] = _json(_normalize_tags(fields["tags"]), [])
     if fields.get("allowed_agents") is not None:
         updates["allowed_agents_json"] = _json(fields["allowed_agents"], [])
     if fields.get("allowed_tools") is not None:

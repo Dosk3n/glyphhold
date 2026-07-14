@@ -4,6 +4,7 @@ from fastapi.testclient import TestClient
 
 from app.admin_cli import main, reset_password
 from app.storage.repositories import auth as auth_repo
+from tests.conftest import dashboard_csrf_headers
 
 
 def _setup_dashboard(client: TestClient, password: str = "correct horse battery staple") -> None:
@@ -14,13 +15,14 @@ def _setup_dashboard(client: TestClient, password: str = "correct horse battery 
             "password": password,
             "confirm_password": password,
         },
+        headers=dashboard_csrf_headers(client),
     )
     assert response.status_code == 200
 
 
 def test_reset_password_updates_existing_admin_login(client: TestClient) -> None:
     _setup_dashboard(client)
-    client.post("/dashboard/api/logout")
+    client.post("/dashboard/api/logout", headers=dashboard_csrf_headers(client))
 
     username = reset_password(username="admin", password="new correct horse battery")
     assert username == "admin"
@@ -28,12 +30,14 @@ def test_reset_password_updates_existing_admin_login(client: TestClient) -> None
     old_login = client.post(
         "/dashboard/api/login",
         json={"username": "admin", "password": "correct horse battery staple"},
+        headers=dashboard_csrf_headers(client),
     )
     assert old_login.status_code == 401
 
     new_login = client.post(
         "/dashboard/api/login",
         json={"username": "admin", "password": "new correct horse battery"},
+        headers=dashboard_csrf_headers(client),
     )
     assert new_login.status_code == 200
     assert new_login.json()["user"]["username"] == "admin"

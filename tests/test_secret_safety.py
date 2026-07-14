@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 
 from app.core.redaction import redact
 from app.storage.repositories import secrets as secrets_repo
-from tests.conftest import make_api_key_headers
+from tests.conftest import dashboard_csrf_headers, make_api_key_headers
 
 
 def test_secret_names_must_be_uppercase_env_vars(secrets_client: TestClient) -> None:
@@ -83,6 +83,7 @@ def test_dashboard_can_reveal_agent_restricted_secret(secrets_client: TestClient
             "password": "very-secure-password",
             "confirm_password": "very-secure-password",
         },
+        headers=dashboard_csrf_headers(secrets_client),
     )
     assert setup_response.status_code == 200
 
@@ -102,7 +103,10 @@ def test_dashboard_can_reveal_agent_restricted_secret(secrets_client: TestClient
     assert denied_response.status_code == 403
     assert "dashboard-visible-secret" not in denied_response.text
 
-    dashboard_response = secrets_client.post(f"/dashboard/api/secrets/{secret['id']}/reveal")
+    dashboard_response = secrets_client.post(
+        f"/dashboard/api/secrets/{secret['id']}/reveal",
+        headers=dashboard_csrf_headers(secrets_client),
+    )
     assert dashboard_response.status_code == 200
     assert dashboard_response.json() == {
         "name": "GLYPHHOLD_DASHBOARD_RESTRICTED",

@@ -93,8 +93,21 @@ def update_category(
 @router.delete("/{category_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_category(
     category_id: str,
-    _: Annotated[ApiPrincipal, Depends(require_scope("memories:write"))],
+    request: Request,
+    principal: Annotated[ApiPrincipal, Depends(require_scope("memories:write"))],
 ) -> None:
-    if not categories.delete_category(category_id):
+    category = categories.get_category(category_id)
+    if category is None:
         raise HTTPException(status_code=404, detail="Category not found")
-
+    if not categories.delete_category(category_id):
+        raise HTTPException(status_code=400, detail="Category could not be deleted")
+    record_event(
+        request_id=get_request_id(request),
+        event_type="category.delete",
+        actor=principal.actor,
+        target_type="category",
+        target_id=category_id,
+        action="delete",
+        success=True,
+        message=category["name"],
+    )

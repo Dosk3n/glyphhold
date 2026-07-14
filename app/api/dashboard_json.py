@@ -4,11 +4,19 @@ import json
 from typing import Any
 
 from fastapi import APIRouter, HTTPException, Request, Response, status
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
+from app.api.validation import (
+    validate_memory_body,
+    validate_secret_value,
+    validate_summary,
+    validate_tags,
+)
 from app.config import settings
 from app.core import auth
+from app.core.encryption import SecretDecryptionError, SecretStorageDisabled
 from app.core.request_context import get_request_id
+from app.core.security import client_address
 from app.storage.db import database_ok
 from app.storage.migrations import current_schema_version
 from app.storage.repositories import auth as auth_repo
@@ -60,6 +68,10 @@ class MemoryCreateRequest(BaseModel):
     confidence: int = Field(default=3, ge=1, le=5)
     auto_prefetch_level: str = "normal"
 
+    _body_limit = field_validator("body")(validate_memory_body)
+    _summary_limit = field_validator("summary")(validate_summary)
+    _tag_limits = field_validator("tags")(validate_tags)
+
 
 class MemoryUpdateRequest(MemoryCreateRequest):
     pass
@@ -81,6 +93,9 @@ class SecretCreateRequest(BaseModel):
     allowed_agents: list[str] = Field(default_factory=list)
     allowed_tools: list[str] = Field(default_factory=list)
 
+    _value_limit = field_validator("value")(validate_secret_value)
+    _tag_limits = field_validator("tags")(validate_tags)
+
 
 class SecretUpdateRequest(BaseModel):
     name: str
@@ -93,6 +108,9 @@ class SecretUpdateRequest(BaseModel):
     tags: list[str] = Field(default_factory=list)
     allowed_agents: list[str] = Field(default_factory=list)
     allowed_tools: list[str] = Field(default_factory=list)
+
+    _value_limit = field_validator("value")(validate_secret_value)
+    _tag_limits = field_validator("tags")(validate_tags)
 
 
 def _dashboard_user(request: Request) -> dict:
@@ -146,9 +164,27 @@ def _secret_row(row: dict[str, Any]) -> dict[str, Any]:
     return item
 
 
+def _dashboard_secret_error(exc: Exception) -> HTTPException:
+    if isinstance(exc, SecretStorageDisabled):
+        return HTTPException(status_code=503, detail=str(exc))
+    if isinstance(exc, SecretDecryptionError):
+        return HTTPException(status_code=500, detail=str(exc))
+    if isinstance(exc, ValueError):
+        return HTTPException(status_code=400, detail=str(exc))
+    return HTTPException(status_code=500, detail="Secret operation failed")
+
+
 @router.get("/session")
-def session(request: Request) -> dict:
+def session(request: Request, response: Response) -> dict:
     user = auth.get_current_dashboard_user(request)
+    response.set_cookie(
+        settings.csrf_cookie_name,
+        auth.create_csrf_value(),
+        httponly=False,
+        secure=settings.cookie_secure,
+        samesite="strict",
+        max_age=60 * 60 * 24 * 14,
+    )
     return {
         "has_admin": auth_repo.has_admin_user(),
         "user": {"id": user["id"], "username": user["username"]} if user else None,
@@ -181,18 +217,45 @@ def setup(payload: SetupRequest, response: Response) -> dict:
 
 
 @router.post("/login")
-def login(payload: LoginRequest, response: Response) -> dict:
+def login(payload: LoginRequest, request: Request, response: Response) -> dict:
     if not auth_repo.has_admin_user():
         raise HTTPException(status_code=404, detail="Dashboard setup is required")
 
-    user = auth_repo.get_dashboard_user_by_username(payload.username.strip())
+    username = payload.username.strip()
+    limiter = request.app.state.failure_rate_limiter
+    limiter_key = f"dashboard-login:{client_address(request)}:{username.casefold()}"
+    retry_after = limiter.retry_after(
+        limiter_key,
+        limit=settings.dashboard_login_attempts,
+        window_seconds=settings.dashboard_login_window_seconds,
+    )
+    if retry_after:
+        raise HTTPException(
+            status_code=429,
+            detail="Too many failed login attempts. Wait and retry.",
+            headers={"Retry-After": str(retry_after)},
+        )
+
+    user = auth_repo.get_dashboard_user_by_username(username)
     if user is None or not auth.verify_password(payload.password, user["password_hash"]):
+        limiter.add_failure(
+            limiter_key, window_seconds=settings.dashboard_login_window_seconds
+        )
+        record_event(
+            request_id=get_request_id(request),
+            event_type="dashboard.login_failed",
+            actor=username or None,
+            action="login",
+            success=False,
+            message="Invalid username or password",
+        )
         raise HTTPException(status_code=401, detail="Invalid username or password.")
 
+    limiter.clear(limiter_key)
     auth_repo.mark_dashboard_login(user["id"])
     response.set_cookie(
         settings.session_cookie_name,
-        auth.create_session_value(user["id"]),
+        auth.create_session_value(user["id"], int(user.get("session_version", 1))),
         httponly=True,
         secure=settings.cookie_secure,
         samesite="lax",
@@ -500,7 +563,7 @@ def create_secret(request: Request, payload: SecretCreateRequest) -> dict:
             allowed_tools=payload.allowed_tools,
         )
     except Exception as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
+        raise _dashboard_secret_error(exc) from exc
     record_event(
         request_id=get_request_id(request),
         event_type="secret.create",
@@ -533,7 +596,7 @@ def update_secret(request: Request, id_or_name: str, payload: SecretUpdateReques
     try:
         secret = secrets_repo.update_secret(id_or_name, **fields)
     except Exception as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
+        raise _dashboard_secret_error(exc) from exc
     if secret is None:
         raise HTTPException(status_code=404, detail="Secret not found")
     record_event(
@@ -576,7 +639,7 @@ def reveal_secret(request: Request, id_or_name: str) -> dict:
     try:
         secret, value = secrets_repo.reveal_secret(id_or_name, bypass_restrictions=True)
     except Exception as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
+        raise _dashboard_secret_error(exc) from exc
     if secret is None:
         raise HTTPException(status_code=404, detail="Secret not found")
     record_event(

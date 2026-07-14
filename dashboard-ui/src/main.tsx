@@ -95,8 +95,16 @@ const navItems = [
 
 async function api<T>(path: string, options: RequestInit = {}): Promise<T> {
   const headers = new Headers(options.headers);
+  const method = (options.method || "GET").toUpperCase();
   if (options.body && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
+  }
+  if (!["GET", "HEAD", "OPTIONS"].includes(method) && path.startsWith("/dashboard/api/")) {
+    const csrfCookie = document.cookie
+      .split("; ")
+      .find((item) => item.startsWith("glyphhold_csrf="))
+      ?.split("=", 2)[1];
+    if (csrfCookie) headers.set("X-CSRF-Token", decodeURIComponent(csrfCookie));
   }
   const response = await fetch(path, {
     credentials: "same-origin",

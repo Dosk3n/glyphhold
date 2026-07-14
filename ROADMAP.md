@@ -7,7 +7,8 @@ This roadmap tracks the public areas most likely to improve next.
 
 - Improve agent guidance for writing useful memories: clear titles, concise
   summaries, stable categories, confidence scores, and good tags.
-- Strengthen duplicate and conflict handling before agents create new memories.
+- Continue refining deterministic duplicate and conflict guidance from live
+  agent usage.
 - Expand examples for the Glyph Hold MCP server and Hermes memory provider.
 - Make dashboard help text clearer around summaries, body text, confidence, and
   prefetch levels.

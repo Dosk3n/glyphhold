@@ -34,6 +34,7 @@ Glyph Hold keeps that information local, deterministic, and inspectable.
 - Provides a browser dashboard for setup, memories, secrets, API keys, and audit
   events.
 - Uses bearer API keys for agents and signed cookies for dashboard sessions.
+- Protects dashboard mutations with CSRF tokens and browser security headers.
 - Runs as a Docker container on port `5995`.
 
 ## What It Does Not Do
@@ -271,6 +272,9 @@ secret values cannot be decrypted.
 ## Data And Backups
 
 Glyph Hold stores data in SQLite. In Docker, mount `/data` and back it up.
+Audit events are retained for 90 days and capped at 100,000 rows by default;
+both limits can be adjusted or disabled with the event-retention environment
+variables in `.env.example`.
 
 With the compose example, the database lives under:
 
@@ -317,6 +321,15 @@ Recommended usage:
 - Do not commit `.env`, SQLite databases, encryption keys, API keys, or exported
   secrets.
 - Dashboard setup happens on first browser visit.
+- Complete first-run setup before exposing Glyph Hold beyond a trusted network.
 - Agents authenticate with bearer API keys created from the dashboard.
 - Secret values are encrypted at rest when `GLYPHHOLD_ENCRYPTION_KEY` is set.
 - Secret values are not included in memory prefetch.
+- Set `GLYPHHOLD_COOKIE_SECURE=true` when the dashboard is served through HTTPS.
+- Direct HTTP access is supported for trusted internal networks, but traffic is
+  not encrypted in transit without an HTTPS reverse proxy.
+- Failed dashboard logins and invalid API authentication attempts are rate
+  limited. Normal authenticated agent requests are not rate limited.
+- Requests are limited to 2 MiB by default and individual memory bodies to 1
+  MiB. Limits are configurable and oversized content is rejected, never
+  truncated.
