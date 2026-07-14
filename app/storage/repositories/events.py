@@ -1,11 +1,17 @@
 from __future__ import annotations
 
 import json
+import threading
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 from app.core.ids import new_id
+from app.config import settings
 from app.storage.db import connection
 from app.utils.time import utc_now
+
+_prune_lock = threading.Lock()
+_events_since_prune = 0
 
 
 def record_event(
@@ -57,7 +63,45 @@ def record_event(
                 json.dumps(metadata or {}, sort_keys=True),
             ),
         )
+    _maybe_prune_events()
     return event_id
+
+
+def _maybe_prune_events() -> None:
+    global _events_since_prune
+    should_prune = False
+    with _prune_lock:
+        _events_since_prune += 1
+        if _events_since_prune >= 1000:
+            _events_since_prune = 0
+            should_prune = True
+    if should_prune:
+        prune_events()
+
+
+def prune_events() -> int:
+    deleted = 0
+    with connection() as conn:
+        if settings.event_retention_days > 0:
+            cutoff = (
+                datetime.now(UTC) - timedelta(days=settings.event_retention_days)
+            ).isoformat(timespec="milliseconds").replace("+00:00", "Z")
+            deleted += conn.execute(
+                "DELETE FROM event_log WHERE created_at < ?", (cutoff,)
+            ).rowcount
+        if settings.max_event_rows > 0:
+            deleted += conn.execute(
+                """
+                DELETE FROM event_log
+                WHERE id IN (
+                    SELECT id FROM event_log
+                    ORDER BY created_at DESC
+                    LIMIT -1 OFFSET ?
+                )
+                """,
+                (settings.max_event_rows,),
+            ).rowcount
+    return deleted
 
 
 def list_events(

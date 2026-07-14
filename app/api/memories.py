@@ -1,12 +1,20 @@
 from __future__ import annotations
 
+import json
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
+from app.api.validation import (
+    validate_memory_body,
+    validate_metadata,
+    validate_summary,
+    validate_tags,
+)
 from app.core.auth import ApiPrincipal, require_scope
 from app.core.request_context import get_request_id
+from app.storage.repositories import categories
 from app.storage.repositories import memories
 from app.storage.repositories.events import record_event
 
@@ -15,7 +23,7 @@ router = APIRouter(prefix="/api/v1/memories", tags=["memories"])
 
 class MemoryCreate(BaseModel):
     category_id: str
-    title: str = Field(min_length=1)
+    title: str = Field(min_length=1, max_length=500)
     summary: str | None = None
     body: str = Field(min_length=1)
     tags: list[str] = Field(default_factory=list)
@@ -24,12 +32,17 @@ class MemoryCreate(BaseModel):
     confidence: int = Field(default=3, ge=1, le=5)
     auto_prefetch_level: str = "normal"
 
+    _body_limit = field_validator("body")(validate_memory_body)
+    _summary_limit = field_validator("summary")(validate_summary)
+    _tag_limits = field_validator("tags")(validate_tags)
+    _metadata_limit = field_validator("metadata")(validate_metadata)
+
 
 class MemoryPatch(BaseModel):
     category_id: str | None = None
-    title: str | None = None
+    title: str | None = Field(default=None, min_length=1, max_length=500)
     summary: str | None = None
-    body: str | None = None
+    body: str | None = Field(default=None, min_length=1)
     tags: list[str] | None = None
     metadata: dict[str, Any] | None = None
     source: str | None = None
@@ -39,9 +52,14 @@ class MemoryPatch(BaseModel):
     superseded_by: str | None = None
     change_reason: str | None = None
 
+    _body_limit = field_validator("body")(validate_memory_body)
+    _summary_limit = field_validator("summary")(validate_summary)
+    _tag_limits = field_validator("tags")(validate_tags)
+    _metadata_limit = field_validator("metadata")(validate_metadata)
+
 
 class MemorySearch(BaseModel):
-    query: str = ""
+    query: str = Field(default="", max_length=8192)
     category: str | None = None
     limit: int = Field(default=10, ge=1, le=100)
     include_archived: bool = False
@@ -50,10 +68,13 @@ class MemorySearch(BaseModel):
 
 class FindSimilar(BaseModel):
     category: str | None = None
-    title: str
+    title: str = Field(max_length=500)
     body: str
     tags: list[str] = Field(default_factory=list)
     limit: int = Field(default=5, ge=1, le=20)
+
+    _body_limit = field_validator("body")(validate_memory_body)
+    _tag_limits = field_validator("tags")(validate_tags)
 
 
 class ConfidenceUpdate(BaseModel):
@@ -67,6 +88,25 @@ class SupersedeRequest(BaseModel):
 
 class RestoreRevisionRequest(BaseModel):
     change_reason: str | None = None
+
+
+def _require_category_permission(category_id: str, permission: str) -> None:
+    category = categories.get_category(category_id)
+    if category is None:
+        raise HTTPException(status_code=400, detail="Category not found")
+    if not category[permission]:
+        message = "Agents cannot create memories in this category"
+        if permission == "agent_can_write":
+            message = "Agents cannot update memories in this category"
+        raise HTTPException(status_code=403, detail=message)
+
+
+def _require_memory_write_permission(memory_id: str) -> dict:
+    memory = memories.get_memory(memory_id)
+    if memory is None:
+        raise HTTPException(status_code=404, detail="Memory not found")
+    _require_category_permission(memory["category_id"], "agent_can_write")
+    return memory
 
 
 @router.get("")
@@ -93,6 +133,7 @@ def create_memory(
     request: Request,
     principal: Annotated[ApiPrincipal, Depends(require_scope("memories:write"))],
 ) -> dict:
+    _require_category_permission(payload.category_id, "agent_can_create")
     try:
         memory = memories.create_memory(**payload.model_dump())
     except ValueError as exc:
@@ -128,7 +169,10 @@ def update_memory(
     request: Request,
     principal: Annotated[ApiPrincipal, Depends(require_scope("memories:write"))],
 ) -> dict:
+    existing = _require_memory_write_permission(memory_id)
     data = payload.model_dump(exclude_unset=True)
+    if data.get("category_id") and data["category_id"] != existing["category_id"]:
+        _require_category_permission(data["category_id"], "agent_can_write")
     change_reason = data.pop("change_reason", None)
     try:
         memory, revision_id = memories.update_memory(
@@ -158,10 +202,22 @@ def update_memory(
 @router.delete("/{memory_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_memory(
     memory_id: str,
-    _: Annotated[ApiPrincipal, Depends(require_scope("memories:write"))],
+    request: Request,
+    principal: Annotated[ApiPrincipal, Depends(require_scope("memories:write"))],
 ) -> None:
+    memory = _require_memory_write_permission(memory_id)
     if not memories.delete_memory(memory_id):
         raise HTTPException(status_code=404, detail="Memory not found")
+    record_event(
+        request_id=get_request_id(request),
+        event_type="memory.delete",
+        actor=principal.actor,
+        target_type="memory",
+        target_id=memory_id,
+        action="delete",
+        success=True,
+        message=memory["title"],
+    )
 
 
 @router.post("/search")
@@ -227,7 +283,25 @@ def prepare_write(
         query=payload.title,
         result_count=len(matches),
     )
-    return {"likely_duplicates": matches, "likely_conflicts": [], "suggested_tags": []}
+    likely_duplicates = [item for item in matches if item["match_score"] >= 0.5]
+    likely_conflicts = [
+        item
+        for item in matches
+        if item["match_score"] < 0.5
+        and payload.category in {item.get("category_id"), item.get("category_name")}
+    ]
+    suggested_tags = sorted(
+        {
+            tag.lower()
+            for item in matches[:3]
+            for tag in json.loads(item.get("tags_json") or "[]")
+        }
+    )[:10]
+    return {
+        "likely_duplicates": likely_duplicates,
+        "likely_conflicts": likely_conflicts,
+        "suggested_tags": suggested_tags,
+    }
 
 
 @router.post("/{memory_id}/confidence")
@@ -237,6 +311,7 @@ def update_confidence(
     request: Request,
     principal: Annotated[ApiPrincipal, Depends(require_scope("memories:write"))],
 ) -> dict:
+    _require_memory_write_permission(memory_id)
     memory, revision_id = memories.update_memory(
         memory_id,
         confidence=payload.confidence,
@@ -264,6 +339,7 @@ def archive_memory(
     request: Request,
     principal: Annotated[ApiPrincipal, Depends(require_scope("memories:write"))],
 ) -> dict:
+    _require_memory_write_permission(memory_id)
     memory, revision_id = memories.archive_memory(memory_id, changed_by=principal.actor)
     if memory is None:
         raise HTTPException(status_code=404, detail="Memory not found")
@@ -287,6 +363,7 @@ def supersede_memory(
     request: Request,
     principal: Annotated[ApiPrincipal, Depends(require_scope("memories:write"))],
 ) -> dict:
+    _require_memory_write_permission(memory_id)
     memory, revision_id = memories.supersede_memory(
         memory_id,
         payload.superseded_by,
@@ -325,6 +402,7 @@ def restore_revision(
     request: Request,
     principal: Annotated[ApiPrincipal, Depends(require_scope("memories:write"))],
 ) -> dict:
+    _require_memory_write_permission(memory_id)
     memory, restore_revision_id = memories.restore_revision(
         memory_id,
         revision_id,

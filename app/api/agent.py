@@ -37,7 +37,8 @@ def _prefetch_score(memory: dict, message_terms: set[str]) -> int:
     tag_terms = set(json.loads(memory["tags_json"] or "[]"))
     tag_terms = {tag.lower() for tag in tag_terms}
 
-    if memory["title"].lower() in " ".join(message_terms):
+    normalized_title = " ".join(re.findall(r"[A-Za-z0-9_]+", memory["title"].lower()))
+    if normalized_title and all(term in message_terms for term in normalized_title.split()):
         score += 50
     score += 20 * len(message_terms & title_terms)
     score += 25 * len(message_terms & tag_terms)
@@ -48,7 +49,7 @@ def _prefetch_score(memory: dict, message_terms: set[str]) -> int:
     if memory["auto_prefetch_level"] == "high":
         score += 10
     if memory["auto_prefetch_level"] == "pinned":
-        score += 15
+        score = max(25, score + 15)
     if memory["auto_prefetch_level"] == "low":
         score -= 10
     return score
@@ -60,14 +61,23 @@ def prefetch(
     request: Request,
     principal: Annotated[ApiPrincipal, Depends(require_scope("memories:read"))],
 ) -> dict:
-    results = memories.search_memories(query=payload.message, limit=20)
+    results = memories.search_memories(
+        query=payload.message,
+        limit=40,
+        auto_prefetch_only=True,
+    )
+    seen = {memory["id"] for memory in results}
+    results.extend(memory for memory in memories.list_pinned_memories() if memory["id"] not in seen)
     message_terms = set(re.findall(r"[A-Za-z0-9_]+", payload.message.lower()))
     ranked = []
     for memory in results:
         score = _prefetch_score(memory, message_terms)
         if score >= 25:
             ranked.append((score, memory))
-    ranked.sort(key=lambda item: item[0], reverse=True)
+    ranked.sort(
+        key=lambda item: (item[1]["auto_prefetch_level"] == "pinned", item[0]),
+        reverse=True,
+    )
 
     selected = []
     used_chars = 0
@@ -75,24 +85,45 @@ def prefetch(
         if len(selected) >= payload.max_memories:
             break
         summary = memory["summary"] or memory["body"][:300]
-        item_chars = len(summary) + len(memory["title"])
+        content = summary if payload.summaries_only else memory["body"]
+        item_chars = len(content) + len(memory["title"])
         if used_chars + item_chars > payload.max_chars:
             continue
-        selected.append(
-            {
-                "id": memory["id"],
-                "category": memory["category_name"],
-                "title": memory["title"],
-                "summary": summary,
-                "score": score,
-            }
+        item = {
+            "id": memory["id"],
+            "category": memory["category_name"],
+            "title": memory["title"],
+            "summary": summary,
+            "score": score,
+        }
+        if not payload.summaries_only:
+            item["body"] = memory["body"]
+        item_tokens = _estimate_tokens(f"{memory['title']}\n{content}")
+        current_tokens = (
+            _estimate_tokens(
+                "\n".join(
+                    f"{selected_item['title']}\n"
+                    f"{selected_item.get('body', selected_item['summary'])}"
+                    for selected_item in selected
+                )
+            )
+            if selected
+            else 0
         )
+        if current_tokens + item_tokens > payload.max_tokens:
+            continue
+        selected.append(item)
         used_chars += item_chars
 
-    estimated_tokens = _estimate_tokens("\n".join(item["summary"] for item in selected))
-    if estimated_tokens > payload.max_tokens:
-        selected = []
-        estimated_tokens = 0
+    estimated_tokens = (
+        _estimate_tokens(
+            "\n".join(
+                f"{item['title']}\n{item.get('body', item['summary'])}" for item in selected
+            )
+        )
+        if selected
+        else 0
+    )
 
     record_event(
         request_id=get_request_id(request),
@@ -115,4 +146,3 @@ def prefetch(
         "estimated_tokens": estimated_tokens,
         "memories": selected,
     }
-

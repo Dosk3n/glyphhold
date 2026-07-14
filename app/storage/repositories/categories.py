@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import sqlite3
 from typing import Any
 
 from app.core.ids import new_id
@@ -41,26 +42,29 @@ def create_category(
 ) -> dict[str, Any]:
     category_id = new_id("cat")
     now = utc_now()
-    with connection() as conn:
-        conn.execute(
-            """
+    try:
+        with connection() as conn:
+            conn.execute(
+                """
             INSERT INTO memory_categories (
                 id, name, description, allow_auto_prefetch, agent_can_create,
                 agent_can_write, created_at, updated_at
             )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-            (
-                category_id,
-                name,
-                description,
-                1 if allow_auto_prefetch else 0,
-                1 if agent_can_create else 0,
-                1 if agent_can_write else 0,
-                now,
-                now,
-            ),
-        )
+                """,
+                (
+                    category_id,
+                    name,
+                    description,
+                    1 if allow_auto_prefetch else 0,
+                    1 if agent_can_create else 0,
+                    1 if agent_can_write else 0,
+                    now,
+                    now,
+                ),
+            )
+    except sqlite3.IntegrityError as exc:
+        raise ValueError(f'A category named "{name}" already exists') from exc
     category = get_category(category_id)
     assert category is not None
     return category
@@ -95,6 +99,8 @@ def update_category(category_id: str, **fields: Any) -> dict[str, Any] | None:
 
 def delete_category(category_id: str) -> bool:
     with connection() as conn:
-        cursor = conn.execute("DELETE FROM memory_categories WHERE id = ?", (category_id,))
+        try:
+            cursor = conn.execute("DELETE FROM memory_categories WHERE id = ?", (category_id,))
+        except sqlite3.IntegrityError:
+            return False
         return cursor.rowcount > 0
-

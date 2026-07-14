@@ -24,6 +24,7 @@ jobs:
         working-directory: dashboard-ui
         run: |
           npm ci
+          npm audit --audit-level=high
           npm run typecheck
           npm run build
 
@@ -39,7 +40,12 @@ jobs:
           python-version: "3.12"
 
       - name: Install package and dev dependencies
-        run: pip install -e ".[dev]"
+        run: |
+          pip install -e ".[dev]"
+          pip install pip-audit
+
+      - name: Audit Python dependencies
+        run: pip-audit
 
       - name: Run ruff
         run: ruff check .
@@ -62,4 +68,4 @@ jobs:
           docker run --rm \
             -e GLYPHHOLD_DB_PATH=/tmp/glyphhold-ci.sqlite \
             glyphhold:ci \
-            python -c "from app.storage.migrations import apply_migrations,current_schema_version; apply_migrations(); assert current_schema_version() >= 4"
+            python -c "from app.storage.migrations import apply_migrations,current_schema_version; apply_migrations(); assert current_schema_version() >= 5"

@@ -6,8 +6,8 @@ assets.
 
 ## Supported Versions
 
-Glyph Hold is currently in early development. Until `v1.0.0`, compatibility and
-security fixes are provided on the main development line.
+Security fixes are provided for the latest published `v1.x` release. Users
+should keep the container image current and retain a backup before upgrading.
 
 ## Reporting A Vulnerability
 
@@ -26,3 +26,12 @@ contact if the owner documents a preferred channel.
   metadata endpoints.
 - Secret reveal must use explicit POST endpoints.
 - Encryption keys must come from runtime configuration, not the database.
+
+## Deployment
+
+- Use an HTTPS reverse proxy when Glyph Hold crosses an untrusted network.
+- Set `GLYPHHOLD_COOKIE_SECURE=true` when the dashboard is served through HTTPS.
+- Direct HTTP access is intended only for trusted internal networks.
+- Complete first-run dashboard setup before exposing the service beyond a
+  trusted network.
+- Grant API keys only the scopes their agent or integration requires.

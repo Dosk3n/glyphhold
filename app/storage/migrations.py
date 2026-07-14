@@ -214,6 +214,13 @@ ALTER TABLE memory_revisions ADD COLUMN category_id TEXT;
 ALTER TABLE memory_revisions ADD COLUMN source TEXT;
 """,
     ),
+    Migration(
+        version=5,
+        name="dashboard_session_version",
+        sql="""
+ALTER TABLE dashboard_users ADD COLUMN session_version INTEGER NOT NULL DEFAULT 1;
+""",
+    ),
 )
 
 

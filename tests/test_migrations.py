@@ -92,7 +92,7 @@ def test_migrations_upgrade_v3_database_without_losing_revisions(tmp_path: Path)
 
     apply_migrations()
 
-    assert current_schema_version() == 4
+    assert current_schema_version() == 5
     with connect(db_path) as conn:
         columns = {
             row["name"]

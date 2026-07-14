@@ -3,8 +3,9 @@ from __future__ import annotations
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
+from app.api.validation import validate_secret_value, validate_tags
 from app.core.auth import ApiPrincipal, require_scope
 from app.core.encryption import SecretDecryptionError, SecretStorageDisabled
 from app.core.request_context import get_request_id
@@ -29,6 +30,9 @@ class SecretCreate(BaseModel):
     allowed_agents: list[str] = Field(default_factory=list)
     allowed_tools: list[str] = Field(default_factory=list)
 
+    _value_limit = field_validator("value")(validate_secret_value)
+    _tag_limits = field_validator("tags")(validate_tags)
+
 
 class SecretPatch(BaseModel):
     name: str | None = None
@@ -41,6 +45,9 @@ class SecretPatch(BaseModel):
     tags: list[str] | None = None
     allowed_agents: list[str] | None = None
     allowed_tools: list[str] | None = None
+
+    _value_limit = field_validator("value")(validate_secret_value)
+    _tag_limits = field_validator("tags")(validate_tags)
 
 
 class SecretRevealRequest(BaseModel):
@@ -62,7 +69,9 @@ def _secret_error(exc: Exception) -> HTTPException:
         return HTTPException(status_code=500, detail=str(exc))
     if isinstance(exc, PermissionError):
         return HTTPException(status_code=403, detail=str(exc))
-    return HTTPException(status_code=400, detail=str(exc))
+    if isinstance(exc, ValueError):
+        return HTTPException(status_code=400, detail=str(exc))
+    return HTTPException(status_code=500, detail="Secret operation failed")
 
 
 @router.get("")

@@ -46,3 +46,12 @@ def make_api_key_headers(*, scopes: list[str], actor: str = "test-agent") -> dic
         scopes=scopes,
     )
     return {"Authorization": f"Bearer {api_key}"}
+
+
+def dashboard_csrf_headers(client: TestClient) -> dict[str, str]:
+    if not client.cookies.get("glyphhold_csrf"):
+        response = client.get("/dashboard/api/session")
+        assert response.status_code == 200
+    token = client.cookies.get("glyphhold_csrf")
+    assert token
+    return {"X-CSRF-Token": token}
