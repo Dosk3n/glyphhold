@@ -74,7 +74,7 @@ jobs:
           docker run --rm \
             -e GLYPHHOLD_DB_PATH=/tmp/glyphhold-ci.sqlite \
             glyphhold:ci \
-            python -c "from app.storage.migrations import apply_migrations,current_schema_version; apply_migrations(); assert current_schema_version() >= 6"
+            python -c "from app.main import app; from app.storage.migrations import current_schema_version; assert current_schema_version() >= 6"
 
       - name: Smoke bundled CLI entrypoints
         run: |
