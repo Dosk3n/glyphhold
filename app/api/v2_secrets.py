@@ -433,6 +433,13 @@ def migrate(id_or_name: str, payload: Migrate, p: Auth):
         }
 
 
+@router.post("/{id_or_name}/migrate/preview")
+def preview_migration(id_or_name: str, payload: Migrate, p: Auth):
+    # A distinct endpoint fails closed on older servers that would otherwise
+    # ignore an unknown dry_run field and perform a real migration.
+    return migrate(id_or_name, payload.model_copy(update={"dry_run": True}), p)
+
+
 def hmac_compare(left: str, right: str) -> bool:
     import hmac
 

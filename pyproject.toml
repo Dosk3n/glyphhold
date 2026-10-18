@@ -1,6 +1,6 @@
 [project]
 name = "glyphhold"
-version = "2.1.2"
+version = "2.1.3"
 description = "Self-hosted shared agent memory with optional subscription-powered maintenance."
 readme = "README.md"
 requires-python = ">=3.12"

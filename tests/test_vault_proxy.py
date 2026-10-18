@@ -563,3 +563,27 @@ def test_full_website_queries_find_same_hostname_across_saved_url_formats(live_v
     state["items"][0]["login"]["uris"] = [{"uri": saved}]
     response = client.get("/api/v2/secrets", headers=headers, params={"query": query})
     assert response.status_code == 200 and len(response.json()["secrets"]) == 1
+
+
+def test_dedicated_preview_endpoint_never_accepts_a_real_migration(live_vault):
+    client, headers, _state, calls = live_vault
+    vault.save_config({"enabled": False})
+    local = client.post(
+        "/api/v2/secrets", headers=headers, json={"name": "Forced preview", "value": "test-only"}
+    ).json()
+    vault.save_config({"enabled": True})
+    calls.clear()
+    result = client.post(
+        "/api/v2/secrets/" + local["id"] + "/migrate/preview",
+        headers=headers,
+        json={"expected_version": 1, "dry_run": False},
+    )
+    assert result.status_code == 200 and result.json()["dry_run"]
+    assert not any(write for _, write in calls)
+    with connection() as c:
+        assert (
+            c.execute(
+                "SELECT provider FROM gh2_secret_handles WHERE id=?", (local["id"],)
+            ).fetchone()[0]
+            == "builtin"
+        )
