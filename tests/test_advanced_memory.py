@@ -300,7 +300,8 @@ def test_backlog_bounded_and_initial_review_reset(advanced):
     assert runner.calls == 2
 
 
-def test_catalog_uses_app_server_metadata_without_model_turn(advanced):
+def test_catalog_uses_app_server_metadata_without_model_turn(advanced, monkeypatch):
+    monkeypatch.setattr("app.advanced.codex.time.monotonic", lambda: 100.0)
     executable = advanced / "catalog-codex"
     executable.write_text("""#!/usr/bin/env python3
 import sys,json

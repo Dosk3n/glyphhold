@@ -136,7 +136,7 @@ class CodexRunner:
 
     async def refresh_models(self) -> None:
         """Read the official app-server model catalog, without starting a model turn."""
-        if time.monotonic() - self.catalog_checked_at < 900:
+        if self.catalog_checked_at and time.monotonic() - self.catalog_checked_at < 900:
             return
         self.catalog_checked_at = time.monotonic()
         process = None
