@@ -152,7 +152,7 @@ def matches(row: dict, query: str) -> bool:
         parsed
         and (
             parsed[0] in [w.casefold() for w in row.get("websites", [])]
-            or ("://" not in query and parsed[1] in row.get("hostnames", []))
+            or parsed[1] in row.get("hostnames", [])
         )
     )
 

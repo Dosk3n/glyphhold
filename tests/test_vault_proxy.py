@@ -548,3 +548,18 @@ def test_cli_errors_are_safe_and_identify_the_failed_stage(secrets_client, monke
         cli._run(["sync"], config={"server_url": "https://vault.example.test", "client_id": "test"})
     assert error.value.code == "vault_sync_failed" and error.value.retryable
     assert "private" not in str(error.value)
+
+
+@pytest.mark.parametrize(
+    "saved,query",
+    [
+        ("nas.example.test", "https://nas.example.test/login"),
+        ("http://nas.example.test:8080", "https://nas.example.test/login"),
+    ],
+)
+def test_full_website_queries_find_same_hostname_across_saved_url_formats(live_vault, saved, query):
+    client, headers, state, _ = live_vault
+    state["items"][0]["name"] = "Different service label"
+    state["items"][0]["login"]["uris"] = [{"uri": saved}]
+    response = client.get("/api/v2/secrets", headers=headers, params={"query": query})
+    assert response.status_code == 200 and len(response.json()["secrets"]) == 1

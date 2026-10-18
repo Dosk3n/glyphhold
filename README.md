@@ -34,12 +34,12 @@ key and saved logins. Do not use `-v` when preserving an installation.
 
 The image contains the web application, dashboard, Codex CLI and Bitwarden CLI.
 Only one service and one persistent data volume are required. Pin a tested image
-version such as `ghcr.io/dosk3n/glyphhold:2.1.1`.
+version such as `ghcr.io/dosk3n/glyphhold:2.1.2`.
 
 ```yaml
 services:
   glyphhold:
-    image: ghcr.io/dosk3n/glyphhold:2.1.1
+    image: ghcr.io/dosk3n/glyphhold:2.1.2
     ports:
       - "127.0.0.1:5995:5995"
     volumes:
@@ -121,7 +121,8 @@ secure notes, cards, identities and custom fields. No registration, linking or
 import into Glyph Hold is needed. Metadata excludes values; reveal selects one
 field. Search matches entry names, folder names, saved website origins and
 hostnames, including IP addresses. URL metadata strips userinfo, paths, queries
-and fragments; full website queries are matched by their normalised origin.
+and fragments; full website queries also match their hostname, including entries saved without
+a scheme or with a different port/protocol.
 Multiple matches remain separate and require an explicit target ID. Existing built-in secrets remain available, identified by provider.
 
 Folders are optional organisation: list/create folders, pass a folder ID when
