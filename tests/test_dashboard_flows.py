@@ -3,8 +3,7 @@ from __future__ import annotations
 from fastapi.testclient import TestClient
 
 from app.storage.repositories import auth as auth_repo
-from app.storage.repositories import events
-from app.storage.repositories import memories, secrets
+from app.storage.repositories import events, memories, secrets
 from tests.conftest import dashboard_csrf_headers
 
 

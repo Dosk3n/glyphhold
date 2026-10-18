@@ -5,12 +5,32 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from pydantic import BaseModel, Field
 
-from app.core.auth import ApiPrincipal, require_scope
+from app.config import settings
+from app.core.auth import (
+    ApiPrincipal,
+    get_current_dashboard_user,
+    require_scope,
+    validate_csrf_value,
+)
 from app.core.request_context import get_request_id
 from app.storage.repositories import categories
 from app.storage.repositories.events import record_event
 
 router = APIRouter(prefix="/api/v1/categories", tags=["categories"])
+
+
+def category_administrator(request: Request) -> ApiPrincipal:
+    """Global taxonomy changes belong to the owner, never a scoped agent key."""
+    user = get_current_dashboard_user(request)
+    if request.headers.get("Authorization") or not user or not user.get("is_admin"):
+        raise HTTPException(status_code=403, detail="Dashboard administration required")
+    if not validate_csrf_value(
+        request.cookies.get(settings.csrf_cookie_name), request.headers.get("X-CSRF-Token")
+    ):
+        raise HTTPException(
+            status_code=403, detail="Dashboard security token is missing or invalid"
+        )
+    return ApiPrincipal(key_id="dashboard", actor=str(user["username"]), scopes={"admin"})
 
 
 class CategoryCreate(BaseModel):
@@ -33,14 +53,19 @@ class CategoryPatch(BaseModel):
 def list_categories(
     _: Annotated[ApiPrincipal, Depends(require_scope("memories:read"))],
 ) -> list[dict]:
-    return categories.list_categories()
+    # Counts are global in the legacy repository; exposing them would reveal
+    # records belonging to spaces the API caller cannot access.
+    return [
+        {k: v for k, v in row.items() if k != "memory_count"}
+        for row in categories.list_categories()
+    ]
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
 def create_category(
     payload: CategoryCreate,
     request: Request,
-    principal: Annotated[ApiPrincipal, Depends(require_scope("memories:write"))],
+    principal: Annotated[ApiPrincipal, Depends(category_administrator)],
 ) -> dict:
     category = categories.create_category(**payload.model_dump())
     record_event(
@@ -72,7 +97,7 @@ def update_category(
     category_id: str,
     payload: CategoryPatch,
     request: Request,
-    principal: Annotated[ApiPrincipal, Depends(require_scope("memories:write"))],
+    principal: Annotated[ApiPrincipal, Depends(category_administrator)],
 ) -> dict:
     category = categories.update_category(category_id, **payload.model_dump(exclude_unset=True))
     if category is None:
@@ -94,7 +119,7 @@ def update_category(
 def delete_category(
     category_id: str,
     request: Request,
-    principal: Annotated[ApiPrincipal, Depends(require_scope("memories:write"))],
+    principal: Annotated[ApiPrincipal, Depends(category_administrator)],
 ) -> None:
     category = categories.get_category(category_id)
     if category is None:

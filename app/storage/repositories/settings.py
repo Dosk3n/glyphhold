@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-import secrets
 from collections.abc import Callable
 
+from app.config import settings
+from app.core.encryption import derive_key, persistent_private_key
 from app.storage.db import connection
 from app.utils.time import utc_now
 
@@ -33,4 +34,13 @@ def get_or_create_setting(key: str, default_factory: Callable[[], str]) -> str:
 
 
 def get_session_secret() -> str:
-    return get_or_create_setting("session_secret", lambda: secrets.token_urlsafe(48))
+    # A database-only leak must not allow forging administrator sessions. Legacy
+    # cookies expire once, while the new secret remains stable across restarts.
+    if settings.secrets_enabled:
+        secret = derive_key("dashboard-signing")
+    else:
+        secret = persistent_private_key(settings.db_path.parent / "session.key")
+    if get_setting("session_secret") is not None:
+        with connection() as conn:
+            conn.execute("DELETE FROM app_settings WHERE key='session_secret'")
+    return secret

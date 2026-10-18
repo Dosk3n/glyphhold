@@ -21,11 +21,13 @@ def _env_int(name: str, default: int) -> int:
 
 @dataclass(frozen=True)
 class Settings:
-    version: str = "1.0.3"
+    version: str = "2.0.0"
     db_path: Path = Path(os.getenv("GLYPHHOLD_DB_PATH", "./data/glyphhold.sqlite"))
     host: str = os.getenv("GLYPHHOLD_HOST", "0.0.0.0")
     port: int = _env_int("GLYPHHOLD_PORT", 5995)
     encryption_key: str | None = os.getenv("GLYPHHOLD_ENCRYPTION_KEY") or None
+    auto_encryption_key: bool = _env_bool("GLYPHHOLD_AUTO_ENCRYPTION_KEY", True)
+    allow_legacy_api: bool = _env_bool("GLYPHHOLD_ALLOW_LEGACY_API", False)
     log_level: str = os.getenv("GLYPHHOLD_LOG_LEVEL", "INFO").upper()
     log_format: str = os.getenv("GLYPHHOLD_LOG_FORMAT", "pretty").lower()
     event_retention_days: int = _env_int("GLYPHHOLD_EVENT_RETENTION_DAYS", 90)
@@ -42,13 +44,14 @@ class Settings:
     invalid_api_key_window_seconds: int = _env_int(
         "GLYPHHOLD_INVALID_API_KEY_WINDOW_SECONDS", 60
     )
+    expose_api_docs: bool = _env_bool("GLYPHHOLD_EXPOSE_API_DOCS", False)
     cookie_secure: bool = _env_bool("GLYPHHOLD_COOKIE_SECURE", False)
     session_cookie_name: str = "glyphhold_session"
     csrf_cookie_name: str = "glyphhold_csrf"
 
     @property
     def secrets_enabled(self) -> bool:
-        return self.encryption_key is not None
+        return self.encryption_key is not None or self.auto_encryption_key
 
 
 settings = Settings()

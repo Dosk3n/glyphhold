@@ -1,108 +1,76 @@
-# Backup And Restore
+# GH2 Backup and Restore
 
-Glyph Hold stores its state in SQLite. In Docker, the database should live under
-`/data` inside the container.
+The default persistent volume contains `glyphhold.sqlite`, its WAL/SHM files,
+`encryption.key`, private Codex authentication under `advanced/codex`, and
+Bitwarden CLI state. Preserve the entire volume securely. A volume backup can
+unlock secrets and use saved account sessions; protect it like credentials.
 
-Back up the whole data directory or volume, not only `glyphhold.sqlite`. SQLite
-may also have `glyphhold.sqlite-wal` and `glyphhold.sqlite-shm` files.
-
-Back up both:
-
-- the SQLite data directory or Docker volume
-- the `GLYPHHOLD_ENCRYPTION_KEY` value from your `.env` file or container config
-
-If you lose or change the encryption key, existing secret values cannot be
-decrypted.
-
-## Docker Compose
-
-With the compose example, data is stored in `./data` next to
-`docker-compose.yml`.
-
-Stop Glyph Hold:
+For a consistent online database snapshot:
 
 ```bash
-docker compose down
+glyphhold-admin backup --output /safe/path/glyphhold-backup.sqlite
 ```
 
-Create a backup:
+Also preserve `/data/encryption.key`, or the original externally supplied
+`GLYPHHOLD_ENCRYPTION_KEY`. A database snapshot by itself does not include the
+installation key or provider login state. Copying only an active SQLite main
+file without its WAL is not a valid online backup.
+
+For a full-volume backup, stop only the intended Compose project, archive its
+volume preserving ownership/permissions, then restart it. Restore into a new,
+empty volume with the service stopped, using the matching database and key.
+Test the restored copy before replacing a working installation. Avoid deleting
+working volumes as a restore procedure.
+
+Use `docker-compose.gh2-test.yml` with project name `glyphhold2-test` for isolated
+rehearsals. Its port5996 and named volume are separate from the running v1
+installation on5995. `docker compose down` retains data; `down -v` deletes it.
+
+## Upgrading v1
+
+1. Preserve an independent consistent backup and the original v1 encryption key.
+2. Rehearse on a copy in a separate volume; never mount live v1 data in GH2 while
+   the old service is using it.
+3. Supply the original key when starting GH2 against copied encrypted data.
+4. GH2 creates a pre-upgrade database snapshot and applies additive v2 schema.
+5. Existing memories/secrets enter restricted Import review ownership. Configure
+   spaces and upgraded-client grants before agents connect.
+6. Compare counts, representative content, revisions, timestamps and search.
+   Explicitly reveal a disposable known secret to verify decryption.
+
+A missing or incompatible key must fail instead of silently generating a new
+one over encrypted data. A changed key source is not key rotation. The database
+and original key must be restored as a matched set. Returning to v1 after new v2
+writes requires reconciliation; do not run v1 directly on the migrated database.
+
+## Combining installations
+
+Export memories separately from secrets:
 
 ```bash
-tar -czf glyphhold-data-backup.tgz data .env
+glyphhold-admin export-memory --database /copy/source.sqlite --output memories.json
 ```
 
-Start Glyph Hold again:
+Import through the Migration page with a stable namespace for each source and
+an explicit destination space. Preview first; repeat imports are safe, changed
+sources produce conflicts rather than overwrite later edits. Unknown ownership
+belongs in Import review. Classifying/merging imported memories is a separate,
+optional Advanced Memory activity after faithful import.
+
+To transfer built-in secrets, use a private file containing the source's
+original encryption key and create a separately encrypted package:
 
 ```bash
-docker compose up -d
+glyphhold-admin export-secrets --database /copy/source.sqlite --key-file /private/source.key --output secrets.encrypted.json
 ```
 
-Restore from a backup:
+The command prompts for a transfer passphrase without echoing it. Import the
+package in the separate encrypted-secret section of Migration, entering that
+passphrase, source namespace and destination space. Preview lists metadata only;
+values are reencrypted under the destination installation key. Keep source
+backups until successful validation. External Bitwarden/Vaultwarden handles must
+be deliberately relinked to selected provider accounts/items/fields; toggling a
+provider is never migration.
 
-```bash
-docker compose down
-rm -rf data
-tar -xzf glyphhold-data-backup.tgz
-docker compose up -d
-```
 
-## Docker Named Volume
-
-If you started Glyph Hold with `-v glyphhold-data:/data`, create a backup with:
-
-```bash
-docker stop glyphhold
-docker run --rm \
-  -v glyphhold-data:/data:ro \
-  -v "$PWD":/backup \
-  busybox \
-  tar -czf /backup/glyphhold-data-backup.tgz -C /data .
-docker start glyphhold
-```
-
-Restore a named volume backup:
-
-```bash
-docker stop glyphhold
-docker rm glyphhold
-docker volume rm glyphhold-data
-docker volume create glyphhold-data
-docker run --rm \
-  -v glyphhold-data:/data \
-  -v "$PWD":/backup \
-  busybox \
-  tar -xzf /backup/glyphhold-data-backup.tgz -C /data
-```
-
-Then recreate the Glyph Hold container with the same `docker run` command and
-the same `GLYPHHOLD_ENCRYPTION_KEY` value.
-
-## Before Upgrading
-
-1. Stop Glyph Hold.
-2. Back up the data directory or named volume.
-3. Back up the encryption key separately.
-4. Change the image tag.
-5. Start Glyph Hold.
-6. Open `http://localhost:5995` and check `/api/v1/health`.
-
-Startup applies pending database migrations automatically.
-
-## After Restore Or Upgrade
-
-Open:
-
-```text
-http://localhost:5995/api/v1/health
-```
-
-Check that `status` is `ok`, `database` is `ok`, and `schema_version` is the
-expected version for the image you are running. Then sign in to the dashboard
-and confirm that memories, API keys, and secrets metadata are present.
-
-To verify secret restore, reveal one known non-critical secret. If it does not
-decrypt, stop Glyph Hold and restore the original `GLYPHHOLD_ENCRYPTION_KEY`.
-
-Glyph Hold's automated tests cover this restore rule: copied SQLite data files
-with the same encryption key can reveal existing secrets; the same files with a
-different key cannot.
+GH2 security upgrades derive dashboard signing keys from the installation encryption key and remove the old database signing secret. Existing dashboard cookies expire once; user passwords are retained. If secret storage is explicitly disabled, also preserve the private session.key file in the data directory. Key files must be regular files owned by the service user; startup repairs permissions to0600 and rejects symbolic links. Legacy secret-import hashes are protected during migration; already copied older backups remain sensitive and cannot be retroactively changed.

@@ -1,7 +1,7 @@
 [project]
 name = "glyphhold"
-version = "1.0.3"
-description = "A local, non-LLM memory and secrets service for agents."
+version = "2.0.0"
+description = "Self-hosted shared agent memory with optional subscription-powered maintenance."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

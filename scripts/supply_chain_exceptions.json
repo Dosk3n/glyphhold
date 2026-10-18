@@ -1,0 +1,26 @@
+[
+  {
+    "ecosystem": "npm",
+    "name": "tmp",
+    "version": "0.0.33",
+    "advisories": ["GHSA-52f5-9888-hmc6", "GHSA-ph9p-34f9-6g65"],
+    "expires": "2026-11-18",
+    "reason": "Official Bitwarden CLI 2026.10.0 dependency through inquirer/external-editor. GH2 uses noninteractive commands; local filesystem attack preconditions are not public API inputs. Retained pending upstream release; not asserted patched."
+  },
+  {
+    "ecosystem": "npm",
+    "name": "multer",
+    "version": "2.3.0",
+    "advisories": ["GHSA-3pph-fpjx-jg34"],
+    "expires": "2026-11-18",
+    "reason": "Official Bitwarden CLI 2026.10.0 dependency. GH2 never starts bw serve or a multer HTTP upload handler; the affected diskStorage upload route is not exposed. Retained pending upstream release."
+  },
+  {
+    "ecosystem": "npm",
+    "name": "node-forge",
+    "version": "1.4.0",
+    "advisories": ["GHSA-86w9-cpqp-85rv"],
+    "expires": "2026-11-18",
+    "reason": "Official Bitwarden CLI 2026.10.0 dependency; 1.4.0 is latest and no upstream patch is published. Vulnerable low-exponent RSA signature verification path has not been established in GH2 flows. Residual upstream risk accepted temporarily, not claimed unreachable or fixed."
+  }
+]

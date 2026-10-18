@@ -19,6 +19,10 @@ def client_factory(tmp_path: Path) -> Callable[..., TestClient]:
         counter += 1
         object.__setattr__(settings, "db_path", tmp_path / f"glyphhold-{counter}.sqlite")
         object.__setattr__(settings, "encryption_key", encryption_key)
+        # Legacy regression fixtures explicitly opt into the old unscoped API.
+        # Production GH2 defaults keep it disabled and generate a persistent key.
+        object.__setattr__(settings, "auto_encryption_key", False)
+        object.__setattr__(settings, "allow_legacy_api", True)
         object.__setattr__(settings, "log_format", "json")
 
         from app.main import create_app

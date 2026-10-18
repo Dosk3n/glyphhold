@@ -1,20 +1,24 @@
 name: CI
 
 on:
+  workflow_call:
   push:
     branches: ["main"]
   pull_request:
     branches: ["main"]
+
+permissions:
+  contents: read
 
 jobs:
   frontend-checks:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
       - name: Set up Node
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: "22"
           cache: npm
@@ -32,16 +36,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.12"
 
       - name: Install package and dev dependencies
         run: |
-          pip install -e ".[dev]"
+          pip install --require-hashes -r requirements.lock -r requirements-build.lock
+          pip install --no-build-isolation --no-deps -e .
+          pip install httpx pytest ruff
           pip install pip-audit
 
       - name: Audit Python dependencies
@@ -58,7 +64,7 @@ jobs:
     needs: [frontend-checks, python-checks]
     steps:
       - name: Check out repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
       - name: Build Docker image
         run: docker build -t glyphhold:ci .
@@ -68,4 +74,13 @@ jobs:
           docker run --rm \
             -e GLYPHHOLD_DB_PATH=/tmp/glyphhold-ci.sqlite \
             glyphhold:ci \
-            python -c "from app.storage.migrations import apply_migrations,current_schema_version; apply_migrations(); assert current_schema_version() >= 5"
+            python -c "from app.storage.migrations import apply_migrations,current_schema_version; apply_migrations(); assert current_schema_version() >= 6"
+
+      - name: Smoke bundled CLI entrypoints
+        run: |
+          docker run --rm --entrypoint codex glyphhold:ci --version
+          docker run --rm -e BITWARDENCLI_APPDATA_DIR=/tmp/bw --entrypoint bw glyphhold:ci --version
+
+      - name: Audit exact final image Python and bundled CLI dependencies
+        timeout-minutes: 5
+        run: python scripts/gh2_supply_chain_audit.py glyphhold:ci

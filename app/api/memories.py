@@ -14,8 +14,7 @@ from app.api.validation import (
 )
 from app.core.auth import ApiPrincipal, require_scope
 from app.core.request_context import get_request_id
-from app.storage.repositories import categories
-from app.storage.repositories import memories
+from app.storage.repositories import categories, memories
 from app.storage.repositories.events import record_event
 
 router = APIRouter(prefix="/api/v1/memories", tags=["memories"])

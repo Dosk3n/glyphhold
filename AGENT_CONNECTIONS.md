@@ -1,125 +1,65 @@
-# Agent Connections
+# Connecting Agents to GH2
 
-Glyph Hold is an HTTP service. Agents should connect through `/api/v1` with a
-dashboard-created API key.
+GH2 uses `/api/v2` for scoped data access. The old unscoped v1 data endpoints are
+closed by default. Upgrade adapters before switching an existing client URL.
+Do not repoint a live agent at the test service during development.
 
-Do not point agents at the SQLite database directly.
+## Connection setup
 
-## Environment Variables
+1. Create a dashboard API key with the required operation scopes.
+2. In Spaces, grant explicit read/write access and choose its default space.
+3. Give each host/profile its own key when defaults or permissions differ.
+4. Configure the chosen adapter's GH URL and key in its private environment.
+5. Verify capabilities, empty/scoped recall, one test write and a version conflict.
 
-Use these values in the agent or tool that should remember things:
+A work laptop can default to Work and a home PC to Personal. General requires an
+explicit read grant. An API `admin` scope does not implicitly grant every space.
+Explicit request space takes precedence over session context, then connection
+default; all choices remain constrained by grants. Broader search does not switch
+the write destination. Start a fresh conversation for strong context separation;
+GH2 cannot remove already injected information from a running model conversation.
 
-```text
-GLYPHHOLD_URL=http://localhost:5995
-GLYPHHOLD_API_KEY=gh_live_xxxxxxxxxxxxxxxxx
-```
+## Local adapters
 
-For another container on the same Docker network:
+The following sibling repositories have GH2 implementations:
 
-```text
-GLYPHHOLD_URL=http://glyphhold:5995
-GLYPHHOLD_API_KEY=gh_live_xxxxxxxxxxxxxxxxx
-```
+- `glyphhold-hermes-memory` **2.0.0**: native Hermes prefetch plus explicit durable tools.
+- `nexus-tools-glyphhold` **0.2.0**: Nexus tool pack for scoped recall and lifecycle.
+- `glyphhold-mcp` **0.2.0**: direct MCP server for Codex and other MCP clients.
 
-Recommended scopes:
+They remain separate packages and must be installed/restarted in their host
+runtimes deliberately. Local tests are not a claim that installed live runtime
+packages have changed. Nothing requires switching your currently working v1
+agents while evaluating GH2.
 
-- memory-only agent: `memories:read`, `memories:write`
-- read-only context agent: `memories:read`
-- secret reader: `secrets:reveal`
-- secret manager: `secrets:write`, `secrets:reveal`
-- dashboard activity reader: `events:read`
+The standard-library `glyphhold_client.GlyphHoldV2Client` provides the common
+HTTP contract. Preserve IDs, versions, spaces, source references and freshness
+when rendering recalled context. Mutations require expected versions; creates
+need stable operation idempotency keys. On HTTP409, reread and reassess rather
+than blindly overwriting.
 
-Only grant secret scopes to tools that need them.
+## Hermes ownership
 
-## HTTP Examples
+Hermes automatic prefetch uses profile-isolated configuration and supplies
+session context. Explicit Glyph Hold tools are the authoritative shared-write
+path. The incomplete v1 additions-only native mirror is removed; local
+MEMORY.md/USER.md can still serve host-local purposes, without implying that
+local scratchpad deletion globally removes a shared fact. No transcript capture
+is added just because a turn hook exists. Backend failures are observable.
 
-Health check:
+## Advanced Memory
 
-```bash
-curl "$GLYPHHOLD_URL/api/v1/health"
-```
+All clients benefit from the maintained records through the same recall API.
+They do not need a separate model call to generate each profile on read and must
+not each start a consolidation schedule. GH2 owns the schedule and job policy.
+The bundled Codex worker has its own official subscription sign-in under
+Settings; agent API keys and secrets are not its OpenAI authentication.
 
-Search memories:
+## Secrets
 
-```bash
-curl -s "$GLYPHHOLD_URL/api/v1/memories/search" \
-  -H "Authorization: Bearer $GLYPHHOLD_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"query":"project context","limit":5}'
-```
-
-Store a memory:
-
-```bash
-curl -s "$GLYPHHOLD_URL/api/v1/memories" \
-  -H "Authorization: Bearer $GLYPHHOLD_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "category_id": "cat_projects",
-    "title": "Deployment decision",
-    "summary": "Glyph Hold runs on port 5995.",
-    "body": "Use Docker and mount /data for persistent storage.",
-    "tags": ["deployment"],
-    "confidence": 4,
-    "auto_prefetch_level": "normal"
-  }'
-```
-
-Ask Glyph Hold what context should be injected before an agent response:
-
-```bash
-curl -s "$GLYPHHOLD_URL/api/v1/agent/prefetch" \
-  -H "Authorization: Bearer $GLYPHHOLD_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"agent":"codex","message":"What should I remember about deployment?"}'
-```
-
-Reveal one secret explicitly:
-
-```bash
-curl -s "$GLYPHHOLD_URL/api/v1/secrets/CUSTOM_API_KEY_HERE/reveal" \
-  -H "Authorization: Bearer $GLYPHHOLD_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"requesting_agent":"codex","purpose":"deployment"}'
-```
-
-Secret names must be uppercase environment variable names, such as
-`CUSTOM_API_KEY_HERE`.
-
-## Python Client
-
-The `glyphhold_client` package is a thin wrapper around the same HTTP API.
-
-```python
-import os
-
-from glyphhold_client import GlyphHoldClient
-
-client = GlyphHoldClient(
-    base_url=os.environ["GLYPHHOLD_URL"],
-    api_key=os.environ["GLYPHHOLD_API_KEY"],
-)
-
-client.create_memory(
-    category_id="cat_projects",
-    title="Deployment decision",
-    summary="Glyph Hold runs on port 5995.",
-    body="Use Docker and mount /data for persistent storage.",
-    tags=["deployment"],
-    confidence=4,
-)
-
-context = client.prefetch(
-    agent="codex",
-    message="What should I remember about deployment?",
-)
-
-secret = client.reveal_secret(
-    "CUSTOM_API_KEY_HERE",
-    requesting_agent="codex",
-    purpose="deployment",
-)
-```
-
-Future Nexus and Hermes integrations should use this HTTP contract from their
-own repositories.
+Secret metadata and explicit reveals use the same GH2 API regardless of built-in
+or Bitwarden/Vaultwarden storage. A client needs both the appropriate operation
+scope and space grant. Secret values never belong in prefetch or ordinary memory
+exports. Use IDs when identical names exist in multiple permitted spaces. Only
+retrieve values for an explicitly authorised task; do not print them into chats
+or logs unnecessarily.

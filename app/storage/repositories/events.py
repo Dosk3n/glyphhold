@@ -5,8 +5,8 @@ import threading
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
-from app.core.ids import new_id
 from app.config import settings
+from app.core.ids import new_id
 from app.storage.db import connection
 from app.utils.time import utc_now
 

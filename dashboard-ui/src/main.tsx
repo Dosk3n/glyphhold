@@ -19,9 +19,22 @@ import {
   RotateCcw,
   Search,
   ShieldCheck,
+  Settings,
+  FolderOpen,
+  Upload,
   Trash2,
 } from "lucide-react";
 import "./styles.css";
+import "./design-system.css";
+import {
+  SpacesPage,
+  SettingsPage,
+  MemoryReviewsPage,
+  MemoryLibrary,
+  MemoryRecord,
+  MigrationPage,
+  SecretLibrary,
+} from "./v2";
 
 type Dict = Record<string, any>;
 
@@ -39,39 +52,6 @@ type Category = {
   agent_can_write: number;
 };
 
-type Memory = {
-  id: string;
-  category_id: string;
-  category_name?: string;
-  title: string;
-  summary?: string | null;
-  body: string;
-  tags?: string[];
-  tags_text?: string;
-  confidence: number;
-  auto_prefetch_level: string;
-  archived: number;
-  updated_at: string;
-};
-
-type Secret = {
-  id: string;
-  name: string;
-  description?: string | null;
-  value_type: string;
-  service?: string | null;
-  host?: string | null;
-  scope?: string | null;
-  tags?: string[];
-  tags_text?: string;
-  allowed_agents?: string[];
-  allowed_agents_text?: string;
-  allowed_tools?: string[];
-  allowed_tools_text?: string;
-  updated_at: string;
-  last_revealed_at?: string | null;
-};
-
 type ApiKey = {
   id: string;
   name: string;
@@ -87,10 +67,13 @@ type ApiKey = {
 const navItems = [
   { label: "Overview", path: "/dashboard", icon: Database },
   { label: "Memories", path: "/dashboard/memories", icon: BookOpen },
+  { label: "Spaces & access", path: "/dashboard/spaces", icon: FolderOpen },
   { label: "Secrets", path: "/dashboard/secrets", icon: Lock },
-  { label: "API Keys", path: "/dashboard/api-keys", icon: KeyRound },
-  { label: "Categories", path: "/dashboard/categories", icon: Layers3 },
   { label: "Activity", path: "/dashboard/activity", icon: Activity },
+  { label: "Agent API keys", path: "/dashboard/api-keys", icon: KeyRound },
+  { label: "Categories", path: "/dashboard/categories", icon: Layers3 },
+  { label: "Settings", path: "/dashboard/settings", icon: Settings },
+  { label: "Migration", path: "/dashboard/migration", icon: Upload },
 ];
 
 async function api<T>(path: string, options: RequestInit = {}): Promise<T> {
@@ -99,7 +82,10 @@ async function api<T>(path: string, options: RequestInit = {}): Promise<T> {
   if (options.body && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
   }
-  if (!["GET", "HEAD", "OPTIONS"].includes(method) && path.startsWith("/dashboard/api/")) {
+  if (
+    !["GET", "HEAD", "OPTIONS"].includes(method) &&
+    (path.startsWith("/dashboard/api/") || path.startsWith("/api/v2/"))
+  ) {
     const csrfCookie = document.cookie
       .split("; ")
       .find((item) => item.startsWith("glyphhold_csrf="))
@@ -171,7 +157,13 @@ function Button({
   );
 }
 
-function Badge({ children, tone = "neutral" }: { children: React.ReactNode; tone?: string }) {
+function Badge({
+  children,
+  tone = "neutral",
+}: {
+  children: React.ReactNode;
+  tone?: string;
+}) {
   return <span className={`badge ${tone}`}>{children}</span>;
 }
 
@@ -211,9 +203,10 @@ function Modal({
   children: React.ReactNode;
   onClose: () => void;
 }) {
+  const ref = React.useRef<HTMLDialogElement>(null);
+  useEffect(() => { ref.current?.showModal(); }, []);
   return (
-    <div className="modal-backdrop" role="presentation">
-      <div className="modal" role="dialog" aria-modal="true" aria-label={title}>
+      <dialog ref={ref} className="modal" aria-label={title} onCancel={onClose} onClose={onClose}>
         <div className="modal-header">
           <h2>{title}</h2>
           <Button tone="ghost" onClick={onClose}>
@@ -221,8 +214,7 @@ function Modal({
           </Button>
         </div>
         {children}
-      </div>
-    </div>
+      </dialog>
   );
 }
 
@@ -260,10 +252,13 @@ function AuthPage({
     setError("");
     setBusy(true);
     try {
-      await api(mode === "setup" ? "/dashboard/api/setup" : "/dashboard/api/login", {
-        method: "POST",
-        body: JSON.stringify(form),
-      });
+      await api(
+        mode === "setup" ? "/dashboard/api/setup" : "/dashboard/api/login",
+        {
+          method: "POST",
+          body: JSON.stringify(form),
+        },
+      );
       onSession(await api<Session>("/dashboard/api/session"));
       window.history.replaceState({}, "", "/dashboard");
     } catch (err) {
@@ -277,7 +272,7 @@ function AuthPage({
     <main className="auth-shell">
       <section className="auth-panel">
         <div className="brand-mark">
-          <ShieldCheck size={30} />
+          <img src="/dashboard-assets/glyphhold-logo.png" alt="" />
           <div>
             <strong>Glyph Hold</strong>
             <span>Local memory and secrets</span>
@@ -312,7 +307,9 @@ function AuthPage({
               <input
                 type="password"
                 value={form.confirm_password}
-                onChange={(e) => setForm({ ...form, confirm_password: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, confirm_password: e.target.value })
+                }
                 required
               />
             </Field>
@@ -339,30 +336,56 @@ function Shell({
   onLogout: () => void;
   children: React.ReactNode;
 }) {
+  const [reviewMenu, setReviewMenu] = useState({enabled: false, pending: 0});
+  useEffect(() => {
+    let active = true;
+    const refresh = async () => {
+      try {
+        const config = await api<Dict>("/dashboard/api/advanced/settings");
+        if(!active) return;
+        if(!config.enabled) { setReviewMenu({enabled: false, pending: 0}); return; }
+        const data = await api<Dict>("/dashboard/api/advanced/proposals/pending-count");
+        if(active) setReviewMenu({enabled: true, pending: Number(data.count) || 0});
+      } catch { /* Keep the last known menu state during a temporary connection failure. */ }
+    };
+    refresh();
+    const timer = window.setInterval(refresh, 15000);
+    window.addEventListener("glyphhold:memory-reviews-changed", refresh);
+    return () => { active = false; clearInterval(timer); window.removeEventListener("glyphhold:memory-reviews-changed", refresh); };
+  }, [path]);
   return (
     <div className="app-shell">
       <aside className="sidebar">
         <button className="brand-button" onClick={() => navigate("/dashboard")}>
-          <div className="brand-icon">GH</div>
+          <div className="brand-icon"><img src="/dashboard-assets/glyphhold-logo.png" alt="" /></div>
           <div>
             <strong>Glyph Hold</strong>
-            <span>Agent memory vault</span>
+            <span>Shared agent memory</span>
           </div>
         </button>
-        <nav>
-          {navItems.map((item) => {
+        <div className="nav-group-label">Workspace</div>
+        <nav aria-label="Main navigation">
+          {navItems.map((item, index) => {
             const Icon = item.icon;
             const active =
-              item.path === "/dashboard" ? path === "/dashboard" : path.startsWith(item.path);
+              item.path === "/dashboard"
+                ? path === "/dashboard"
+                : path.startsWith(item.path);
             return (
+              <React.Fragment key={item.path}>
+              {index === 5 && <div className="nav-group-label manage">Manage</div>}
               <button
-                key={item.path}
+                aria-current={active ? "page" : undefined}
                 className={active ? "active" : ""}
                 onClick={() => navigate(item.path)}
               >
                 <Icon size={18} />
                 <span>{item.label}</span>
               </button>
+              {index === 1 && reviewMenu.enabled && <button className={path === "/dashboard/memory-reviews" ? "active" : ""} aria-current={path === "/dashboard/memory-reviews" ? "page" : undefined} onClick={() => navigate("/dashboard/memory-reviews")}>
+                <Check size={18} /><span>Memory reviews</span>{reviewMenu.pending > 0 && <span className="nav-review-count" aria-label={`${reviewMenu.pending} awaiting approval`}>{reviewMenu.pending}</span>}
+              </button>}
+              </React.Fragment>
             );
           })}
         </nav>
@@ -376,7 +399,10 @@ function Shell({
           </Button>
         </div>
       </aside>
-      <main className="content-shell">{children}</main>
+      <div className="dashboard-main">
+        <header className="dashboard-topbar"><span>Workspace / <strong>{path === "/dashboard/memory-reviews" ? "Memory reviews" : navItems.find(item => item.path !== "/dashboard" && path.startsWith(item.path))?.label || "Overview"}</strong></span><span className="instance-label">Glyph Hold 2</span></header>
+        <main className="content-shell">{children}</main>
+      </div>
     </div>
   );
 }
@@ -409,30 +435,51 @@ function OverviewPage({ navigate }: { navigate: (path: string) => void }) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    api<Dict>("/dashboard/api/overview").then(setData).catch((err) => setError(err.message));
+    api<Dict>("/dashboard/api/overview")
+      .then(setData)
+      .catch((err) => setError(err.message));
   }, []);
 
   if (error) return <div className="alert">{error}</div>;
   if (!data) return <div className="loading">Loading dashboard</div>;
 
   const stats = [
-    { label: "Memories", value: data.memory_count, icon: BookOpen, path: "/dashboard/memories" },
-    { label: "Secrets", value: data.secret_count, icon: Lock, path: "/dashboard/secrets" },
-    { label: "API Keys", value: data.api_key_count, icon: KeyRound, path: "/dashboard/api-keys" },
+    {
+      label: "Memories",
+      value: data.memory_count,
+      icon: BookOpen,
+      path: "/dashboard/memories",
+    },
+    {
+      label: "Secrets",
+      value: data.secret_count,
+      icon: Lock,
+      path: "/dashboard/secrets",
+    },
+    {
+      label: "Agent API keys",
+      value: data.api_key_count,
+      icon: KeyRound,
+      path: "/dashboard/api-keys",
+    },
   ];
 
   return (
     <>
       <PageHeader
         eyebrow="Status"
-        title="Dashboard"
+        title="Overview"
         body="Manage durable agent memory, local secrets, API keys, and audit activity from one place."
       />
       <section className="stats-grid">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
-            <button key={stat.label} className="stat-card" onClick={() => navigate(stat.path)}>
+            <button
+              key={stat.label}
+              className="stat-card"
+              onClick={() => navigate(stat.path)}
+            >
               <Icon size={22} />
               <span>{stat.label}</span>
               <strong>{stat.value}</strong>
@@ -451,7 +498,9 @@ function OverviewPage({ navigate }: { navigate: (path: string) => void }) {
             <div>
               <dt>Database</dt>
               <dd>
-                <Badge tone={data.database_status === "ok" ? "success" : "danger"}>
+                <Badge
+                  tone={data.database_status === "ok" ? "success" : "danger"}
+                >
                   {data.database_status}
                 </Badge>
               </dd>
@@ -468,751 +517,14 @@ function OverviewPage({ navigate }: { navigate: (path: string) => void }) {
         </div>
       </section>
       <section className="panel activity-panel">
-          <div className="panel-heading">
-            <h2>Recent Activity</h2>
-            <Button tone="ghost" onClick={() => navigate("/dashboard/activity")}>
-              View all
-            </Button>
-          </div>
-          <EventList events={data.recent_events || []} compact />
-      </section>
-    </>
-  );
-}
-
-function MemoriesPage({ navigate }: { navigate: (path: string) => void }) {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [memoriesList, setMemoriesList] = useState<Memory[]>([]);
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("");
-  const [error, setError] = useState("");
-  const [form, setForm] = useState({
-    category_id: "",
-    title: "",
-    summary: "",
-    body: "",
-    tags: "",
-    confidence: 3,
-    auto_prefetch_level: "normal",
-  });
-
-  async function load() {
-    const [categoryRows, memoryRows] = await Promise.all([
-      api<Category[]>("/dashboard/api/categories"),
-      api<{ memories: Memory[] }>(
-        `/dashboard/api/memories?q=${encodeURIComponent(query)}&category=${encodeURIComponent(category)}`,
-      ),
-    ]);
-    setCategories(categoryRows);
-    setMemoriesList(memoryRows.memories);
-    setForm((current) => ({
-      ...current,
-      category_id: current.category_id || categoryRows[0]?.id || "",
-    }));
-  }
-
-  useEffect(() => {
-    load().catch((err) => setError(err.message));
-  }, []);
-
-  async function search(event?: FormEvent) {
-    event?.preventDefault();
-    setError("");
-    try {
-      await load();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Search failed");
-    }
-  }
-
-  async function create(event: FormEvent) {
-    event.preventDefault();
-    setError("");
-    try {
-      await api<Memory>("/dashboard/api/memories", {
-        method: "POST",
-        body: JSON.stringify({
-          ...form,
-          tags: splitTags(form.tags),
-          confidence: Number(form.confidence),
-        }),
-      });
-      setForm({
-        ...form,
-        title: "",
-        summary: "",
-        body: "",
-        tags: "",
-        confidence: 3,
-        auto_prefetch_level: "normal",
-      });
-      await load();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Create failed");
-    }
-  }
-
-  return (
-    <>
-      <PageHeader
-        eyebrow="Memory"
-        title="Memories"
-        body="Create searchable context that agents can retrieve deterministically."
-      />
-      {error && <div className="alert">{error}</div>}
-      <section className="resource-grid">
-        <div className="panel resource-panel">
-          <div className="panel-heading">
-            <div>
-              <h2>Memory library</h2>
-              <p>Search, review, and open stored context.</p>
-            </div>
-            <ResultCount count={memoriesList.length} noun="memory" />
-          </div>
-          <form className="filters resource-filters" onSubmit={search}>
-            <div className="searchbox">
-              <Search size={16} />
-              <input value={query} placeholder="Search memories" onChange={(e) => setQuery(e.target.value)} />
-            </div>
-            <select value={category} onChange={(e) => setCategory(e.target.value)}>
-              <option value="">All categories</option>
-              {categories.map((item) => (
-                <option key={item.id} value={item.name}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-            <Button icon={Search} tone="secondary">
-              Search
-            </Button>
-          </form>
-          {memoriesList.length === 0 ? (
-            <EmptyState title="No memories found" body="Create a memory or adjust the current search." />
-          ) : (
-            <div className="list-table resource-list">
-              {memoriesList.map((memory) => (
-                <button
-                  key={memory.id}
-                  className="list-row resource-row"
-                  onClick={() => navigate(`/dashboard/memories/${memory.id}`)}
-                >
-                  <div className="row-main">
-                    <strong>{memory.title}</strong>
-                    <span>{memory.summary || memory.body.slice(0, 180)}</span>
-                  </div>
-                  <div className="row-meta">
-                    <Badge>{memory.category_name}</Badge>
-                    <Badge tone={memory.auto_prefetch_level === "pinned" ? "success" : "neutral"}>
-                      {memory.auto_prefetch_level}
-                    </Badge>
-                    <span>{memory.updated_at}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-        <form className="panel stack side-panel compact-form" onSubmit={create}>
-          <div className="panel-heading">
-            <div>
-              <h2>Create memory</h2>
-              <p>Add durable context for agents.</p>
-            </div>
-          </div>
-          <Field label="Category">
-            <select
-              value={form.category_id}
-              onChange={(e) => setForm({ ...form, category_id: e.target.value })}
-              required
-            >
-              {categories.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field label="Title">
-            <input
-              value={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
-              required
-            />
-          </Field>
-          <Field label="Summary" hint="Short version used for quick review and prefetch.">
-            <input value={form.summary} onChange={(e) => setForm({ ...form, summary: e.target.value })} />
-          </Field>
-          <Field label="Body">
-            <textarea
-              className="compact-textarea"
-              value={form.body}
-              onChange={(e) => setForm({ ...form, body: e.target.value })}
-              required
-            />
-          </Field>
-          <div className="form-row">
-            <Field label="Confidence">
-              <input
-                type="number"
-                min="1"
-                max="5"
-                value={form.confidence}
-                onChange={(e) => setForm({ ...form, confidence: Number(e.target.value) })}
-              />
-            </Field>
-            <Field label="Prefetch">
-              <select
-                value={form.auto_prefetch_level}
-                onChange={(e) => setForm({ ...form, auto_prefetch_level: e.target.value })}
-              >
-                {["never", "low", "normal", "high", "pinned"].map((level) => (
-                  <option key={level} value={level}>
-                    {level}
-                  </option>
-                ))}
-              </select>
-            </Field>
-          </div>
-          <Field label="Tags">
-            <input
-              value={form.tags}
-              placeholder="comma-separated"
-              onChange={(e) => setForm({ ...form, tags: e.target.value })}
-            />
-          </Field>
-          <Button icon={Plus}>Create memory</Button>
-        </form>
-      </section>
-    </>
-  );
-}
-
-function MemoryDetailPage({ id, navigate }: { id: string; navigate: (path: string) => void }) {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [memory, setMemory] = useState<Memory | null>(null);
-  const [revisions, setRevisions] = useState<Memory[]>([]);
-  const [error, setError] = useState("");
-  const [confirmDelete, setConfirmDelete] = useState(false);
-  const [form, setForm] = useState<any>(null);
-
-  async function load() {
-    const [categoryRows, detail] = await Promise.all([
-      api<Category[]>("/dashboard/api/categories"),
-      api<{ memory: Memory; revisions: Memory[] }>(`/dashboard/api/memories/${id}`),
-    ]);
-    setCategories(categoryRows);
-    setMemory(detail.memory);
-    setRevisions(detail.revisions);
-    setForm({
-      category_id: detail.memory.category_id,
-      title: detail.memory.title,
-      summary: detail.memory.summary || "",
-      body: detail.memory.body,
-      tags: detail.memory.tags_text || "",
-      confidence: detail.memory.confidence,
-      auto_prefetch_level: detail.memory.auto_prefetch_level,
-    });
-  }
-
-  useEffect(() => {
-    load().catch((err) => setError(err.message));
-  }, [id]);
-
-  async function save(event: FormEvent) {
-    event.preventDefault();
-    setError("");
-    try {
-      await api(`/dashboard/api/memories/${id}`, {
-        method: "PATCH",
-        body: JSON.stringify({
-          ...form,
-          tags: splitTags(form.tags),
-          confidence: Number(form.confidence),
-        }),
-      });
-      await load();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Save failed");
-    }
-  }
-
-  async function restore(revisionId: string) {
-    await api(`/dashboard/api/memories/${id}/revisions/${revisionId}/restore`, { method: "POST" });
-    await load();
-  }
-
-  async function archive() {
-    await api(`/dashboard/api/memories/${id}/archive`, { method: "POST" });
-    await load();
-  }
-
-  async function remove(confirmTitle: string) {
-    await api(`/dashboard/api/memories/${id}`, {
-      method: "DELETE",
-      body: JSON.stringify({ confirm_title: confirmTitle }),
-    });
-    navigate("/dashboard/memories");
-  }
-
-  if (error) return <div className="alert">{error}</div>;
-  if (!memory || !form) return <div className="loading">Loading memory</div>;
-
-  return (
-    <>
-      <PageHeader
-        eyebrow="Memory detail"
-        title={memory.title}
-        body="Review, edit, archive, delete, or restore a previous revision."
-        action={
-          <Button tone="secondary" onClick={() => navigate("/dashboard/memories")}>
-            Back to memories
+        <div className="panel-heading">
+          <h2>Recent Activity</h2>
+          <Button tone="ghost" onClick={() => navigate("/dashboard/activity")}>
+            View all
           </Button>
-        }
-      />
-      <section className="work-grid">
-        <form className="panel stack" onSubmit={save}>
-          <div className="panel-heading">
-            <h2>Edit memory</h2>
-          </div>
-          <Field label="Category">
-            <select value={form.category_id} onChange={(e) => setForm({ ...form, category_id: e.target.value })}>
-              {categories.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field label="Title">
-            <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
-          </Field>
-          <Field label="Summary">
-            <input value={form.summary} onChange={(e) => setForm({ ...form, summary: e.target.value })} />
-          </Field>
-          <Field label="Body">
-            <textarea value={form.body} onChange={(e) => setForm({ ...form, body: e.target.value })} />
-          </Field>
-          <div className="form-row">
-            <Field label="Confidence">
-              <input
-                type="number"
-                min="1"
-                max="5"
-                value={form.confidence}
-                onChange={(e) => setForm({ ...form, confidence: Number(e.target.value) })}
-              />
-            </Field>
-            <Field label="Prefetch">
-              <select
-                value={form.auto_prefetch_level}
-                onChange={(e) => setForm({ ...form, auto_prefetch_level: e.target.value })}
-              >
-                {["never", "low", "normal", "high", "pinned"].map((level) => (
-                  <option key={level} value={level}>
-                    {level}
-                  </option>
-                ))}
-              </select>
-            </Field>
-          </div>
-          <Field label="Tags">
-            <input value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })} />
-          </Field>
-          <div className="button-row">
-            <Button icon={Pencil}>Save memory</Button>
-            <Button type="button" tone="secondary" icon={Archive} onClick={archive}>
-              Archive
-            </Button>
-            <Button type="button" tone="danger" icon={Trash2} onClick={() => setConfirmDelete(true)}>
-              Delete
-            </Button>
-          </div>
-        </form>
-        <div className="panel">
-          <div className="panel-heading">
-            <h2>Revisions</h2>
-          </div>
-          {revisions.length === 0 ? (
-            <EmptyState title="No revisions yet" body="Revisions appear after edits or restores." icon={RotateCcw} />
-          ) : (
-            <div className="list-table compact">
-              {revisions.map((revision) => (
-                <div className="list-row static" key={revision.id}>
-                  <div>
-                    <strong>{revision.title}</strong>
-                    <span>{revision.summary || revision.body.slice(0, 140)}</span>
-                  </div>
-                  <div className="row-meta">
-                    <span>{(revision as any).changed_by || ""}</span>
-                    <span>{(revision as any).change_reason || ""}</span>
-                    <Button tone="secondary" icon={RotateCcw} onClick={() => restore(revision.id)}>
-                      Restore
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
+        <EventList events={data.recent_events || []} compact />
       </section>
-      {confirmDelete && (
-        <ConfirmModal
-          title="Delete memory"
-          label="Type the memory title to delete it."
-          expected={memory.title}
-          onClose={() => setConfirmDelete(false)}
-          onConfirm={remove}
-        />
-      )}
-    </>
-  );
-}
-
-function SecretsPage() {
-  const [secrets, setSecrets] = useState<Secret[]>([]);
-  const [valueTypes, setValueTypes] = useState<string[]>([]);
-  const [enabled, setEnabled] = useState(true);
-  const [error, setError] = useState("");
-  const [revealed, setRevealed] = useState<{ name: string; value: string } | null>(null);
-  const [confirmDelete, setConfirmDelete] = useState<Secret | null>(null);
-  const [editing, setEditing] = useState<Secret | null>(null);
-  const [filters, setFilters] = useState({ query: "", service: "", host: "", scope: "" });
-  const [form, setForm] = useState({
-    name: "",
-    value: "",
-    description: "",
-    value_type: "text",
-    service: "",
-    host: "",
-    scope: "",
-    tags: "",
-    allowed_agents: "",
-    allowed_tools: "",
-  });
-
-  async function load() {
-    const params = new URLSearchParams(filters);
-    const data = await api<{ secrets_enabled: boolean; value_types: string[]; secrets: Secret[] }>(
-      `/dashboard/api/secrets?${params}`,
-    );
-    setEnabled(data.secrets_enabled);
-    setValueTypes(data.value_types);
-    setSecrets(data.secrets);
-  }
-
-  useEffect(() => {
-    load().catch((err) => setError(err.message));
-  }, []);
-
-  async function create(event: FormEvent) {
-    event.preventDefault();
-    setError("");
-    try {
-      await api("/dashboard/api/secrets", {
-        method: "POST",
-        body: JSON.stringify({
-          ...form,
-          tags: splitTags(form.tags),
-          allowed_agents: splitTags(form.allowed_agents),
-          allowed_tools: splitTags(form.allowed_tools),
-        }),
-      });
-      setForm({
-        ...form,
-        name: "",
-        value: "",
-        description: "",
-        tags: "",
-        allowed_agents: "",
-        allowed_tools: "",
-      });
-      await load();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Create failed");
-    }
-  }
-
-  async function saveEdit(event: FormEvent) {
-    event.preventDefault();
-    if (!editing) return;
-    setError("");
-    const data = new FormData(event.target as HTMLFormElement);
-    try {
-      await api(`/dashboard/api/secrets/${editing.id}`, {
-        method: "PATCH",
-        body: JSON.stringify({
-          name: data.get("name"),
-          value: data.get("value") || null,
-          description: data.get("description") || null,
-          value_type: data.get("value_type"),
-          service: data.get("service") || null,
-          host: data.get("host") || null,
-          scope: data.get("scope") || null,
-          tags: splitTags(String(data.get("tags") || "")),
-          allowed_agents: splitTags(String(data.get("allowed_agents") || "")),
-          allowed_tools: splitTags(String(data.get("allowed_tools") || "")),
-        }),
-      });
-      setEditing(null);
-      await load();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Save failed");
-    }
-  }
-
-  async function reveal(secret: Secret) {
-    setError("");
-    try {
-      setRevealed(await api(`/dashboard/api/secrets/${secret.id}/reveal`, { method: "POST" }));
-      await load();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Reveal failed");
-    }
-  }
-
-  async function remove(confirmName: string) {
-    if (!confirmDelete) return;
-    await api(`/dashboard/api/secrets/${confirmDelete.id}`, {
-      method: "DELETE",
-      body: JSON.stringify({ confirm_name: confirmName }),
-    });
-    setConfirmDelete(null);
-    await load();
-  }
-
-  return (
-    <>
-      <PageHeader
-        eyebrow="Secrets"
-        title="Secrets"
-        body="Store encrypted values and reveal them only through deliberate dashboard or API actions."
-      />
-      {!enabled && <div className="alert">Secret storage is disabled until an encryption key is configured.</div>}
-      {error && <div className="alert">{error}</div>}
-      <section className="resource-grid">
-        <div className="panel resource-panel">
-          <div className="panel-heading">
-            <div>
-              <h2>Secret vault</h2>
-              <p>Search metadata and reveal values only when needed.</p>
-            </div>
-            <ResultCount count={secrets.length} noun="secret" />
-          </div>
-          <form
-            className="filters resource-filters secret-filters"
-            onSubmit={(event) => {
-              event.preventDefault();
-              load().catch((err) => setError(err.message));
-            }}
-          >
-            <div className="searchbox">
-              <Search size={16} />
-              <input
-                value={filters.query}
-                placeholder="Search metadata"
-                onChange={(e) => setFilters({ ...filters, query: e.target.value })}
-              />
-            </div>
-            <input placeholder="Service" value={filters.service} onChange={(e) => setFilters({ ...filters, service: e.target.value })} />
-            <input placeholder="Host" value={filters.host} onChange={(e) => setFilters({ ...filters, host: e.target.value })} />
-            <Button tone="secondary" icon={Search}>
-              Filter
-            </Button>
-          </form>
-          {secrets.length === 0 ? (
-            <EmptyState title="No secrets found" body="Create a secret or adjust the current metadata filters." icon={Lock} />
-          ) : (
-            <div className="secret-list">
-              {secrets.map((secret) => (
-                <article className="secret-row" key={secret.id}>
-                  <div className="secret-summary">
-                    <code>{secret.name}</code>
-                    <span>{secret.description || "No description"}</span>
-                  </div>
-                  <dl className="secret-meta">
-                    <div>
-                      <dt>Type</dt>
-                      <dd>{secret.value_type}</dd>
-                    </div>
-                    <div>
-                      <dt>Service</dt>
-                      <dd>{secret.service || "Any"}</dd>
-                    </div>
-                    <div>
-                      <dt>Scope</dt>
-                      <dd>{secret.scope || "Global"}</dd>
-                    </div>
-                    <div>
-                      <dt>Last revealed</dt>
-                      <dd>{secret.last_revealed_at || "Never"}</dd>
-                    </div>
-                  </dl>
-                  <div className="restriction-summary">
-                    <Badge tone={(secret.allowed_agents?.length || secret.allowed_tools?.length) ? "warning" : "success"}>
-                      {(secret.allowed_agents?.length || secret.allowed_tools?.length) ? "restricted" : "unrestricted"}
-                    </Badge>
-                  </div>
-                  <div className="row-actions">
-                    <Button tone="secondary" icon={Eye} onClick={() => reveal(secret)}>
-                      Reveal
-                    </Button>
-                    <Button tone="ghost" icon={Pencil} onClick={() => setEditing(secret)}>
-                      Edit
-                    </Button>
-                    <Button tone="danger" icon={Trash2} onClick={() => setConfirmDelete(secret)}>
-                      Delete
-                    </Button>
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
-        </div>
-        <form className="panel stack side-panel compact-form" onSubmit={create}>
-          <div className="panel-heading">
-            <div>
-              <h2>Create secret</h2>
-              <p>Encrypted values stay out of logs and prefetch.</p>
-            </div>
-          </div>
-          <Field label="Name">
-            <input
-              value={form.name}
-              placeholder="CUSTOM_API_KEY_HERE"
-              onChange={(e) => setForm({ ...form, name: e.target.value.toUpperCase() })}
-              required
-            />
-          </Field>
-          <Field label="Value">
-            <input
-              type="password"
-              value={form.value}
-              onChange={(e) => setForm({ ...form, value: e.target.value })}
-              required
-            />
-          </Field>
-          <Field label="Description">
-            <input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
-          </Field>
-          <div className="form-row">
-            <Field label="Type">
-              <select value={form.value_type} onChange={(e) => setForm({ ...form, value_type: e.target.value })}>
-                {valueTypes.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </Field>
-            <Field label="Scope">
-              <input value={form.scope} onChange={(e) => setForm({ ...form, scope: e.target.value })} />
-            </Field>
-          </div>
-          <div className="form-row">
-            <Field label="Service">
-              <input value={form.service} onChange={(e) => setForm({ ...form, service: e.target.value })} />
-            </Field>
-            <Field label="Host">
-              <input value={form.host} onChange={(e) => setForm({ ...form, host: e.target.value })} />
-            </Field>
-          </div>
-          <Field label="Tags">
-            <input value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })} />
-          </Field>
-          <div className="access-restrictions">
-            <strong>Agent reveal restrictions</strong>
-            <p>Leave these empty to let any agent with reveal scope request this secret.</p>
-            <Field label="Allowed agents" hint="Optional, comma-separated agent names.">
-              <input
-                value={form.allowed_agents}
-                placeholder="codex, hermes"
-                onChange={(e) => setForm({ ...form, allowed_agents: e.target.value })}
-              />
-            </Field>
-            <Field label="Allowed tools" hint="Optional, comma-separated tool names.">
-              <input
-                value={form.allowed_tools}
-                placeholder="glyphhold_mcp"
-                onChange={(e) => setForm({ ...form, allowed_tools: e.target.value })}
-              />
-            </Field>
-          </div>
-          <Button icon={Plus} disabled={!enabled}>
-            Create secret
-          </Button>
-        </form>
-      </section>
-      {revealed && (
-        <Modal title={revealed.name} onClose={() => setRevealed(null)}>
-          <div className="secret-reveal">
-            <span>This value is shown only for this reveal action.</span>
-            <code>{revealed.value}</code>
-            <Button icon={Copy} onClick={() => navigator.clipboard.writeText(revealed.value)}>
-              Copy value
-            </Button>
-          </div>
-        </Modal>
-      )}
-      {confirmDelete && (
-        <ConfirmModal
-          title="Delete secret"
-          label="Type the secret name to delete it."
-          expected={confirmDelete.name}
-          onClose={() => setConfirmDelete(null)}
-          onConfirm={remove}
-        />
-      )}
-      {editing && (
-        <Modal title={`Edit ${editing.name}`} onClose={() => setEditing(null)}>
-          <form className="stack" onSubmit={saveEdit}>
-            <Field label="Name">
-              <input name="name" defaultValue={editing.name} required />
-            </Field>
-            <Field label="New value">
-              <input name="value" type="password" placeholder="Leave blank to keep current" />
-            </Field>
-            <Field label="Description">
-              <input name="description" defaultValue={editing.description || ""} />
-            </Field>
-            <div className="form-row">
-              <Field label="Type">
-                <select name="value_type" defaultValue={editing.value_type}>
-                  {valueTypes.map((item) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-              <Field label="Scope">
-                <input name="scope" defaultValue={editing.scope || ""} />
-              </Field>
-            </div>
-            <div className="form-row">
-              <Field label="Service">
-                <input name="service" defaultValue={editing.service || ""} />
-              </Field>
-              <Field label="Host">
-                <input name="host" defaultValue={editing.host || ""} />
-              </Field>
-            </div>
-            <Field label="Tags">
-              <input name="tags" defaultValue={editing.tags_text || ""} />
-            </Field>
-            <div className="access-restrictions">
-              <strong>Agent reveal restrictions</strong>
-              <p>Leave these empty to let any agent with reveal scope request this secret.</p>
-              <Field label="Allowed agents" hint="Optional, comma-separated agent names.">
-                <input name="allowed_agents" defaultValue={editing.allowed_agents_text || joinList(editing.allowed_agents)} />
-              </Field>
-              <Field label="Allowed tools" hint="Optional, comma-separated tool names.">
-                <input name="allowed_tools" defaultValue={editing.allowed_tools_text || joinList(editing.allowed_tools)} />
-              </Field>
-            </div>
-            <Button icon={Pencil}>Save secret</Button>
-          </form>
-        </Modal>
-      )}
     </>
   );
 }
@@ -1223,10 +535,17 @@ function ApiKeysPage() {
   const [createdKey, setCreatedKey] = useState("");
   const [confirmDisable, setConfirmDisable] = useState<ApiKey | null>(null);
   const [error, setError] = useState("");
-  const [form, setForm] = useState({ name: "", actor: "", description: "", scopes: [] as string[] });
+  const [form, setForm] = useState({
+    name: "",
+    actor: "",
+    description: "",
+    scopes: [] as string[],
+  });
 
   async function load() {
-    const data = await api<{ default_scopes: string[]; keys: ApiKey[] }>("/dashboard/api/api-keys");
+    const data = await api<{ default_scopes: string[]; keys: ApiKey[] }>(
+      "/dashboard/api/api-keys",
+    );
     setDefaultScopes(data.default_scopes);
     setKeys(data.keys);
     setForm((current) => ({
@@ -1243,10 +562,13 @@ function ApiKeysPage() {
     event.preventDefault();
     setError("");
     try {
-      const data = await api<{ id: string; value: string }>("/dashboard/api/api-keys", {
-        method: "POST",
-        body: JSON.stringify(form),
-      });
+      const data = await api<{ id: string; value: string }>(
+        "/dashboard/api/api-keys",
+        {
+          method: "POST",
+          body: JSON.stringify(form),
+        },
+      );
       setCreatedKey(data.value);
       setForm({ ...form, name: "", actor: "", description: "" });
       await load();
@@ -1283,18 +605,21 @@ function ApiKeysPage() {
     <>
       <PageHeader
         eyebrow="Access"
-        title="API keys"
-        body="Create scoped bearer keys for agents and disable keys when access should stop."
+        title="Agent API keys"
+        body="Create scoped bearer keys, then assign their default space and grants in Spaces & access before connecting an agent."
       />
       {error && <div className="alert">{error}</div>}
       {createdKey && (
         <div className="secret-once">
           <div>
             <strong>Copy this API key now</strong>
-            <span>It will not be shown again.</span>
+            <span>It will not be shown again. <a href="/dashboard/spaces">Set its space access</a> before connecting an agent.</span>
           </div>
           <code>{createdKey}</code>
-          <Button icon={Copy} onClick={() => navigator.clipboard.writeText(createdKey)}>
+          <Button
+            icon={Copy}
+            onClick={() => navigator.clipboard.writeText(createdKey)}
+          >
             Copy key
           </Button>
         </div>
@@ -1309,11 +634,18 @@ function ApiKeysPage() {
             <ResultCount count={keys.length} noun="key" />
           </div>
           {keys.length === 0 ? (
-            <EmptyState title="No API keys" body="Create a key before connecting an agent." icon={KeyRound} />
+            <EmptyState
+              title="No API keys"
+              body="Create a key before connecting an agent."
+              icon={KeyRound}
+            />
           ) : (
             <div className="api-key-list">
               {keys.map((key) => (
-                <article className={`api-key-row ${key.enabled ? "" : "disabled"}`} key={key.id}>
+                <article
+                  className={`api-key-row ${key.enabled ? "" : "disabled"}`}
+                  key={key.id}
+                >
                   <div className="api-key-main">
                     <div>
                       <strong>{key.name}</strong>
@@ -1350,7 +682,10 @@ function ApiKeysPage() {
                   </div>
                   <div className="row-actions">
                     {key.enabled ? (
-                      <Button tone="danger" onClick={() => setConfirmDisable(key)}>
+                      <Button
+                        tone="danger"
+                        onClick={() => setConfirmDisable(key)}
+                      >
                         Disable
                       </Button>
                     ) : (
@@ -1372,13 +707,28 @@ function ApiKeysPage() {
             </div>
           </div>
           <Field label="Name">
-            <input value={form.name} placeholder="Local agent" onChange={(e) => setForm({ ...form, name: e.target.value })} required />
+            <input
+              value={form.name}
+              placeholder="Local agent"
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              required
+            />
           </Field>
           <Field label="Actor">
-            <input value={form.actor} placeholder="local-agent" onChange={(e) => setForm({ ...form, actor: e.target.value })} required />
+            <input
+              value={form.actor}
+              placeholder="local-agent"
+              onChange={(e) => setForm({ ...form, actor: e.target.value })}
+              required
+            />
           </Field>
           <Field label="Description">
-            <input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
+            <input
+              value={form.description}
+              onChange={(e) =>
+                setForm({ ...form, description: e.target.value })
+              }
+            />
           </Field>
           <div className="scope-grid">
             {[...defaultScopes, "admin"].map((scope) => (
@@ -1409,6 +759,7 @@ function ApiKeysPage() {
 }
 
 function CategoriesPage() {
+  const [creating, setCreating] = useState(false);
   const [categoriesList, setCategoriesList] = useState<Category[]>([]);
   const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", description: "" });
@@ -1423,6 +774,7 @@ function CategoriesPage() {
 
   async function create(event: FormEvent) {
     event.preventDefault();
+    try {
     await api("/dashboard/api/categories", {
       method: "POST",
       body: JSON.stringify({
@@ -1435,6 +787,8 @@ function CategoriesPage() {
     });
     setForm({ name: "", description: "" });
     await load();
+    setCreating(false);
+    } catch (err) { setError(err instanceof Error ? err.message : "Could not create category"); }
   }
 
   return (
@@ -1442,22 +796,29 @@ function CategoriesPage() {
       <PageHeader
         eyebrow="Taxonomy"
         title="Categories"
-        body="Control the high-level memory buckets agents and dashboard users can choose from."
+        body="Classify what a memory describes. Spaces and connection grants control access; categories organise content."
+        action={<Button icon={Plus} onClick={() => setCreating(true)}>New category</Button>}
       />
       {error && <div className="alert">{error}</div>}
-      <section className="work-grid">
-        <form className="panel stack" onSubmit={create}>
-          <div className="panel-heading">
-            <h2>Create category</h2>
-          </div>
+      <section>
+        {creating && <Modal title="Create category" onClose={() => setCreating(false)}>{error && <div className="alert">{error}</div>}<form className="stack" onSubmit={create}>
           <Field label="Name">
-            <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
+            <input
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              required
+            />
           </Field>
           <Field label="Description">
-            <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
+            <textarea
+              value={form.description}
+              onChange={(e) =>
+                setForm({ ...form, description: e.target.value })
+              }
+            />
           </Field>
           <Button icon={Plus}>Create category</Button>
-        </form>
+        </form></Modal>}
         <div className="panel">
           <div className="panel-heading">
             <h2>Available categories</h2>
@@ -1467,10 +828,7 @@ function CategoriesPage() {
               <div className="category-card" key={category.id}>
                 <strong>{category.name}</strong>
                 <p>{category.description}</p>
-                <div className="tag-row">
-                  <Badge tone={category.allow_auto_prefetch ? "success" : "neutral"}>prefetch</Badge>
-                  <Badge tone={category.agent_can_write ? "success" : "neutral"}>agent write</Badge>
-                </div>
+
               </div>
             ))}
           </div>
@@ -1487,7 +845,9 @@ function ActivityPage() {
 
   async function load() {
     const params = new URLSearchParams(filters);
-    const data = await api<{ events: Dict[] }>(`/dashboard/api/activity?${params}`);
+    const data = await api<{ events: Dict[] }>(
+      `/dashboard/api/activity?${params}`,
+    );
     setEvents(data.events);
   }
 
@@ -1505,17 +865,25 @@ function ActivityPage() {
       {error && <div className="alert">{error}</div>}
       <section className="panel">
         <form
-          className="filters"
+          className="filters activity-filters"
           onSubmit={(event) => {
             event.preventDefault();
             load().catch((err) => setError(err.message));
           }}
         >
-          <input placeholder="Actor" value={filters.actor} onChange={(e) => setFilters({ ...filters, actor: e.target.value })} />
           <input
-            placeholder="Event type"
+            placeholder="Filter by agent or user"
+            aria-label="Filter activity by actor"
+            value={filters.actor}
+            onChange={(e) => setFilters({ ...filters, actor: e.target.value })}
+          />
+          <input
+            placeholder="Event type, e.g. memory.create"
+            aria-label="Filter activity by event type"
             value={filters.event_type}
-            onChange={(e) => setFilters({ ...filters, event_type: e.target.value })}
+            onChange={(e) =>
+              setFilters({ ...filters, event_type: e.target.value })
+            }
           />
           <Button icon={Search} tone="secondary">
             Filter
@@ -1527,19 +895,33 @@ function ActivityPage() {
   );
 }
 
-function EventList({ events, compact = false }: { events: Dict[]; compact?: boolean }) {
+function EventList({
+  events,
+  compact = false,
+}: {
+  events: Dict[];
+  compact?: boolean;
+}) {
   if (!events.length) {
-    return <EmptyState title="No activity yet" body="Events appear as dashboard users and agents act." icon={Activity} />;
+    return (
+      <EmptyState
+        title="No activity yet"
+        body="Events appear as dashboard users and agents act."
+        icon={Activity}
+      />
+    );
   }
   return (
     <div className={`event-list ${compact ? "compact" : ""}`}>
       {events.map((event) => (
         <div className="event-row" key={event.id}>
-          <Badge tone={event.success ? "success" : "danger"}>{event.event_type}</Badge>
+          <Badge tone={event.success ? "success" : "danger"}>
+            {(event.event_type || "event").replace(/[._]/g, " ")}
+          </Badge>
           <div>
             <strong>{event.message || event.target_id || event.action}</strong>
             <span>
-              {event.actor || "unknown"} · {event.created_at}
+              {event.actor || "Unknown actor"} · {new Date(event.created_at).toLocaleString()}
             </span>
           </div>
         </div>
@@ -1569,9 +951,19 @@ function ConfirmModal({
       <div className="confirm-box">
         <p>{label}</p>
         <code>{expected}</code>
-        <input value={value} onChange={(event) => setValue(event.target.value)} autoFocus />
+        <input
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          autoFocus
+        />
         <div className="button-row">
-          <Button tone="danger" icon={Trash2} onClick={() => onConfirm(value).catch((err) => setError(err.message))}>
+          <Button
+            tone="danger"
+            icon={Trash2}
+            onClick={() =>
+              onConfirm(value).catch((err) => setError(err.message))
+            }
+          >
             Confirm
           </Button>
           <Button tone="secondary" onClick={onClose}>
@@ -1589,7 +981,9 @@ function App() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    api<Session>("/dashboard/api/session").then(setSession).catch((err) => setError(err.message));
+    api<Session>("/dashboard/api/session")
+      .then(setSession)
+      .catch((err) => setError(err.message));
   }, []);
 
   async function logout() {
@@ -1599,21 +993,39 @@ function App() {
   }
 
   const page = useMemo(() => {
-    if (!session?.has_admin) return <AuthPage mode="setup" onSession={setSession} />;
+    if (!session?.has_admin)
+      return <AuthPage mode="setup" onSession={setSession} />;
     if (!session.user) return <AuthPage mode="login" onSession={setSession} />;
+    if (path === "/dashboard/memory-reviews") return <MemoryReviewsPage />;
     if (path.startsWith("/dashboard/memories/")) {
-      return <MemoryDetailPage id={path.split("/").pop() || ""} navigate={navigate} />;
+      return (
+        <MemoryRecord id={path.split("/").pop() || ""} navigate={navigate} />
+      );
     }
-    if (path.startsWith("/dashboard/memories")) return <MemoriesPage navigate={navigate} />;
-    if (path.startsWith("/dashboard/secrets")) return <SecretsPage />;
+    if (path.startsWith("/dashboard/memories"))
+      return <MemoryLibrary navigate={navigate} />;
+    if (path.startsWith("/dashboard/spaces")) return <SpacesPage />;
+    if (path.startsWith("/dashboard/settings")) return <SettingsPage />;
+    if (path.startsWith("/dashboard/migration")) return <MigrationPage />;
+    if (path.startsWith("/dashboard/secrets")) return <SecretLibrary />;
     if (path.startsWith("/dashboard/api-keys")) return <ApiKeysPage />;
     if (path.startsWith("/dashboard/categories")) return <CategoriesPage />;
     if (path.startsWith("/dashboard/activity")) return <ActivityPage />;
     return <OverviewPage navigate={navigate} />;
   }, [session, path]);
 
-  if (error) return <main className="auth-shell"><div className="alert">{error}</div></main>;
-  if (!session) return <main className="auth-shell"><div className="loading">Loading Glyph Hold</div></main>;
+  if (error)
+    return (
+      <main className="auth-shell">
+        <div className="alert">{error}</div>
+      </main>
+    );
+  if (!session)
+    return (
+      <main className="auth-shell">
+        <div className="loading">Loading Glyph Hold</div>
+      </main>
+    );
   if (!session.has_admin || !session.user) return page;
 
   return (

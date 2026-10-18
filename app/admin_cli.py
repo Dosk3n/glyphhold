@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import getpass
 import sys
+from pathlib import Path
 
 from app.core.auth import hash_password
 from app.storage.migrations import apply_migrations
@@ -56,6 +57,15 @@ def build_parser() -> argparse.ArgumentParser:
         "--password",
         help="New password. If omitted, the command prompts without echoing input.",
     )
+    export_parser = subparsers.add_parser("export-memory", help="Export a source SQLite memory store read-only, excluding secrets.")
+    export_parser.add_argument("--database", type=Path, required=True)
+    export_parser.add_argument("--output", type=Path, required=True)
+    backup_parser = subparsers.add_parser("backup", help="Create a consistent SQLite backup (also preserve your encryption key separately).")
+    backup_parser.add_argument("--output", type=Path, required=True)
+    secret_parser = subparsers.add_parser("export-secrets", help="Create a passphrase-encrypted transfer of built-in secrets; source key is read from a private file.")
+    secret_parser.add_argument("--database", type=Path, required=True)
+    secret_parser.add_argument("--key-file", type=Path, required=True)
+    secret_parser.add_argument("--output", type=Path, required=True)
     return parser
 
 
@@ -64,6 +74,27 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     try:
+        if args.command == "export-secrets":
+            from app.providers.transfer import export_secrets
+            from app.storage.upgrade import write_private_json
+            password = getpass.getpass("Transfer passphrase (at least 12 characters): ")
+            if password != getpass.getpass("Confirm transfer passphrase: "):
+                raise ValueError("Passphrases do not match")
+            package = export_secrets(args.database, args.key_file.read_text().strip(), password)
+            write_private_json(args.output, package)
+            print("Encrypted secret transfer created. Import it separately from memories.")
+            return 0
+        if args.command == "export-memory":
+            from app.storage.upgrade import export_legacy_memories, write_private_json
+            write_private_json(args.output, export_legacy_memories(args.database))
+            print("Memory export created; secrets are excluded.")
+            return 0
+        if args.command == "backup":
+            from app.config import settings
+            from app.storage.upgrade import snapshot_database
+            snapshot_database(settings.db_path, args.output)
+            print("Database backup created. Preserve encryption.key or the external encryption key separately.")
+            return 0
         if args.command == "reset-password":
             password = args.password or _prompt_password()
             username = reset_password(username=args.username, password=password)

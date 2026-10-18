@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -13,10 +12,12 @@ def test_dockerfile_has_runtime_healthcheck() -> None:
     assert "127.0.0.1:5995/api/v1/health" in dockerfile
 
 
-def test_compose_example_uses_published_image_and_healthcheck() -> None:
+def test_compose_example_uses_isolated_local_image_and_healthcheck() -> None:
     compose = (ROOT / "docker-compose.example.yml").read_text()
 
-    assert "ghcr.io/dosk3n/glyphhold:latest" in compose
-    assert "ghcr.io/Dosk3n" not in compose
+    assert "image: glyphhold:gh2-local-test" in compose
+    assert "127.0.0.1:5996:5995" in compose
+    assert "glyphhold2-data:/data" in compose
+    assert "container_name: glyphhold" not in compose
     assert "healthcheck:" in compose
     assert "127.0.0.1:5995/api/v1/health" in compose

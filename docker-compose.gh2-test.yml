@@ -1,0 +1,17 @@
+services:
+  glyphhold2-test:
+    image: glyphhold:gh2-local-test
+    build:
+      context: .
+    ports:
+      - "127.0.0.1:5996:5995"
+    volumes:
+      - glyphhold2-test-data:/data
+    environment:
+      GLYPHHOLD_DB_PATH: /data/glyphhold.sqlite
+      GLYPHHOLD_LOG_FORMAT: json
+      CODEX_HOME: /data/advanced/codex
+    restart: unless-stopped
+
+volumes:
+  glyphhold2-test-data:

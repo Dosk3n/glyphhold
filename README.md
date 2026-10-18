@@ -1,335 +1,183 @@
-# Glyph Hold
+# Glyph Hold 2
 
-Glyph Hold is a local memory and secrets service for AI agents.
+A self-hosted memory and secrets service shared by agents on different machines.
+Work, Personal and General spaces keep ownership explicit. Hermes native memory
+and tool-based clients use the same scoped HTTP API. Projects are optional.
 
-It gives your agents a shared place to store durable notes, decisions, project
-context, procedures, preferences, and operational secrets without sending that
-data to a hosted AI service.
+Core memory uses SQLite/FTS5 and requires no AI account, API credits, embeddings
+or vector service. Optional **Advanced Memory** uses the official Codex CLI with
+ChatGPT subscription sign-in to maintain source-backed profiles and propose
+consolidation and space placement. It is disabled by default.
 
-Open the dashboard, create memories and secrets, create an API key, then point
-your agents at Glyph Hold.
+## Local isolated evaluation
 
-## Why Run It?
-
-AI agents are more useful when they can remember stable context:
-
-- who people are
-- how your projects are structured
-- which servers and services exist
-- what decisions have already been made
-- repeatable procedures and runbooks
-- preferences you do not want to repeat every session
-- secrets that should be revealed only when explicitly requested
-
-Glyph Hold keeps that information local, deterministic, and inspectable.
-
-## What It Does
-
-- Stores memories with categories, tags, confidence, and revision history.
-- Searches memories with deterministic SQLite FTS5.
-- Provides conservative memory prefetch for agents.
-- Stores secrets encrypted at rest when an encryption key is configured.
-- Reveals secret values only through explicit reveal/env endpoints.
-- Keeps secret values out of memory prefetch.
-- Provides a browser dashboard for setup, memories, secrets, API keys, and audit
-  events.
-- Uses bearer API keys for agents and signed cookies for dashboard sessions.
-- Protects dashboard mutations with CSRF tokens and browser security headers.
-- Runs as a Docker container on port `5995`.
-
-## What It Does Not Do
-
-Glyph Hold does not use or include:
-
-- LLM calls
-- embeddings
-- vector databases
-- Ollama
-- hosted AI APIs
-- paid APIs
-
-Agents remain HTTP clients. Glyph Hold owns the SQLite database.
-
-## Status
-
-Glyph Hold is suitable for self-hosted agent memory and secrets. Keep backups of
-the mounted data directory and encryption key before upgrading.
-
-For planned improvements, see [ROADMAP.md](ROADMAP.md). GitHub Releases contain
-the release notes for published versions.
-
-## Quick Start
-
-For real secret storage, use a persistent encryption key. The command below
-generates one and prints it once. Save it somewhere safe before storing secrets.
-
-Run Glyph Hold with one Docker command:
+Do not point this test service at a live Glyph Hold data directory.
 
 ```bash
-GLYPHHOLD_KEY="$(openssl rand -hex 32)" && \
-docker run -d \
-  --name glyphhold \
-  --restart unless-stopped \
-  -p 5995:5995 \
-  -v glyphhold-data:/data \
-  -e GLYPHHOLD_DB_PATH=/data/glyphhold.sqlite \
-  -e GLYPHHOLD_ENCRYPTION_KEY="$GLYPHHOLD_KEY" \
-  ghcr.io/dosk3n/glyphhold:latest && \
-printf 'Save this Glyph Hold encryption key: %s\n' "$GLYPHHOLD_KEY"
+docker compose -p glyphhold2-test -f docker-compose.gh2-test.yml up --build -d
 ```
 
-Open:
+Open **http://localhost:5996**, create a dashboard administrator, and use the
+Spaces page to configure connection defaults and read/write grants. This Compose
+file uses `glyphhold:gh2-local-test` and its own named volume. It does not replace
+the existing instance on port 5995. No image publishing is required.
 
-```text
-http://localhost:5995
+```bash
+docker compose -p glyphhold2-test -f docker-compose.gh2-test.yml logs --tail=100
+docker compose -p glyphhold2-test -f docker-compose.gh2-test.yml down
 ```
 
-On first run, Glyph Hold asks you to create the dashboard username and password.
-After setup, create an API key from the dashboard and use that key in your
-agent.
+`down` retains the test volume; `down -v` permanently removes its data, encryption
+key and saved logins. Do not use `-v` when preserving an installation.
 
-## Docker Compose
+## Single-container installation
 
-Create a `docker-compose.yml`:
+The image contains the web application, dashboard, Codex CLI and Bitwarden CLI.
+Only one service and one persistent data volume are required. Pin a tested image
+version such as `ghcr.io/dosk3n/glyphhold:2.0.0`.
 
 ```yaml
 services:
   glyphhold:
-    image: ghcr.io/dosk3n/glyphhold:latest
-    container_name: glyphhold
+    image: ghcr.io/dosk3n/glyphhold:2.0.0
     ports:
-      - "5995:5995"
+      - "127.0.0.1:5995:5995"
     volumes:
-      - ./data:/data
+      - glyphhold-data:/data
     environment:
       GLYPHHOLD_DB_PATH: /data/glyphhold.sqlite
-      GLYPHHOLD_ENCRYPTION_KEY: change-this-to-a-long-random-value
-      GLYPHHOLD_LOG_LEVEL: INFO
-      GLYPHHOLD_LOG_FORMAT: pretty
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "python",
-          "-c",
-          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5995/api/v1/health', timeout=3).read()",
-        ]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
     restart: unless-stopped
+volumes:
+  glyphhold-data:
 ```
 
-Start it:
+Use a TLS reverse proxy for remote access and secure cookies when serving HTTPS.
+Container `/data` includes the database, installation encryption key and private
+provider/runner state. The Codex subprocess uses a separate unprivileged account
+and receives a bounded memory batch rather than database access.
+
+## Spaces and connections
+
+Each record has one owning space. Every API key needs explicit space grants;
+even an API `admin` scope does not implicitly grant all spaces. A connection's
+default space is the fallback for normal writes/recall. Explicit request context
+and isolated session context can override it within the same grants.
+
+Automatic recall includes the active space and permitted General records within
+a size budget. Broader discovery is explicit. Searching another space does not
+change where subsequent writes go. Categories classify information and never
+act as permission boundaries. General is not a destination for unknown ownership.
+
+The dashboard supports spaces, grants, confirmed placement guidance, memory
+editing with version checks, history, migration and optional integration settings.
+
+## Advanced Memory
+
+Enable it under Settings after completing official Codex sign-in. The server
+shows a device sign-in link and code for your browser; GH2 does not ask for your
+ChatGPT password. The server must have internet access and your account must
+permit device-code login. Saved login state persists in the data volume.
+
+Choose a model from the runner's available catalog or enter a supported model
+ID, then choose reasoning effort where supported. The account default is also
+available. Models and reasoning support depend on your account and CLI version;
+GH2 does not claim that any particular model is free or available to everyone.
+
+Schedules support hourly (minute), daily (hour/minute), weekly (day/hour/minute),
+an explicit timezone, next-run display and Run now. No changed work means no
+model call. Initial review can include older/imported records. Batch, context
+and runtime controls bound work. Failures pause for inspection/resume and never
+fall back to a paid API.
+
+The model proposes evidence-backed profiles/summaries, duplicate merges,
+superseding and placement questions. Existing-record moves always require review.
+Choose proposal-only or automatic reversible maintenance. Source changes
+invalidate dependent summaries; originals and revisions remain traceable.
+Generated profiles are not independent corroborating facts. Uncertain identities
+and contradictions stay unresolved. Secret values are excluded from maintenance.
+
+Codex runs consume your existing subscription allowance. The desktop app need
+not be open. Login, model availability and actual semantic quality must be tested
+with your own account; mock tests do not establish these live behaviours.
+
+## Secrets and Bitwarden / Vaultwarden
+
+Built-in secrets work by default. First startup generates `/data/encryption.key`
+with restrictive permissions, independently of SQLite. Restarts and upgrades
+reuse it. Missing/incompatible keys over encrypted data fail rather than silently
+replace the key. `GLYPHHOLD_ENCRYPTION_KEY` remains an advanced external-key
+option; retain the original v1 key when upgrading existing encrypted data.
+
+Settings offers an optional Password Manager provider, disabled by default.
+Enter the self-hosted server URL (or Bitwarden service URL), personal API client
+ID/secret and master password. Sensitive configuration is encrypted in SQLite;
+saved credentials are never returned to the browser. Automatic unlock uses the
+official CLI and an in-memory unlock session. A separate password file is not
+required. Bitwarden Secrets Manager is a different product and is not used.
+
+Select approved folders per space and one write folder. Folders organise a
+personal vault; they are not upstream security boundaries. GH2 only exposes
+explicitly linked item fields. A login username and password can have separate
+handles, as can SSH key fields and named custom fields. The metadata browser
+never returns secret values. External writes have a separate enable switch.
+
+Existing secrets keep their provider bindings when the integration is toggled.
+Provider outages/disablement return errors for external bindings; they never
+silently select local values. Deleting an external GH2 handle only unlinks it;
+it does not trash the original vault item. External value updates cannot promise
+atomic conflict detection against simultaneous edits in other Bitwarden clients.
+Use disposable vault items for compatibility testing before real mutations.
+
+## Migration and backups
+
+Before an in-place v1-to-v2 schema upgrade, GH2 creates a consistent SQLite
+snapshot in `/data/backups/pre-gh2-*.sqlite`. Back up the original key separately.
+Older records and secrets enter restricted Import review ownership. Assign
+spaces deliberately before granting agents access.
+
+To export another installation's memories using a read-only source database:
 
 ```bash
-docker compose up -d
+glyphhold-admin export-memory --database /path/to/source.sqlite --output memories.json
 ```
 
-Open:
-
-```text
-http://localhost:5995
-```
-
-You can also copy the included examples:
+This excludes secrets. The dashboard Migration page previews the export with a
+source namespace and destination space, then performs a repeatable import.
+Use a different namespace per source installation. Preserve source backups until
+counts, revisions, references and representative searches have been checked.
+Advanced Memory classification is optional and follows faithful import.
 
 ```bash
-cp .env.example .env
-cp docker-compose.example.yml docker-compose.yml
+glyphhold-admin backup --output /safe/path/glyphhold-backup.sqlite
 ```
 
-Edit `.env` before storing real secrets.
+A complete recovery also needs the installation encryption key or original
+external key. Private Codex/Bitwarden state contains authentication material;
+protect full-volume backups accordingly. Stop the service when restoring a
+matched database/key backup. Reverting to v1 after new v2 writes requires
+reconciliation; never run v1 against a migrated database as a rollback shortcut.
 
-Generate a persistent encryption key with:
+## Agent API and upgrades
 
-```bash
-openssl rand -hex 32
-```
+Use `/api/v2`; see `/docs` for the running API. Key capabilities:
 
-## First Run
+- `GET /capabilities`, `/spaces`, `/guidance`, `/subjects`, `/context`.
+- `POST /recall` and `/search` with `query`, optional `space_id`, explicit `broaden`.
+- `POST /memories` with a stable `idempotency_key` (or `Idempotency-Key` header).
+- `PATCH /memories/{id}` with `expected_version`; stale writes return HTTP409.
+- Memory revisions, explicit moves/restores and scoped secret metadata/reveal.
 
-1. Open `http://localhost:5995`.
-2. Create the first dashboard admin user.
-3. Go to **API Keys**.
-4. Create an API key for your agent.
-5. Copy the key immediately. It is shown once.
+`glyphhold_client.GlyphHoldV2Client` is the standard-library client. The sibling
+`glyphhold-hermes-memory` provider is upgraded separately. Tool packs should
+advertise version/idempotency and space selection instead of forwarding old
+unscoped calls. Tool access alone does not guarantee automatic prefetch in hosts
+without lifecycle integration.
 
-API keys use the `gh_live_` prefix. Glyph Hold stores only a hash and a short
-non-sensitive prefix.
+Old v1 data routes return HTTP410 by default to prevent bypassing space grants.
+`/api/v1/health` and category discovery remain available. A temporary
+`GLYPHHOLD_ALLOW_LEGACY_API=true` switch exists for controlled regression/migration
+only: it exposes unscoped legacy data access and must not be enabled in a normal
+GH2 multi-space deployment. Upgrade clients before cutover.
 
-## Reset The Dashboard Password
-
-If you lose the dashboard password, reset it from inside the running container:
-
-```bash
-docker exec -it glyphhold glyphhold-admin reset-password --username admin
-```
-
-The command prompts for a new password without printing it to the terminal. It
-updates only the dashboard admin password. Memories, secrets, API keys,
-categories, and audit history are not removed.
-
-## Connect An Agent
-
-Agents call Glyph Hold over HTTP:
-
-```text
-GLYPHHOLD_URL=http://localhost:5995
-GLYPHHOLD_API_KEY=gh_live_xxxxxxxxxxxxxxxxx
-```
-
-For another container on the same Docker network, use:
-
-```text
-GLYPHHOLD_URL=http://glyphhold:5995
-GLYPHHOLD_API_KEY=gh_live_xxxxxxxxxxxxxxxxx
-```
-
-The public API starts at `/api/v1`.
-
-More connection examples are in [AGENT_CONNECTIONS.md](AGENT_CONNECTIONS.md).
-
-Useful endpoints:
-
-```text
-GET  /api/v1/health
-GET  /api/v1/categories
-POST /api/v1/memories/search
-POST /api/v1/agent/prefetch
-POST /api/v1/secrets/CUSTOM_API_KEY_HERE/reveal
-POST /api/v1/secrets/env
-```
-
-## Python Client
-
-Glyph Hold includes a small Python HTTP client package named `glyphhold_client`.
-It is a convenience wrapper around `/api/v1` for projects that want to call
-Glyph Hold without hand-writing HTTP requests.
-
-```python
-from glyphhold_client import GlyphHoldClient
-
-client = GlyphHoldClient(
-    base_url="http://localhost:5995",
-    api_key="gh_live_xxxxxxxxxxxxxxxxx",
-)
-
-results = client.search_memories(query="project context")
-```
-
-The client can also create memories, create secrets, reveal individual secrets,
-and request scoped env-style secret bundles.
-
-Agent integrations live in separate repositories so this project stays focused
-on the Glyph Hold service.
-
-## Memories
-
-Memories are structured notes for agents. They can be categorized, tagged,
-searched, edited, archived, and restored from revisions.
-
-Default categories include:
-
-- people
-- servers
-- services
-- projects
-- procedures
-- preferences
-- decisions
-- facts
-- temporary
-
-Search is deterministic. There is no semantic/vector search.
-
-## Secrets
-
-Secret storage requires:
-
-```text
-GLYPHHOLD_ENCRYPTION_KEY=<long-random-value>
-```
-
-If no encryption key is configured, Glyph Hold still runs and memory features
-continue to work. Secret create/reveal/env actions return a clear configuration
-error until the key is set.
-
-Secret rules:
-
-- Secret names must be uppercase environment variable names.
-- Secret values are encrypted at rest.
-- Secret values are never returned by memory search.
-- Secret values are never included in agent prefetch.
-- Secret metadata and reveal access require `secrets:reveal`.
-- Secret create/update/delete requires `secrets:write`.
-- Secret values are shown only for explicit reveal actions.
-
-Use a persistent encryption key. If you lose or change the key, existing stored
-secret values cannot be decrypted.
-
-## Data And Backups
-
-Glyph Hold stores data in SQLite. In Docker, mount `/data` and back it up.
-Audit events are retained for 90 days and capped at 100,000 rows by default;
-both limits can be adjusted or disabled with the event-retention environment
-variables in `.env.example`.
-
-With the compose example, the database lives under:
-
-```text
-./data/glyphhold.sqlite
-```
-
-Before upgrading:
-
-1. Stop the container.
-2. Back up the `data` directory.
-3. Back up the `GLYPHHOLD_ENCRYPTION_KEY` value separately.
-4. Pull or switch to the new image tag.
-5. Start the container again.
-
-Startup applies pending migrations automatically.
-
-Detailed backup and restore steps are in
-[BACKUP_AND_RESTORE.md](BACKUP_AND_RESTORE.md).
-
-Troubleshooting steps are in [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
-
-## Image Tags
-
-Images are published to GitHub Container Registry:
-
-```text
-ghcr.io/dosk3n/glyphhold:<version>
-ghcr.io/dosk3n/glyphhold:<major>.<minor>
-ghcr.io/dosk3n/glyphhold:sha-<commit>
-ghcr.io/dosk3n/glyphhold:latest
-```
-
-Recommended usage:
-
-- Pin an exact release tag for predictable deployments.
-- Use `latest` only when you are comfortable receiving newer changes.
-- Back up `/data` before major upgrades.
-
-## Security Notes
-
-- Do not expose Glyph Hold publicly without a reverse proxy, HTTPS, and access
-  controls.
-- Do not commit `.env`, SQLite databases, encryption keys, API keys, or exported
-  secrets.
-- Dashboard setup happens on first browser visit.
-- Complete first-run setup before exposing Glyph Hold beyond a trusted network.
-- Agents authenticate with bearer API keys created from the dashboard.
-- Secret values are encrypted at rest when `GLYPHHOLD_ENCRYPTION_KEY` is set.
-- Secret values are not included in memory prefetch.
-- Set `GLYPHHOLD_COOKIE_SECURE=true` when the dashboard is served through HTTPS.
-- Direct HTTP access is supported for trusted internal networks, but traffic is
-  not encrypted in transit without an HTTPS reverse proxy.
-- Failed dashboard logins and invalid API authentication attempts are rate
-  limited. Normal authenticated agent requests are not rate limited.
-- Requests are limited to 2 MiB by default and individual memory bodies to 1
-  MiB. Limits are configurable and oversized content is rejected, never
-  truncated.
+See [GLYPHHOLD_2_PLAN.md](GLYPHHOLD_2_PLAN.md) for the product design and quality
+requirements, and [CONTRIBUTING.md](CONTRIBUTING.md) for local checks.

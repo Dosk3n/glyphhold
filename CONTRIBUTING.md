@@ -15,7 +15,7 @@ cd dashboard-ui
 npm ci
 npm run build
 cd ..
-uvicorn app.main:app --reload --host 0.0.0.0 --port 5995
+GLYPHHOLD_DB_PATH=/tmp/glyphhold2-dev/glyphhold.sqlite uvicorn app.main:app --reload --host 127.0.0.1 --port 5996
 ```
 
 For active dashboard work, run Vite in another terminal:
@@ -28,7 +28,7 @@ npm run dev
 Open:
 
 ```text
-http://localhost:5995
+http://localhost:5996
 ```
 
 ## Checks
@@ -46,16 +46,16 @@ docker run --rm -e GLYPHHOLD_DB_PATH=/tmp/glyphhold-ci.sqlite glyphhold:ci \
 
 ## Project Boundaries
 
-Glyph Hold is deliberately local and deterministic.
+Core memory remains local and deterministic, without required model calls,
+embeddings, vector databases or paid APIs. GH2's explicitly enabled Advanced
+Memory uses an isolated official Codex CLI worker with subscription sign-in.
+Keep it disabled by default and never fall back to paid API billing. Model
+output is evidence-backed proposed maintenance, constrained by server policy.
 
-Do not add:
-
-- LLM calls
-- embeddings
-- vector databases
-- Ollama integration inside the service
-- hosted AI APIs
-- paid APIs
+Use the isolated `docker-compose.gh2-test.yml` project for deployment testing.
+Never attach the test image to an existing installation's volume or reuse its
+port. Test source/version checks, grants, derived-data invalidation and runner
+failure behaviour before evaluating live semantic quality with owner login.
 
 External integrations must use the HTTP API and must not access SQLite directly.
 Nexus and Hermes integrations should live in separate repositories.

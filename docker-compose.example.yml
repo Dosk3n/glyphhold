@@ -1,13 +1,12 @@
 services:
   glyphhold:
-    image: ghcr.io/dosk3n/glyphhold:latest
-    container_name: glyphhold
+    image: ghcr.io/dosk3n/glyphhold:2.0.0
     ports:
-      - "5995:5995"
+      - "127.0.0.1:5995:5995"
     volumes:
-      - ./data:/data
-    env_file:
-      - .env
+      - glyphhold2-data:/data
+    environment:
+      GLYPHHOLD_DB_PATH: /data/glyphhold.sqlite
     healthcheck:
       test:
         [
@@ -21,3 +20,6 @@ services:
       retries: 3
       start_period: 10s
     restart: unless-stopped
+
+volumes:
+  glyphhold2-data:

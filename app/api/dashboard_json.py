@@ -17,7 +17,7 @@ from app.core import auth
 from app.core.encryption import SecretDecryptionError, SecretStorageDisabled
 from app.core.request_context import get_request_id
 from app.core.security import client_address
-from app.storage.db import database_ok
+from app.storage.db import connection, database_ok
 from app.storage.migrations import current_schema_version
 from app.storage.repositories import auth as auth_repo
 from app.storage.repositories import categories, memories
@@ -38,14 +38,14 @@ DEFAULT_SCOPES = [
 
 
 class SetupRequest(BaseModel):
-    username: str
-    password: str
-    confirm_password: str
+    username: str = Field(min_length=1, max_length=128)
+    password: str = Field(max_length=1024)
+    confirm_password: str = Field(max_length=1024)
 
 
 class LoginRequest(BaseModel):
-    username: str
-    password: str
+    username: str = Field(min_length=1, max_length=128)
+    password: str = Field(max_length=1024)
 
 
 class ApiKeyCreateRequest(BaseModel):
@@ -224,10 +224,10 @@ def login(payload: LoginRequest, request: Request, response: Response) -> dict:
     username = payload.username.strip()
     limiter = request.app.state.failure_rate_limiter
     limiter_key = f"dashboard-login:{client_address(request)}:{username.casefold()}"
-    retry_after = limiter.retry_after(
-        limiter_key,
-        limit=settings.dashboard_login_attempts,
-        window_seconds=settings.dashboard_login_window_seconds,
+    ip_limiter_key = f"dashboard-login-ip:{client_address(request)}"
+    retry_after = max(
+        limiter.retry_after(limiter_key, limit=settings.dashboard_login_attempts, window_seconds=settings.dashboard_login_window_seconds),
+        limiter.retry_after(ip_limiter_key, limit=settings.dashboard_login_attempts, window_seconds=settings.dashboard_login_window_seconds),
     )
     if retry_after:
         raise HTTPException(
@@ -238,9 +238,8 @@ def login(payload: LoginRequest, request: Request, response: Response) -> dict:
 
     user = auth_repo.get_dashboard_user_by_username(username)
     if user is None or not auth.verify_password(payload.password, user["password_hash"]):
-        limiter.add_failure(
-            limiter_key, window_seconds=settings.dashboard_login_window_seconds
-        )
+        limiter.add_failure(limiter_key, window_seconds=settings.dashboard_login_window_seconds)
+        limiter.add_failure(ip_limiter_key, window_seconds=settings.dashboard_login_window_seconds)
         record_event(
             request_id=get_request_id(request),
             event_type="dashboard.login_failed",
@@ -273,14 +272,17 @@ def logout(response: Response) -> dict:
 @router.get("/overview")
 def overview(request: Request) -> dict:
     _dashboard_user(request)
+    with connection() as conn:
+        memory_count = conn.execute("SELECT count(*) FROM memories WHERE archived=0 AND merged_into IS NULL AND superseded_by IS NULL").fetchone()[0]
+        secret_count = conn.execute("SELECT count(*) FROM gh2_secret_handles").fetchone()[0]
     return {
         "database_status": "ok" if database_ok() else "error",
         "schema_version": current_schema_version(),
         "version": settings.version,
         "secrets_enabled": settings.secrets_enabled,
         "api_key_count": len(auth_repo.list_api_keys()),
-        "memory_count": len(memories.list_memories(limit=500)),
-        "secret_count": len(secrets_repo.list_secrets(limit=500)),
+        "memory_count": memory_count,
+        "secret_count": secret_count,
         "recent_events": events_repo.list_events(limit=8),
     }
 

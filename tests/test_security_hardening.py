@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
 from contextlib import contextmanager
-from typing import Iterator
 
 from fastapi.testclient import TestClient
 
@@ -64,20 +64,19 @@ def test_failed_dashboard_logins_are_rate_limited(client: TestClient) -> None:
     setup_dashboard(client)
     client.post("/dashboard/api/logout", headers=dashboard_csrf_headers(client))
 
-    with changed_setting("dashboard_login_attempts", 2):
-        with changed_setting("dashboard_login_window_seconds", 60):
-            for _ in range(2):
-                response = client.post(
-                    "/dashboard/api/login",
-                    headers=dashboard_csrf_headers(client),
-                    json={"username": "admin", "password": "wrong-password"},
-                )
-                assert response.status_code == 401
-            limited = client.post(
+    with changed_setting("dashboard_login_attempts", 2), changed_setting("dashboard_login_window_seconds", 60):
+        for _ in range(2):
+            response = client.post(
                 "/dashboard/api/login",
                 headers=dashboard_csrf_headers(client),
                 json={"username": "admin", "password": "wrong-password"},
             )
+            assert response.status_code == 401
+        limited = client.post(
+            "/dashboard/api/login",
+            headers=dashboard_csrf_headers(client),
+            json={"username": "admin", "password": "wrong-password"},
+        )
 
     assert limited.status_code == 429
     assert int(limited.headers["Retry-After"]) > 0
@@ -88,13 +87,12 @@ def test_invalid_api_keys_are_limited_without_blocking_valid_keys(client: TestCl
     valid_headers = make_api_key_headers(scopes=["memories:read"], actor="valid-agent")
     invalid_headers = {"Authorization": "Bearer gh_live_invalid"}
 
-    with changed_setting("invalid_api_key_attempts", 2):
-        with changed_setting("invalid_api_key_window_seconds", 60):
-            for _ in range(2):
-                response = client.get("/api/v1/categories", headers=invalid_headers)
-                assert response.status_code == 401
-            limited = client.get("/api/v1/categories", headers=invalid_headers)
-            valid = client.get("/api/v1/categories", headers=valid_headers)
+    with changed_setting("invalid_api_key_attempts", 2), changed_setting("invalid_api_key_window_seconds", 60):
+        for _ in range(2):
+            response = client.get("/api/v1/categories", headers=invalid_headers)
+            assert response.status_code == 401
+        limited = client.get("/api/v1/categories", headers=invalid_headers)
+        valid = client.get("/api/v1/categories", headers=valid_headers)
 
     assert limited.status_code == 429
     assert valid.status_code == 200
@@ -143,9 +141,8 @@ def test_event_retention_removes_old_and_excess_rows(client: TestClient) -> None
             ("2000-01-01T00:00:00.000Z", "req_0"),
         )
 
-    with changed_setting("event_retention_days", 1):
-        with changed_setting("max_event_rows", 2):
-            deleted = events.prune_events()
+    with changed_setting("event_retention_days", 1), changed_setting("max_event_rows", 2):
+        deleted = events.prune_events()
 
     assert deleted == 2
     retained = events.list_events(event_type="retention.test", limit=10)

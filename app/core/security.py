@@ -115,7 +115,10 @@ class DashboardCSRFMiddleware:
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
         method = scope.get("method", "GET").upper()
         path = scope.get("path", "")
-        if scope["type"] == "http" and path.startswith("/dashboard/api/") and method not in {
+        auth_header = dict(scope.get("headers", [])).get(b"authorization", b"").split()
+        bearer_request = len(auth_header) == 2 and auth_header[0].lower() == b"bearer"
+        cookie_authenticated_v2 = path.startswith("/api/v2/") and not bearer_request
+        if scope["type"] == "http" and (path.startswith("/dashboard/api/") or cookie_authenticated_v2) and method not in {
             "GET",
             "HEAD",
             "OPTIONS",
@@ -131,6 +134,24 @@ class DashboardCSRFMiddleware:
                 )
                 await response(scope, receive, send)
                 return
+        await self.app(scope, receive, send)
+
+
+class LegacyDataBoundaryMiddleware:
+    """Old unscoped routes must not bypass v2 ownership grants."""
+
+    def __init__(self, app: ASGIApp) -> None:
+        self.app = app
+
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        path = scope.get("path", "")
+        blocked = any(path == prefix or path.startswith(prefix + "/") for prefix in (
+            "/api/v1/memories", "/api/v1/agent", "/api/v1/secrets", "/api/v1/events",
+            "/dashboard/api/memories", "/dashboard/api/secrets",
+        ))
+        if scope["type"] == "http" and blocked and not settings.allow_legacy_api:
+            await JSONResponse(status_code=410, content={"detail": "GH2 requires scoped /api/v2 routes; upgrade this client before use"})(scope, receive, send)
+            return
         await self.app(scope, receive, send)
 
 
