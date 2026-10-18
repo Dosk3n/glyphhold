@@ -2357,7 +2357,7 @@ export function SecretLibrary() {
           >
             <input
               aria-label="Search secret metadata"
-              placeholder="Search names and descriptions…"
+              placeholder="Search names, websites or hostnames…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -2377,6 +2377,7 @@ export function SecretLibrary() {
                   <div>
                     <strong>{s.name}</strong>
                     <p className="muted">{s.description}</p>
+                    {s.websites?.length > 0 && <p className="muted">{s.websites.join(" · ")}</p>}
                   </div>
                   <span className="badge">
                     {s.provider === "builtin" ? "Built-in" : "Vaultwarden"}

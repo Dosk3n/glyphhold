@@ -213,6 +213,7 @@ class GlyphHoldV2Client(GlyphHoldClient):
         target_id: str | None = None,
         field: str | None = None,
         folder_id: str | None = None,
+        dry_run: bool = False,
     ):
         return self._request(
             "POST",
@@ -224,6 +225,7 @@ class GlyphHoldV2Client(GlyphHoldClient):
                     "target_id": target_id,
                     "field": field,
                     "folder_id": folder_id,
+                    **({"dry_run": True} if dry_run else {}),
                 }.items()
                 if v is not None
             },

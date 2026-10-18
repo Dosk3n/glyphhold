@@ -142,7 +142,30 @@ def account_id(config: dict) -> str:
 
 
 class VaultError(RuntimeError):
-    pass
+    def __init__(self, message: str, *, code: str = "vault_unavailable", retryable: bool = False):
+        super().__init__(message)
+        self.code = code
+        self.retryable = retryable
+
+
+def failure(args: list[str], *, retryable: bool = False) -> VaultError:
+    operation = (
+        args[0]
+        if args
+        and args[0]
+        in {"status", "config", "login", "unlock", "sync", "get", "list", "create", "edit"}
+        else "operation"
+    )
+    advice = (
+        "Check whether the destination changed before retrying."
+        if operation in {"create", "edit"}
+        else "Test the saved connection or repeat this read."
+    )
+    return VaultError(
+        f"Vault {operation} failed. {advice}",
+        code="vault_" + operation + "_failed",
+        retryable=retryable,
+    )
 
 
 class VaultCLI:
@@ -207,12 +230,30 @@ class VaultCLI:
                 timeout=60,
             )
         except (OSError, subprocess.TimeoutExpired) as exc:
-            raise VaultError("Bitwarden CLI unavailable or timed out") from exc
+            raise failure(args) from exc
         if result.returncode:
-            # CLI output can contain sensitive data. Never propagate stdout/stderr.
-            raise VaultError(
-                "Vault operation failed; verify connection, credentials and item state"
+            # Classify only known failures; never forward raw CLI output or data.
+            output = (result.stderr + " " + result.stdout).casefold()
+            if args[:2] == ["get", "item"] and (
+                result.stderr.strip().casefold() in {"not found", "not found."}
+                or result.stdout.strip().casefold() in {"not found", "not found."}
+            ):
+                raise VaultError(
+                    "Vault item not found; search again and use a current ID",
+                    code="vault_item_not_found",
+                )
+            transient = args[0] in {"get", "list", "sync"} or any(
+                marker in output
+                for marker in (
+                    "your vault is locked",
+                    "you are not logged in",
+                    "invalid session",
+                    "econnreset",
+                    "econnrefused",
+                    "etimedout",
+                )
             )
+            raise failure(args, retryable=transient)
         if raw:
             return result.stdout.strip()
         try:
@@ -269,24 +310,31 @@ class VaultCLI:
                 config = config | {"enabled": True}
             if write and not config["write_enabled"]:
                 raise VaultError("External writes are disabled")
-            try:
-                self.unlock(config)
-                if not self.operation_depth or not self.operation_synced:
-                    self._run(["sync"], config=config, raw=True)
-                    self.operation_synced = True
-                data = (
-                    base64.b64encode(json.dumps(payload).encode()).decode()
-                    if payload is not None
-                    else None
-                )
-                result = self._run(args, config=config, data=data)
-                if write:
+            for attempt in range(2):
+                mutation_started = False
+                try:
+                    self.unlock(config)
+                    if not self.operation_depth or not self.operation_synced:
+                        self._run(["sync"], config=config, raw=True)
+                        self.operation_synced = True
+                    data = (
+                        base64.b64encode(json.dumps(payload).encode()).decode()
+                        if payload is not None
+                        else None
+                    )
+                    mutation_started = write
+                    result = self._run(args, config=config, data=data)
+                    if write:
+                        self.operation_synced = False
+                    return result
+                except VaultError as exc:
+                    self.session = None
                     self.operation_synced = False
-                return result
-            except VaultError:
-                self.session = None
-                self.operation_synced = False
-                raise
+                    # Only repeat safe reads/preparation. A mutation may have
+                    # reached the vault even when its acknowledgement was lost.
+                    if attempt == 0 and not mutation_started and exc.retryable:
+                        continue
+                    raise
 
 
 vault = VaultCLI()

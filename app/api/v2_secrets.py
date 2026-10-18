@@ -67,7 +67,11 @@ def vault_errors(fn):
             with provider.vault.operation():
                 return fn(*args, **kwargs)
         except provider.VaultError as exc:
-            raise HTTPException(503, str(exc)) from exc
+            raise HTTPException(
+                404 if exc.code == "vault_item_not_found" else 503,
+                str(exc),
+                headers={"X-GlyphHold-Error": exc.code},
+            ) from exc
 
     return wrapped
 
@@ -186,11 +190,7 @@ def list_handles(
     rows = [
         r
         for r in rows
-        if (not provider_name or r["provider"] == provider_name)
-        and query.casefold()
-        in (
-            r["name"] + " " + (r.get("description") or "") + " " + (r.get("folder_name") or "")
-        ).casefold()
+        if (not provider_name or r["provider"] == provider_name) and proxy.matches(r, query)
     ]
     return {
         "secrets_enabled": True,
@@ -352,6 +352,7 @@ def update(id_or_name: str, payload: Patch, p: Auth):
 
 
 class Migrate(BaseModel):
+    dry_run: bool = False
     expected_version: int = Field(ge=1)
     target_id: str | None = Field(default=None, max_length=300)
     field: str | None = Field(default=None, max_length=200)
@@ -376,9 +377,23 @@ def migrate(id_or_name: str, payload: Migrate, p: Auth):
             field = proxy.selected_field(item, payload.field)
             if not hmac_compare(provider.get_field(item, field), value):
                 raise HTTPException(
-                    409, "Values differ; existing vault item and built-in secret were retained"
+                    409,
+                    "Values differ; existing vault item and built-in secret were retained",
+                    headers={"X-GlyphHold-Error": "secret_values_differ"},
                 )
         else:
+            if payload.dry_run:
+                proxy.ensure_unique(row["name"], proxy.list_items())
+                folder = proxy.folder_destination(
+                    payload.folder_id, "folder_id" in payload.model_fields_set
+                )
+                return {
+                    "dry_run": True,
+                    "can_migrate": True,
+                    "action": "create",
+                    "name": row["name"],
+                    "folder_id": folder,
+                }
             fields = {"name": row["name"], "value": value, "value_type": row["value_type"]}
             if "folder_id" in payload.model_fields_set:
                 fields["folder_id"] = payload.folder_id
@@ -387,6 +402,14 @@ def migrate(id_or_name: str, payload: Migrate, p: Auth):
         verified = proxy.get_item(item["id"])
         if not hmac_compare(provider.get_field(verified, field), value):
             raise HTTPException(409, "Destination verification failed; built-in secret retained")
+        if payload.dry_run:
+            return {
+                "dry_run": True,
+                "can_migrate": True,
+                "action": "reuse_existing",
+                "secret": proxy.metadata(verified),
+                "value_verified": True,
+            }
         with connection() as conn:
             changed = conn.execute(
                 "UPDATE gh2_secret_handles SET provider='vaultwarden',account_id=?,item_id=?,field=?,encrypted_value=NULL,version=version+1,updated_at=? WHERE id=? AND version=? AND provider='builtin'",

@@ -347,3 +347,204 @@ def test_cli_operation_syncs_once_and_refreshes_after_writes(secrets_client, mon
     assert calls.count(["sync"]) == 2
     cli.call(["list", "items"])
     assert calls.count(["sync"]) == 3
+
+
+@pytest.mark.parametrize(
+    "query",
+    [
+        "RADARR.deanbox.co.uk",
+        "https://radarr.deanbox.co.uk",
+        "https://radarr.deanbox.co.uk:443/login?token=ignore#fragment",
+        "192.168.1.189",
+        "ssh://192.168.1.189:22",
+        "radarr.deanbox.co.uk/login",
+    ],
+)
+def test_search_finds_entries_by_website_and_hostname(live_vault, query):
+    client, headers, state, _ = live_vault
+    state["items"][0]["name"] = "Unrelated name"
+    state["items"][0]["login"]["uris"] = [
+        {
+            "uri": "https://URL_USER:URL_PASSWORD@radarr.deanbox.co.uk/login?token=URL_TOKEN#URL_FRAGMENT"
+        },
+        {"uri": "ssh://dean@192.168.1.189:22"},
+    ]
+    response = client.get("/api/v2/secrets", headers=headers, params={"query": query})
+    assert response.status_code == 200
+    rows = response.json()["secrets"]
+    assert len(rows) == 1 and rows[0]["name"] == "Unrelated name"
+    assert rows[0]["hostnames"] == ["radarr.deanbox.co.uk", "192.168.1.189"]
+    for sensitive in (
+        "URL_USER",
+        "URL_PASSWORD",
+        "URL_TOKEN",
+        "URL_FRAGMENT",
+        "private-password",
+        "private-user",
+    ):
+        assert sensitive not in response.text
+        assert (
+            client.get("/api/v2/secrets", headers=headers, params={"query": sensitive}).json()[
+                "secrets"
+            ]
+            == []
+        )
+
+
+def test_website_normalization_and_duplicate_host_ambiguity(live_vault):
+    client, headers, state, _ = live_vault
+    state["items"][0]["login"]["uris"] = [
+        {"uri": "radarr.deanbox.co.uk"},
+        {"uri": "https://[fd00::1]:8443/login"},
+        {"uri": "https://münich.example/"},
+        {"uri": "https://host:invalid"},
+        {"uri": None},
+        None,
+        {"uri": "https://invalid host/"},
+    ]
+    state["items"].append(
+        {
+            "id": "second",
+            "name": "Other account",
+            "type": 1,
+            "login": {"password": "other", "uris": [{"uri": "https://radarr.deanbox.co.uk"}]},
+        }
+    )
+    rows = client.get(
+        "/api/v2/secrets", headers=headers, params={"query": "radarr.deanbox.co.uk"}
+    ).json()["secrets"]
+    assert len(rows) == 2 and rows[0]["id"] != rows[1]["id"]
+    assert (
+        len(
+            client.get("/api/v2/secrets", headers=headers, params={"query": "fd00::1"}).json()[
+                "secrets"
+            ]
+        )
+        == 1
+    )
+    assert (
+        len(
+            client.get(
+                "/api/v2/secrets", headers=headers, params={"query": "münich.example"}
+            ).json()["secrets"]
+        )
+        == 1
+    )
+
+
+def test_migration_dry_run_verifies_without_changing_source_or_destination(live_vault):
+    client, headers, _state, calls = live_vault
+    vault.save_config({"enabled": False})
+    local = client.post(
+        "/api/v2/secrets",
+        headers=headers,
+        json={"name": "Home server", "value": "private-password", "value_type": "password"},
+    ).json()
+    vault.save_config({"enabled": True})
+    remote = next(
+        r
+        for r in client.get("/api/v2/secrets", headers=headers).json()["secrets"]
+        if r["provider"] == "vaultwarden"
+    )
+    calls.clear()
+    result = client.post(
+        "/api/v2/secrets/" + local["id"] + "/migrate",
+        headers=headers,
+        json={
+            "expected_version": 1,
+            "target_id": remote["id"],
+            "field": "login.password",
+            "dry_run": True,
+        },
+    )
+    assert result.status_code == 200 and result.json()["can_migrate"] and result.json()["dry_run"]
+    assert "private-password" not in result.text
+    assert not any(write for _, write in calls)
+    with connection() as c:
+        row = c.execute(
+            "SELECT provider,version,encrypted_value FROM gh2_secret_handles WHERE id=?",
+            (local["id"],),
+        ).fetchone()
+        assert (
+            row["provider"] == "builtin"
+            and row["version"] == 1
+            and row["encrypted_value"] is not None
+        )
+    conflict = client.post(
+        "/api/v2/secrets/" + local["id"] + "/migrate",
+        headers=headers,
+        json={
+            "expected_version": 1,
+            "target_id": remote["id"],
+            "field": "login.username",
+            "dry_run": True,
+        },
+    )
+    assert (
+        conflict.status_code == 409
+        and conflict.headers["X-GlyphHold-Error"] == "secret_values_differ"
+    )
+
+
+def test_migration_creation_preview_does_not_create_anything(live_vault):
+    client, headers, state, calls = live_vault
+    vault.save_config({"enabled": False})
+    local = client.post(
+        "/api/v2/secrets", headers=headers, json={"name": "Preview only", "value": "test-only"}
+    ).json()
+    vault.save_config({"enabled": True})
+    calls.clear()
+    result = client.post(
+        "/api/v2/secrets/" + local["id"] + "/migrate",
+        headers=headers,
+        json={"expected_version": 1, "dry_run": True, "folder_id": "home"},
+    )
+    assert result.status_code == 200 and result.json()["action"] == "create"
+    assert not any(write for _, write in calls) and len(state["items"]) == 1
+
+
+def test_cli_retries_reads_once_but_never_repeats_attempted_writes(secrets_client, monkeypatch):
+    vault.save_config(
+        {
+            "enabled": True,
+            "server_url": "https://vault.example.test",
+            "client_id": "user.test",
+            "client_secret": "test",
+            "master_password": "test",
+            "write_enabled": True,
+        }
+    )
+    cli = vault.VaultCLI()
+    calls = []
+    monkeypatch.setattr(cli, "unlock", lambda config: None)
+
+    def run(args, **kwargs):
+        calls.append(args[0])
+        if args[0] == "get" and calls.count("get") == 1:
+            raise vault.VaultError("Safe retry", retryable=True)
+        if args[0] == "create":
+            raise vault.VaultError("Uncertain write", retryable=True)
+        return {"id": "test"}
+
+    monkeypatch.setattr(cli, "_run", run)
+    assert cli.call(["get", "item", "test"]) == {"id": "test"} and calls.count("get") == 2
+    with pytest.raises(vault.VaultError):
+        cli.call(["create", "item"], payload={"notes": "test"}, write=True)
+    assert calls.count("create") == 1
+
+
+def test_cli_errors_are_safe_and_identify_the_failed_stage(secrets_client, monkeypatch):
+    from types import SimpleNamespace
+
+    monkeypatch.setattr(
+        vault.subprocess,
+        "run",
+        lambda *a, **k: SimpleNamespace(
+            returncode=1, stdout="private-value", stderr="ECONNRESET private-password"
+        ),
+    )
+    cli = vault.VaultCLI()
+    with pytest.raises(vault.VaultError) as error:
+        cli._run(["sync"], config={"server_url": "https://vault.example.test", "client_id": "test"})
+    assert error.value.code == "vault_sync_failed" and error.value.retryable
+    assert "private" not in str(error.value)

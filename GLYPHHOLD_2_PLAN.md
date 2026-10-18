@@ -440,6 +440,12 @@ not a requirement to copy items into GH2's database. Test authentication, direct
 search, field retrieval, optional folders, duplicate handling, conflicts, outage
 behaviour, account switching, restart recovery, UI and all three adapters.
 
+Patch 2.1.1 adds name/folder/website/hostname discovery, with safe website origins
+and hostnames in metadata. Full URL credentials, paths and tokens stay out of
+metadata. Migration preview (`dry_run`) verifies an existing target or checks a
+new destination without changing either provider. Provider failures identify
+the failed CLI stage; safe reads can retry once, while attempted writes cannot.
+
 Research references:
 
 - [Bitwarden API overview](https://bitwarden.com/help/bitwarden-apis/): the

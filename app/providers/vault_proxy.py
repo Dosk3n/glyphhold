@@ -6,6 +6,7 @@ import hashlib
 import hmac
 import json
 import re
+from urllib.parse import urlsplit
 
 from fastapi import HTTPException
 
@@ -96,6 +97,66 @@ def decode_reference(value: str) -> str:
     return identifier(pieces[2])
 
 
+def website_origin(value: str) -> tuple[str, str] | None:
+    """Safe discovery metadata: never return URL credentials, paths or tokens."""
+    if not isinstance(value, str) or not value.strip():
+        return None
+    value = value.strip()
+    try:
+        parsed = urlsplit(value if "://" in value or value.startswith("//") else "//" + value)
+        host = (parsed.hostname or "").rstrip(".").encode("idna").decode().casefold()
+        if not host or not re.fullmatch(r"[a-z0-9_.:-]+", host):
+            return None
+        port = parsed.port
+        if port == {"https": 443, "http": 80, "ssh": 22, "ftp": 21}.get(parsed.scheme.casefold()):
+            port = None
+        display = "[" + host + "]" if ":" in host else host
+        origin = ((parsed.scheme.casefold() + "://") if parsed.scheme else "") + display
+        if port is not None:
+            origin += ":" + str(port)
+        return origin, host
+    except (ValueError, UnicodeError):
+        return None
+
+
+def websites(item: dict) -> dict:
+    origins, hosts = [], []
+    for entry in (item.get("login") or {}).get("uris") or []:
+        parsed = website_origin(entry.get("uri")) if isinstance(entry, dict) else None
+        if parsed:
+            origin, host = parsed
+            if origin not in origins:
+                origins.append(origin)
+            if host not in hosts:
+                hosts.append(host)
+    return {"websites": origins, "hostnames": hosts}
+
+
+def matches(row: dict, query: str) -> bool:
+    query = query.strip().casefold()
+    text = " ".join(
+        [
+            row["name"],
+            row.get("description") or "",
+            row.get("folder_name") or "",
+            *row.get("websites", []),
+            *row.get("hostnames", []),
+        ]
+    ).casefold()
+    if query in text:
+        return True
+    # A complete saved website URL can include a path/query that we deliberately
+    # exclude from metadata. Match its safe origin; ambiguous matches stay distinct.
+    parsed = website_origin(query)
+    return bool(
+        parsed
+        and (
+            parsed[0] in [w.casefold() for w in row.get("websites", [])]
+            or ("://" not in query and parsed[1] in row.get("hostnames", []))
+        )
+    )
+
+
 def metadata(item: dict, folder_names: dict | None = None) -> dict:
     return {
         "id": reference(item["id"]),
@@ -115,6 +176,7 @@ def metadata(item: dict, folder_names: dict | None = None) -> dict:
         "created_at": item.get("creationDate"),
         "updated_at": item.get("revisionDate"),
         "direct": True,
+        **websites(item),
     }
 
 
