@@ -1438,30 +1438,11 @@ export function MemoryReviewsPage() {
 
 function SecretProviderSettings() {
   const base = "/dashboard/api/providers/secrets";
-  const [config, setConfig] = useState<Row | null>(null),
-    [spaces, setSpaces] = useState<Row[]>([]),
-    [folders, setFolders] = useState<Row[]>([]),
-    [vaultItems, setVaultItems] = useState<Row[]>([]);
-  const [error, setError] = useState(""),
-    [success, setSuccess] = useState(""),
-    [busy, setBusy] = useState(false),
-    [folderName, setFolderName] = useState(""),
-    [filterFolder, setFilterFolder] = useState("");
-  const [link, setLink] = useState({
-    space_id: "",
-    name: "",
-    item_id: "",
-    field: "login.password",
-    value_type: "password",
-  });
+  const [config, setConfig] = useState<Row | null>(null), [folders, setFolders] = useState<Row[]>([]);
+  const [error, setError] = useState(""), [success, setSuccess] = useState(""), [busy, setBusy] = useState(false), [folderName, setFolderName] = useState("");
   async function load() {
-    const [c, cap] = await Promise.all([v2api(base), v2api("capabilities")]);
-    setConfig({ ...c, client_secret: "", master_password: "" });
-    setSpaces(cap.spaces);
-    setLink((l) => ({
-      ...l,
-      space_id: l.space_id || cap.default_space_id || cap.spaces[0]?.id || "",
-    }));
+    const c = await v2api(base);
+    setConfig({...c, client_id: "", client_secret: "", master_password: ""});
   }
   useEffect(() => {
     load().catch((e) => setError(message(e)));
@@ -1487,16 +1468,6 @@ function SecretProviderSettings() {
         <div className="loading">Loading secret provider…</div>
       </>
     );
-  const mapping = (space: string) =>
-    config.folder_mappings?.[space] || {
-      folder_ids: [],
-      write_folder_id: null,
-    };
-  const mapUpdate = (space: string, field: string, value: any) =>
-    update("folder_mappings", {
-      ...(config.folder_mappings || {}),
-      [space]: { ...mapping(space), [field]: value },
-    });
   return (
     <>
       <Notice error={error} success={success} />
@@ -1520,7 +1491,7 @@ function SecretProviderSettings() {
             <div>
               <h2>Bitwarden / Vaultwarden</h2>
               <p className="muted">
-                Use an external password vault for new secrets.
+                Search and use your Bitwarden or Vaultwarden secrets directly.
               </p>
             </div>
             <label className="v2-switch">
@@ -1535,7 +1506,7 @@ function SecretProviderSettings() {
           </div>
           <div className="v2-callout">
             {config.enabled
-              ? "External provider selected. Existing secrets keep their recorded provider until explicitly migrated."
+              ? "Vaultwarden is selected. All accessible vault items are available directly; existing built-in secrets remain accessible."
               : "Built-in encrypted secret storage is active."}
           </div>
           <Field name="Server URL">
@@ -1630,227 +1601,27 @@ function SecretProviderSettings() {
             </Button>
           </div>
           <small className="muted">
-            Credentials are encrypted using this installation’s persistent key.
-            Folders organise your vault; GH2 space permissions control agent
-            access.
+            Save your details before testing the connection. You can test while the integration is disabled. Credentials are encrypted using this installation’s persistent key.
+            Secrets are shared independently of memory spaces. API key secret permissions control agent access.
           </small>
         </form>
         <section className="panel stack">
-          <h2>Folder mapping</h2>
-          <p className="muted">
-            Choose accessible folders and a destination for each space. Save
-            mappings with the provider settings.
-          </p>
-          <Button
-            secondary
-            disabled={busy}
-            onClick={() =>
-              action(
-                async () =>
-                  setFolders(items(await v2api(`${base}/folders`), "folders")),
-                "Folders loaded.",
-              )
-            }
-          >
-            Load vault folders
-          </Button>
-          {spaces.map((s) => (
-            <div className="v2-mapping" key={s.id}>
-              <h3>{s.name}</h3>
-              <div className="scope-grid">
-                {folders.map((f) => (
-                  <label className="check-card" key={f.id}>
-                    <input
-                      type="checkbox"
-                      checked={(mapping(s.id).folder_ids || []).includes(f.id)}
-                      onChange={(e) =>
-                        mapUpdate(
-                          s.id,
-                          "folder_ids",
-                          e.target.checked
-                            ? [...mapping(s.id).folder_ids, f.id]
-                            : mapping(s.id).folder_ids.filter(
-                                (id: string) => id !== f.id,
-                              ),
-                        )
-                      }
-                    />
-                    <span>{f.name}</span>
-                  </label>
-                ))}
-              </div>
-              <Field name="Write destination">
-                <select
-                  value={mapping(s.id).write_folder_id || ""}
-                  onChange={(e) =>
-                    mapUpdate(s.id, "write_folder_id", e.target.value || null)
-                  }
-                >
-                  <option value="">No write destination</option>
-                  {folders
-                    .filter((f) =>
-                      (mapping(s.id).folder_ids || []).includes(f.id),
-                    )
-                    .map((f) => (
-                      <option key={f.id} value={f.id}>
-                        {f.name}
-                      </option>
-                    ))}
-                </select>
-              </Field>
-            </div>
-          ))}
-          <form
-            className="v2-inline-form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              action(async () => {
-                await send(`${base}/folders`, { name: folderName });
-                setFolderName("");
-                setFolders(items(await v2api(`${base}/folders`), "folders"));
-              }, "Vault folder created.");
-            }}
-          >
-            <Field name="New folder">
-              <input
-                required
-                value={folderName}
-                onChange={(e) => setFolderName(e.target.value)}
-              />
-            </Field>
-            <Button disabled={busy || !config.write_enabled}>
-              Create folder
-            </Button>
+          <h2>Optional default folder</h2>
+          <p className="muted">All accessible vault folders and unfiled items are searchable. Folders organise secrets independently of memory spaces.</p>
+          <Button secondary disabled={busy || !config.enabled} onClick={() => action(async () => setFolders(items(await v2api(`${base}/folders`), "folders")), "Folders loaded.")}>Load vault folders</Button>
+          <Field name="Default folder for new secrets" hint="An agent can choose a different folder when saving. Save changes using Save provider settings.">
+            <select value={config.default_folder_id || ""} onChange={e => update("default_folder_id", e.target.value || null)}>
+              <option value="">Unfiled</option>
+              {config.default_folder_id && !folders.some(f => f.id === config.default_folder_id) && <option value={config.default_folder_id}>Saved folder — load folders to see its name</option>}
+              {folders.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+            </select>
+          </Field>
+          <form className="v2-inline-form" onSubmit={e => {e.preventDefault(); action(async () => { await send(`${base}/folders`, {name: folderName}); setFolderName(""); setFolders(items(await v2api(`${base}/folders`), "folders")); }, "Folder created.");}}>
+            <Field name="New folder"><input required value={folderName} onChange={e => setFolderName(e.target.value)} /></Field>
+            <Button disabled={busy || !config.enabled || !config.write_enabled}>Create folder</Button>
           </form>
+          <p className="muted">Existing built-in secrets remain in Secrets. Agents can check for a matching vault item and transfer a secret directly, without exporting a plaintext file.</p>
         </section>
-      </section>
-      <ExternalSecretMigration config={config} spaces={spaces} />
-      <section className="panel stack v2-section">
-        <h2>Link an existing vault item</h2>
-        <p className="muted">
-          Register a secret reference without copying its value into memory.
-          Vault browsing returns metadata only.
-        </p>
-        <div className="v2-inline-form">
-          <Field name="Folder">
-            <select
-              value={filterFolder}
-              onChange={(e) => setFilterFolder(e.target.value)}
-            >
-              <option value="">Choose a folder</option>
-              {folders.map((f) => (
-                <option key={f.id} value={f.id}>
-                  {f.name}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Button
-            secondary
-            disabled={busy || !filterFolder}
-            onClick={() =>
-              action(
-                async () =>
-                  setVaultItems(
-                    items(
-                      await v2api(
-                        `${base}/items${filterFolder ? `?folder_id=${encodeURIComponent(filterFolder)}` : ""}`,
-                      ),
-                      "items",
-                    ),
-                  ),
-                "Vault item metadata loaded.",
-              )
-            }
-          >
-            Browse items
-          </Button>
-        </div>
-        <form
-          className="v2-link-form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            action(async () => {
-              await send(`${base}/link`, link);
-              setLink((l) => ({ ...l, name: "", item_id: "" }));
-            }, "Vault item linked. Find it in Secrets.");
-          }}
-        >
-          <Field name="Owning space">
-            <SpaceSelect
-              spaces={spaces}
-              value={link.space_id}
-              onChange={(id) => setLink({ ...link, space_id: id })}
-            />
-          </Field>
-          <Field name="Vault item">
-            <select
-              required
-              value={link.item_id}
-              onChange={(e) => {
-                const item = vaultItems.find((i) => i.id === e.target.value);
-                setLink({
-                  ...link,
-                  item_id: e.target.value,
-                  field: item?.fields?.[0] || "notes",
-                  name: link.name || item?.name || "",
-                });
-              }}
-            >
-              <option value="">Choose an item</option>
-              {vaultItems.map((i) => (
-                <option key={i.id} value={i.id}>
-                  {i.name} · {i.id}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field name="GH2 secret name">
-            <input
-              required
-              value={link.name}
-              onChange={(e) => setLink({ ...link, name: e.target.value })}
-            />
-          </Field>
-          <Field
-            name="Item field"
-            hint="For example password, username, notes, or a supported custom field."
-          >
-            <select
-              required
-              value={link.field}
-              onChange={(e) => setLink({ ...link, field: e.target.value })}
-            >
-              {(
-                vaultItems.find((i) => i.id === link.item_id)?.fields || [
-                  "login.password",
-                  "login.username",
-                  "notes",
-                  "sshKey.privateKey",
-                  "sshKey.publicKey",
-                  "sshKey.keyFingerprint",
-                ]
-              ).map((f: any) => (
-                <option key={f.id || f} value={f.id || f}>
-                  {f.label || f.id || f}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field name="Value type">
-            <select
-              value={link.value_type}
-              onChange={(e) => setLink({ ...link, value_type: e.target.value })}
-            >
-              {["password", "api_key", "username", "ssh_key", "text"].map(
-                (v) => (
-                  <option key={v}>{v}</option>
-                ),
-              )}
-            </select>
-          </Field>
-          <Button disabled={busy}>Link secret</Button>
-        </form>
       </section>
     </>
   );
@@ -2510,7 +2281,9 @@ export function MigrationPage() {
 export function SecretLibrary() {
   const [creating, setCreating] = useState(false);
   const [secrets, setSecrets] = useState<Row[]>([]),
-    [spaces, setSpaces] = useState<Row[]>([]),
+    [folders, setFolders] = useState<Row[]>([]),
+    [activeProvider, setActiveProvider] = useState("builtin"),
+    [fields, setFields] = useState<Record<string, string>>({}),
     [types, setTypes] = useState<string[]>([]),
     [query, setQuery] = useState(""),
     [filter, setFilter] = useState("");
@@ -2522,25 +2295,18 @@ export function SecretLibrary() {
     [value, setValue] = useState("");
   const [form, setForm] = useState({
     name: "",
-    space_id: "",
+    folder_id: "",
     description: "",
     value: "",
     value_type: "password",
   });
   async function load(space = filter, search = query) {
-    const [data, cap] = await Promise.all([
-      v2api(
-        `secrets?query=${encodeURIComponent(search)}${space ? `&space_id=${encodeURIComponent(space)}` : ""}`,
-      ),
-      v2api("capabilities"),
-    ]);
+    const data = await v2api(`secrets?query=${encodeURIComponent(search)}${space ? `&provider_name=${encodeURIComponent(space)}` : ""}`);
     setSecrets(data.secrets);
     setTypes(data.value_types || ["text", "password", "api_key", "ssh_key"]);
-    setSpaces(cap.spaces);
-    setForm((f) => ({
-      ...f,
-      space_id: f.space_id || cap.default_space_id || cap.spaces[0]?.id || "",
-    }));
+    setActiveProvider(data.active_provider || "builtin");
+    if (data.active_provider === "vaultwarden") setFolders(items(await v2api("secrets/folders"), "folders"));
+
   }
   useEffect(() => {
     load().catch((e) => setError(message(e)));
@@ -2571,7 +2337,7 @@ export function SecretLibrary() {
     <>
       <Heading
         title="Secrets"
-        body="Store encrypted values or references to your connected vault. Values are revealed only by an explicit action."
+        body="Search your active secret provider and existing built-in secrets. Values are revealed only by an explicit action."
         icon={KeyRound}
         action={<Button onClick={() => setCreating(true)}><Plus size={15} /> New secret</Button>}
       />
@@ -2579,7 +2345,7 @@ export function SecretLibrary() {
       <section className="secret-library-layout">
         <section className="panel resource-panel">
           <div className="panel-heading">
-            <h2>Secret references</h2>
+            <h2>Secrets</h2>
             <span className="badge">{secrets.length} secrets</span>
           </div>
           <form
@@ -2595,21 +2361,14 @@ export function SecretLibrary() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            <SpaceSelect
-              spaces={spaces}
-              all
-              value={filter}
-              onChange={(id) => {
-                setFilter(id);
-                action(() => load(id));
-              }}
-            />
+            <select aria-label="Secret provider" value={filter} onChange={e => { setFilter(e.target.value); action(() => load(e.target.value)); }}>
+              <option value="">All providers</option><option value="builtin">Built-in</option><option value="vaultwarden">Vaultwarden</option>
+            </select>
             <Button secondary>Search</Button>
           </form>
           {!secrets.length ? (
             <Empty>
-              No secrets in this view. Add a value or link an existing vault
-              item in Settings.
+              No secrets in this view. New secrets use your active provider. Vaultwarden entries appear automatically when connected.
             </Empty>
           ) : (
             secrets.map((s) => (
@@ -2624,22 +2383,20 @@ export function SecretLibrary() {
                   </span>
                 </div>
                 <div className="tag-row">
-                  <span className="badge">
-                    {spaces.find((space) => space.id === s.space_id)?.name ||
-                      s.space_id}
-                  </span>
+                  {s.provider === "vaultwarden" && <span className="badge">{s.folder_name || "Unfiled"}</span>}
                   <span className="badge">{s.value_type}</span>
                   <small className="muted">
-                    v{s.version} · {stamp(s.updated_at)}
+                    {typeof s.version === "number" ? `v${s.version} · ` : ""}{s.updated_at ? stamp(s.updated_at) : ""}
                   </small>
                 </div>
+                {s.fields?.length > 0 && <Field name={`Field for ${s.name}`}><select value={fields[s.id] || s.default_field || ""} onChange={e => setFields({...fields, [s.id]: e.target.value})}><option value="">Choose a field</option>{s.fields.map((f: string) => <option key={f} value={f}>{f}</option>)}</select></Field>}
                 <div className="button-row v2-section">
                   <Button
                     secondary
                     disabled={busy}
                     onClick={() =>
                       action(async () =>
-                        setRevealed(await send(`secrets/${s.id}/reveal`, {})),
+                        setRevealed(await send(`secrets/${encodeURIComponent(s.id)}/reveal`, {field: fields[s.id] || s.default_field || undefined})),
                       )
                     }
                   >
@@ -2649,13 +2406,13 @@ export function SecretLibrary() {
                     secondary
                     disabled={busy}
                     onClick={() => {
-                      setEditing(s);
+                      setEditing({...s, selected_field: fields[s.id] || s.default_field || ""});
                       setValue("");
                     }}
                   >
                     Edit
                   </Button>
-                  <Button
+                  {!s.direct && <Button
                     secondary
                     disabled={busy}
                     onClick={() => {
@@ -2670,12 +2427,12 @@ export function SecretLibrary() {
                               `secrets/${s.id}?expected_version=${s.version}`,
                               { method: "DELETE" },
                             ),
-                          "Secret reference removed.",
+                          "Secret removed.",
                         );
                     }}
                   >
                     Remove
-                  </Button>
+                  </Button>}
                 </div>
               </article>
             ))
@@ -2686,19 +2443,14 @@ export function SecretLibrary() {
           onSubmit={(e) => {
             e.preventDefault();
             action(async () => {
-              await send("secrets", form);
+              const {folder_id, ...rest} = form;
+              await send("secrets", {...rest, ...(folder_id ? {folder_id: folder_id === "__unfiled" ? null : folder_id} : {})});
               setForm((f) => ({ ...f, name: "", value: "", description: "" }));
               setCreating(false);
             }, "Secret saved.");
           }}
         >
-          <Field name="Owning space">
-            <SpaceSelect
-              spaces={spaces.filter((s) => s.can_write)}
-              value={form.space_id}
-              onChange={(id) => setForm({ ...form, space_id: id })}
-            />
-          </Field>
+          {activeProvider === "vaultwarden" && <Field name="Folder (optional)"><select value={form.folder_id} onChange={e => setForm({...form, folder_id:e.target.value})}><option value="">Use configured default</option><option value="__unfiled">Unfiled</option>{folders.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}</select></Field>}
           <Field name="Name">
             <input
               required
@@ -2734,8 +2486,7 @@ export function SecretLibrary() {
             />
           </Field>
           <small className="muted">
-            New secrets use your configured provider. Existing references retain
-            their original provider.
+            New secrets use your configured provider. Existing built-in secrets remain available.
           </small>
           <Button disabled={busy}>Save secret</Button>
         </form></CreateDialog>}
@@ -2778,10 +2529,10 @@ export function SecretLibrary() {
               e.preventDefault();
               action(async () => {
                 await send(
-                  `secrets/${editing.id}`,
+                  `secrets/${encodeURIComponent(editing.id)}`,
                   {
                     expected_version: editing.version,
-                    description: editing.description || "",
+                    ...(editing.direct ? {field: editing.selected_field || undefined} : {description: editing.description || ""}),
                     ...(value ? { value } : {}),
                   },
                   "PATCH",
@@ -2797,14 +2548,7 @@ export function SecretLibrary() {
                 Close
               </Button>
             </div>
-            <Field name="Description">
-              <input
-                value={editing.description || ""}
-                onChange={(e) =>
-                  setEditing({ ...editing, description: e.target.value })
-                }
-              />
-            </Field>
+            {editing.direct ? <Field name="Item field"><select required value={editing.selected_field} onChange={e => setEditing({...editing, selected_field:e.target.value})}><option value="">Choose a field</option>{(editing.fields || []).map((f:string) => <option key={f} value={f}>{f}</option>)}</select></Field> : <Field name="Description"><input value={editing.description || ""} onChange={e => setEditing({...editing, description:e.target.value})}/></Field>}
             <Field
               name="Replacement value"
               hint="Leave blank to retain the existing value."
@@ -2825,8 +2569,6 @@ export function SecretLibrary() {
 }
 
 function EncryptedSecretTransfer() {
-  const [spaces, setSpaces] = useState<Row[]>([]),
-    [spaceId, setSpaceId] = useState("space_import_review");
   const [namespace, setNamespace] = useState(""),
     [password, setPassword] = useState(""),
     [packageData, setPackageData] = useState<Row | null>(null),
@@ -2835,11 +2577,6 @@ function EncryptedSecretTransfer() {
     [result, setResult] = useState<Row | null>(null),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
-  useEffect(() => {
-    v2api("capabilities")
-      .then((c) => setSpaces(c.spaces))
-      .catch((e) => setError(message(e)));
-  }, []);
   const resetPreview = () => {
     setPreview(null);
     setResult(null);
@@ -2850,7 +2587,7 @@ function EncryptedSecretTransfer() {
     try {
       const data = await send(
         `/dashboard/api/providers/secrets/migration/${apply ? "apply" : "preview"}`,
-        { package: packageData, password, namespace, space_id: spaceId },
+        { package: packageData, password, namespace },
       );
       if (apply) {
         setResult(data);
@@ -2930,16 +2667,6 @@ function EncryptedSecretTransfer() {
             }}
           />
         </Field>
-        <Field name="Destination space">
-          <SpaceSelect
-            spaces={spaces}
-            value={spaceId}
-            onChange={(id) => {
-              setSpaceId(id);
-              resetPreview();
-            }}
-          />
-        </Field>
         <Button disabled={busy || !packageData}>Preview secret transfer</Button>
       </form>
       {preview && (
@@ -2978,210 +2705,6 @@ function EncryptedSecretTransfer() {
           </Button>
         </div>
       )}
-    </section>
-  );
-}
-
-function ExternalSecretMigration({
-  config,
-  spaces,
-}: {
-  config: Row;
-  spaces: Row[];
-}) {
-  const [secrets, setSecrets] = useState<Row[]>([]),
-    [selected, setSelected] = useState<string[]>([]),
-    [preview, setPreview] = useState<Row | null>(null),
-    [result, setResult] = useState<Row | null>(null);
-  const [error, setError] = useState(""),
-    [busy, setBusy] = useState(false);
-  const base = "/dashboard/api/providers/secrets/migration/external";
-  async function load() {
-    const response = await v2api("secrets");
-    setSecrets(
-      (response.secrets || []).filter((s: Row) => s.provider === "builtin"),
-    );
-  }
-  useEffect(() => {
-    load().catch((e) => setError(message(e)));
-  }, []);
-  useEffect(() => {
-    setPreview(null);
-    setResult(null);
-  }, [config]);
-  const allowed = (s: Row) => {
-    const mapping = config.folder_mappings?.[s.space_id];
-    return (
-      !!config.enabled &&
-      !!config.write_enabled &&
-      !!mapping?.write_folder_id &&
-      (mapping.folder_ids || []).includes(mapping.write_folder_id)
-    );
-  };
-  const selectedItems = secrets.filter((s) => selected.includes(s.id));
-  async function migrate(apply: boolean) {
-    setError("");
-    setBusy(true);
-    try {
-      const response = await send(`${base}/${apply ? "apply" : "preview"}`, {
-        items: selectedItems.map((s) => ({
-          id: s.id,
-          expected_version: s.version,
-        })),
-      });
-      if (apply) {
-        setResult(response);
-        setSelected([]);
-        await load();
-      } else setPreview(response);
-    } catch (e) {
-      setError(message(e));
-    } finally {
-      setBusy(false);
-    }
-  }
-  return (
-    <section className="panel stack v2-section">
-      <div className="panel-heading">
-        <div>
-          <h2>Move built-in secrets to your vault</h2>
-          <p className="muted">
-            Explicitly transfer selected values to approved vault folders. GH2
-            then retains a reference to each external item.
-          </p>
-        </div>
-        <Button
-          secondary
-          disabled={busy}
-          onClick={() => {
-            setSelected([]);
-            setPreview(null);
-            setResult(null);
-            setError("");
-            load().catch((e) => setError(message(e)));
-          }}
-        >
-          Refresh secret metadata
-        </Button>
-      </div>
-      {result?.partial && (
-        <div className="alert">
-          Some secrets were transferred before the job stopped. Review the
-          results, refresh metadata and preview the remaining records before
-          retrying.
-        </div>
-      )}
-      <Notice
-        error={error}
-        success={
-          result && !result.partial
-            ? "Provider transfer completed. Review the results below."
-            : ""
-        }
-      />
-      {(!config.enabled || !config.write_enabled) && (
-        <div className="v2-callout">
-          Enable the external provider and vault writes, configure approved
-          write folders, and save provider settings before transferring.
-        </div>
-      )}
-      {!secrets.length ? (
-        <Empty>No built-in secrets are available to transfer.</Empty>
-      ) : (
-        secrets.map((s) => (
-          <label className="check-card v2-transfer-choice" key={s.id}>
-            <input
-              type="checkbox"
-              checked={selected.includes(s.id)}
-              disabled={busy || !allowed(s)}
-              onChange={(e) => {
-                setSelected((current) =>
-                  e.target.checked
-                    ? [...current, s.id]
-                    : current.filter((id) => id !== s.id),
-                );
-                setPreview(null);
-                setResult(null);
-              }}
-            />
-            <span>
-              <strong>{s.name}</strong>
-              <small className="v2-block">
-                {spaces.find((space) => space.id === s.space_id)?.name ||
-                  s.space_id}{" "}
-                · {s.value_type} · version {s.version}
-                {!allowed(s)
-                  ? " · Needs enabled provider, write access and an approved destination folder"
-                  : ""}
-              </small>
-            </span>
-          </label>
-        ))
-      )}
-      <div className="button-row">
-        <Button
-          secondary
-          disabled={
-            busy ||
-            !selectedItems.length ||
-            selectedItems.some((s) => !allowed(s))
-          }
-          onClick={() => migrate(false)}
-        >
-          Preview provider transfer
-        </Button>
-        {preview && (
-          <Button
-            disabled={
-              busy ||
-              !!result ||
-              !selectedItems.length ||
-              (preview.conflicts?.length || 0) > 0 ||
-              preview.can_apply === false ||
-              selectedItems.some((s) => !allowed(s))
-            }
-            onClick={() => {
-              if (
-                window.confirm(
-                  "Transfer these secrets to the external vault and replace their local encrypted values with vault references?",
-                )
-              )
-                migrate(true);
-            }}
-          >
-            Transfer selected secrets
-          </Button>
-        )}
-      </div>
-      {preview && (
-        <div className="stack">
-          <h3>Provider transfer preview</h3>
-          <p className="muted">
-            {preview.items?.length || 0} selected secrets. Secret values are
-            excluded from this preview.
-          </p>
-          {(preview.items || []).map((i: Row) => (
-            <div className="v2-guidance" key={i.id}>
-              <strong>{i.name}</strong>
-              <small>Destination folder: {i.folder_id}</small>
-            </div>
-          ))}
-          <details>
-            <summary>Preview metadata and conflicts</summary>
-            <pre className="v2-json">{pretty(preview)}</pre>
-          </details>
-        </div>
-      )}
-      {result && (
-        <details open>
-          <summary>Provider transfer results</summary>
-          <pre className="v2-json">{pretty(result)}</pre>
-        </details>
-      )}
-      <small className="muted">
-        If a vault operation fails, review the result before retrying. Switching
-        the provider setting alone never transfers existing secrets.
-      </small>
     </section>
   );
 }

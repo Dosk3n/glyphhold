@@ -21,11 +21,12 @@ class ProviderSettings(BaseModel):
     master_password: str | None = Field(default=None, max_length=8192)
     write_enabled: bool | None = None
     folder_mappings: dict | None = None
+    default_folder_id: str | None = Field(default=None, max_length=200)
     clear_credentials: bool = False
 
 
 def provider_error(exc: Exception) -> HTTPException:
-    if isinstance(exc, (ValueError, TypeError)):
+    if isinstance(exc, (ValueError, TypeError, provider.VaultError)):
         return HTTPException(400, str(exc))
     return HTTPException(
         503, "Secret provider unavailable; check saved credentials, unlock and server status"
@@ -40,7 +41,10 @@ def read_settings():
 @router.put("")
 def update_settings(payload: ProviderSettings):
     try:
-        return provider.save_config(payload.model_dump(exclude_none=True))
+        fields = payload.model_dump(exclude_none=True)
+        if "default_folder_id" in payload.model_fields_set:
+            fields["default_folder_id"] = payload.default_folder_id
+        return provider.save_config(fields)
     except Exception as exc:
         raise provider_error(exc) from exc
 
@@ -48,7 +52,7 @@ def update_settings(payload: ProviderSettings):
 @router.post("/test")
 def test_provider():
     try:
-        folders = provider.vault.call(["list", "folders"])
+        folders = provider.vault.call(["list", "folders"], allow_disabled=True)
         return {"status": "unlocked", "folder_count": len(folders)}
     except Exception as exc:
         raise provider_error(exc) from exc
@@ -96,17 +100,7 @@ def items(folder_id: str):
         raise provider_error(exc) from exc
 
 
-def available_fields(item: dict) -> list[str]:
-    fields = ["notes"] if item.get("notes") is not None else []
-    for group, names in {
-        "login": ["username", "password", "totp"],
-        "sshKey": ["privateKey", "publicKey", "keyFingerprint"],
-    }.items():
-        fields += [
-            f"{group}.{name}" for name in names if (item.get(group) or {}).get(name) is not None
-        ]
-    fields += ["custom:" + f["name"] for f in item.get("fields", []) if f.get("name")]
-    return fields
+from app.providers.vault_proxy import available_fields
 
 
 class LinkRequest(BaseModel):
@@ -189,13 +183,7 @@ def external_transfer_plan(payload: ExternalTransfer):
                     {"id": selected.id, "reason": "Secret is already externally bound"}
                 )
                 continue
-            mapping = config["folder_mappings"].get(row["space_id"], {})
-            folder = mapping.get("write_folder_id")
-            if not folder or folder not in mapping.get("folder_ids", []):
-                conflicts.append(
-                    {"id": selected.id, "reason": "Choose an approved write folder for its space"}
-                )
-                continue
+            folder = config.get("default_folder_id")
             items.append(
                 {
                     "id": row["id"],
@@ -242,7 +230,16 @@ def apply_external_transfer(payload: ExternalTransfer):
                 # A stable marker allows retry to recover an upstream create whose
                 # result was not committed locally. Never identify by alias alone.
                 remote_name = row["name"] + " [GH2:" + row["id"] + "]"
-                remote = provider.vault.call(["list", "items", "--folderid", selected["folder_id"]])
+                remote = provider.vault.call(["list", "items"])
+                ordinary = [
+                    item
+                    for item in remote
+                    if (item.get("name") or "").casefold() == row["name"].casefold()
+                ]
+                if ordinary:
+                    raise ValueError(
+                        "A vault item with this name exists; use the secret migrate tool with its target ID and field to verify it without overwriting"
+                    )
                 matches = [item for item in remote if item.get("name") == remote_name]
                 if len(matches) > 1:
                     raise ValueError(

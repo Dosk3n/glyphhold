@@ -114,32 +114,119 @@ class GlyphHoldV2Client(GlyphHoldClient):
         *,
         name: str,
         value: str,
-        space_id: str,
+        space_id: str | None = None,
         description: str | None = None,
         value_type: str = "text",
+        folder_id: str | None = None,
+        username: str | None = None,
+        uri: str | None = None,
     ):
         return self._request(
             "POST",
             "/api/v2/secrets",
             payload={
-                "name": name,
-                "value": value,
-                "space_id": space_id,
-                "description": description,
-                "value_type": value_type,
+                k: v
+                for k, v in {
+                    "name": name,
+                    "value": value,
+                    "space_id": space_id,
+                    "description": description,
+                    "value_type": value_type,
+                    "folder_id": folder_id,
+                    "username": username,
+                    "uri": uri,
+                }.items()
+                if v is not None
             },
         )
 
-    def search_secrets(self, *, query: str = "", space_id: str | None = None):
-        params = {"query": query}
-        if space_id:
-            params["space_id"] = space_id
+    def search_secrets(
+        self, *, query: str = "", space_id: str | None = None, provider_name: str | None = None
+    ):
+        params = {
+            k: v
+            for k, v in {
+                "query": query,
+                "space_id": space_id,
+                "provider_name": provider_name,
+            }.items()
+            if v is not None
+        }
         return self._request("GET", "/api/v2/secrets?" + urlencode(params))
 
-    def reveal_secret(self, name: str, *, space_id: str | None = None, **_):
+    def get_secret_metadata(self, id_or_name: str):
+        return self._request("GET", "/api/v2/secrets/" + quote(id_or_name, safe=""))
+
+    def reveal_secret(
+        self,
+        name: str,
+        *,
+        space_id: str | None = None,
+        field: str | None = None,
+        requesting_agent: str | None = None,
+        tool: str | None = None,
+        **_,
+    ):
         query = "?" + urlencode({"space_id": space_id}) if space_id else ""
         return self._request(
-            "POST", "/api/v2/secrets/" + quote(name, safe="") + "/reveal" + query, payload={}
+            "POST",
+            "/api/v2/secrets/" + quote(name, safe="") + "/reveal" + query,
+            payload={
+                k: v
+                for k, v in {
+                    "field": field,
+                    "requesting_agent": requesting_agent,
+                    "tool": tool,
+                }.items()
+                if v is not None
+            },
+        )
+
+    def list_secret_folders(self):
+        return self._request("GET", "/api/v2/secrets/folders")
+
+    def create_secret_folder(self, name: str):
+        return self._request("POST", "/api/v2/secrets/folders", payload={"name": name})
+
+    def update_secret(
+        self, id_or_name: str, *, expected_version: int | str, value: str, field: str | None = None
+    ):
+        return self._request(
+            "PATCH",
+            "/api/v2/secrets/" + quote(id_or_name, safe=""),
+            payload={
+                k: v
+                for k, v in {
+                    "expected_version": expected_version,
+                    "value": value,
+                    "field": field,
+                }.items()
+                if v is not None
+            },
+        )
+
+    def migrate_secret(
+        self,
+        id_or_name: str,
+        *,
+        expected_version: int,
+        target_id: str | None = None,
+        field: str | None = None,
+        folder_id: str | None = None,
+    ):
+        return self._request(
+            "POST",
+            "/api/v2/secrets/" + quote(id_or_name, safe="") + "/migrate",
+            payload={
+                k: v
+                for k, v in {
+                    "expected_version": expected_version,
+                    "target_id": target_id,
+                    "field": field,
+                    "folder_id": folder_id,
+                }.items()
+                if v is not None
+            },
         )
 
     def list_memories(

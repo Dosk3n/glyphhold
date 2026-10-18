@@ -313,10 +313,10 @@ Space grants must apply consistently to lists, direct lookups, recall, search,
 pins, revisions, similarity checks, moves, exports, and mutations. Client-supplied
 agent names or context never override authenticated authority.
 
-Plan consistent space ownership for secrets as well, while keeping secret
-permissions and explicit reveal operations separate. Recall must never reveal
-secret values. Secret names, uniqueness across spaces, and ambiguous lookups
-must be resolved in the schema/API design before migration is implemented.
+Secrets are global and independent of memory spaces. Separate API key secret
+permissions and explicit reveal operations still apply. Recall must never reveal
+secret values. Names must be unambiguous across providers; duplicate names require
+an explicit ID and new writes must not create silent duplicates.
 
 Secrets require a distinct transfer procedure: decrypt only through an
 authorised migration path, encrypt with the destination key, and prevent values
@@ -366,9 +366,11 @@ must not be assumed to provide access to these items.
 
 Use a provider interface behind GH2's secret API. Hermes, Nexus, and other
 clients continue to search metadata and explicitly reveal secrets through GH2.
-GH2 retains space ownership, aliases, field bindings, permissions, and audit
-records; the selected provider owns the secret value. Avoid copying external
-values into GH2's database as a normal part of operation.
+Secrets are global, independent of memory ownership spaces. When Vaultwarden
+is enabled, the selected provider is a live proxy over all accessible items,
+including entries created outside Glyph Hold. No per-item registration, linking,
+or SQL import is required. GH2 retains audit records and backward compatibility
+for existing built-in secret IDs. External values remain in the external vault.
 
 Recommended initial implementation route: an isolated official Bitwarden CLI
 worker, using its local Vault Management API where suitable. This keeps vault
@@ -399,51 +401,43 @@ logs, or ordinary configuration exports. Define explicit connection/unlock
 states and errors for invalid credentials or unavailable providers. Automatic
 access means the GH2 runtime holds the ability to unlock the connected vault.
 
-Folder support should include listing/selecting folders, optional creation,
-and placing newly created items into the configured destination. Map by stable
-folder ID, with a readable name for administrators. Example mappings:
+Folders are optional organisation and do not map to memory spaces. Support
+listing/creating folders, an optional default destination, and an optional
+per-create folder ID. Omission uses the default or unfiled destination; an
+explicit empty/null destination means unfiled. Search covers all accessible
+folders and unfiled entries. Personal/work organisation is for memories only.
 
-| GH2 space | Existing Vaultwarden folder |
-| --- | --- |
-| Personal | Home Network |
-| Work | Luxury Leisure |
-| Dan / another chosen space | Dan Goodman |
+Metadata returns safe names, IDs, folder names and available field selectors,
+never secret values or vault notes. A reveal returns one selected field, such
+as a login username/password, SSH key, notes, card/identity or named custom field.
+Use an explicit ID for duplicate names and a field selector for ambiguity.
+Existing provider-bound legacy IDs continue to work. New external references
+are bound to the configured account, preventing accidental reuse after a switch.
 
-GH2 may allow multiple approved folders per space with one explicit write
-destination. Folder mapping does not grant upstream access: folders are personal
-organisation, not access-control boundaries. A personal-account connector may
-decrypt more than the folders GH2 exposes. Enforce GH2 policy before returning
-metadata or values; organisations/collections or a dedicated account are later
-options if upstream isolation is needed.
+Built-in secrets remain accessible when Vaultwarden is selected. Normal new
+writes use the active provider; provider outages fail explicitly and do not
+create local duplicates. A built-in-only filter allows access during an outage.
+External writes have a separate enable switch. Normal create rejects duplicate
+names. Updates require current metadata versions and preserve unrelated fields.
+Bitwarden's CLI cannot guarantee atomic conflict detection against simultaneous
+edits by other clients; document that limitation rather than promise SQL-like
+transactions across the provider. Direct external deletion remains in the vault
+application; deleting a legacy reference does not delete its upstream item.
 
-Existing vault items should be deliberately linked by provider account, item
-ID, and selected field. A login can supply separate username/password handles;
-an SSH item can supply a private-key handle. Do not reveal entire items when
-one field was requested, infer identity from non-unique titles, or automatically
-expose the complete personal vault. Start with selected existing items and
-verify native SSH item compatibility against pinned client/server versions.
-Fetching key material is separate from providing an SSH signing agent.
+An explicit server-to-server migration tool checks existing vault items first.
+If a selected target field has the same value, verify it and replace the local
+handle with the verified reference. A different value requires review; do not
+overwrite it. If no matching name exists, create then verify the destination
+before changing the built-in record. Retain the original on errors. Never route
+migration values through agent responses or plaintext export files. Toggling the
+provider is not a migration. Preserve backups and older IDs.
 
-Enabling the provider selects a destination for new secrets; existing records
-retain their provider bindings until an explicit migration. Disable/restart and
-provider-outage behaviour must be defined. An unavailable external secret
-returns an explicit error rather than silently selecting a local value or
-creating a second copy. Linking a field, unlinking a handle, changing a value,
-and trashing an external item must have distinct semantics, particularly when
-several GH2 handles reference one login item.
-
-Validate external changes, rename/move/delete events, duplicate names, value
-types, new-item mappings, and restart recovery in a bounded prototype. Define
-sync/freshness policy before reveals. GH2 version checks cannot alone guarantee
-atomic updates against concurrent edits made in Bitwarden clients; verify
-upstream conflict support and document unsupported guarantees. Never implement
-distributed writes as if GH2's SQLite transaction includes the external vault.
-
-Settings should expose enablement, connection configuration, connection/unlock
-status, selected folder mappings, linked items, and separately controlled write
-capabilities. Test with disposable items before allowing external mutations.
-Existing built-in secrets need a previewed, repeatable transfer with verified
-destination bindings; toggling the integration is not migration.
+Settings expose connection fields, enablement, write permissions and an optional
+default folder. Save before testing; a saved connection can be tested while the
+integration remains disabled. Official CLI cache/sync is an implementation detail,
+not a requirement to copy items into GH2's database. Test authentication, direct
+search, field retrieval, optional folders, duplicate handling, conflicts, outage
+behaviour, account switching, restart recovery, UI and all three adapters.
 
 Research references:
 
@@ -810,9 +804,9 @@ Required scenarios:
 - The same GH2 secret operations work through the built-in and external providers
   without provider-specific credentials or arguments in Hermes/Nexus clients.
 - Bitwarden and Vaultwarden compatibility is tested against declared supported
-  versions, including folder selection/creation, item field linking, secret
+  versions, including folder selection/creation, direct item field selection, secret
   creation/reveal/update, and explicitly defined unlink/trash behaviour.
-- External folder renames preserve mappings by ID; moves, deletions, duplicate
+- External folder renames preserve optional destinations by ID; moves, deletions, duplicate
   names, and edits in another Bitwarden client produce predictable results.
 - Disabling or losing access to the external provider never silently redirects
   an existing secret binding to a different value or creates a local duplicate.
@@ -917,8 +911,8 @@ contract fixtures. Validate automatic recall and explicit tools end to end.
 Document local/native memory ownership and supported host capabilities.
 
 Implement the Bitwarden/Vaultwarden secret provider behind GH2's common secret
-API, including automatic authentication/unlock, folder mappings and creation,
-selected existing-item links, supported value/field types, and controlled
+API, including automatic authentication/unlock, optional folder selection and creation,
+direct access to existing items, supported value/field types, and controlled
 mutations. Validate provider state, external edits, restart recovery, and
 failure behaviour. Confirm Hermes and Nexus can use both providers through the
 same GH2 operations.

@@ -6,6 +6,7 @@ import os
 import shutil
 import subprocess
 import threading
+from contextlib import contextmanager
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -21,7 +22,8 @@ DEFAULTS = {
     "client_secret": "",
     "master_password": "",
     "write_enabled": False,
-    "folder_mappings": {},
+    "folder_mappings": {},  # Legacy configuration retained for rollback only.
+    "default_folder_id": None,
 }
 SENSITIVE = {"client_id", "client_secret", "master_password"}
 
@@ -79,6 +81,11 @@ def get_config(private: bool = False) -> dict:
 
 
 def save_config(fields: dict) -> dict:
+    with vault.lock:
+        return _save_config(dict(fields))
+
+
+def _save_config(fields: dict) -> dict:
     config = get_config(private=True)
     unknown = set(fields) - set(DEFAULTS) - {"clear_credentials"}
     if unknown:
@@ -142,10 +149,27 @@ class VaultCLI:
     def __init__(self):
         self.lock = threading.RLock()
         self.session: str | None = None
+        self.operation_depth = 0
+        self.operation_synced = False
+
+    @contextmanager
+    def operation(self):
+        """One fresh sync per logical operation, and again after any write."""
+        with self.lock:
+            if not self.operation_depth:
+                self.operation_synced = False
+            self.operation_depth += 1
+            try:
+                yield
+            finally:
+                self.operation_depth -= 1
+                if not self.operation_depth:
+                    self.operation_synced = False
 
     def reset(self):
         with self.lock:
             self.session = None
+            self.operation_synced = False
 
     def _run(
         self,
@@ -199,6 +223,10 @@ class VaultCLI:
     def unlock(self, config: dict):
         if not config["enabled"]:
             raise VaultError("External secret provider is disabled")
+        if not all(config.get(k) for k in (*SENSITIVE, "server_url")):
+            raise VaultError(
+                "Save the server URL, personal API client ID and secret, and master password before testing"
+            )
         if not self.session:
             status = self._run(["status"], config=config)
             # Configuring an already logged-in CLI fails after a GH2 restart.
@@ -227,22 +255,37 @@ class VaultCLI:
             if not self.session:
                 raise VaultError("Vault unlock did not return a session")
 
-    def call(self, args: list[str], *, payload: dict | None = None, write: bool = False):
+    def call(
+        self,
+        args: list[str],
+        *,
+        payload: dict | None = None,
+        write: bool = False,
+        allow_disabled: bool = False,
+    ):
         with self.lock:
             config = get_config(private=True)
+            if allow_disabled:
+                config = config | {"enabled": True}
             if write and not config["write_enabled"]:
                 raise VaultError("External writes are disabled")
             try:
                 self.unlock(config)
-                self._run(["sync"], config=config, raw=True)
+                if not self.operation_depth or not self.operation_synced:
+                    self._run(["sync"], config=config, raw=True)
+                    self.operation_synced = True
                 data = (
                     base64.b64encode(json.dumps(payload).encode()).decode()
                     if payload is not None
                     else None
                 )
-                return self._run(args, config=config, data=data)
+                result = self._run(args, config=config, data=data)
+                if write:
+                    self.operation_synced = False
+                return result
             except VaultError:
                 self.session = None
+                self.operation_synced = False
                 raise
 
 
@@ -250,13 +293,42 @@ vault = VaultCLI()
 
 
 def approved_item(config: dict, space_id: str, item: dict) -> None:
-    folders = config["folder_mappings"].get(space_id, {}).get("folder_ids", [])
-    if item.get("folderId") not in folders:
-        raise VaultError("Item is not in an approved folder for this space")
+    # Folders organise secrets; they are independent of memory spaces.
+    if not config["enabled"]:
+        raise VaultError("External secret provider is disabled")
 
 
 def get_field(item: dict, field: str) -> str:
     if field in {
+        "card.cardholderName",
+        "card.number",
+        "card.brand",
+        "card.expMonth",
+        "card.expYear",
+        "card.code",
+        *{
+            "identity." + key
+            for key in (
+                "title",
+                "firstName",
+                "middleName",
+                "lastName",
+                "address1",
+                "address2",
+                "address3",
+                "city",
+                "state",
+                "postalCode",
+                "country",
+                "company",
+                "email",
+                "phone",
+                "ssn",
+                "username",
+                "passportNumber",
+                "licenseNumber",
+            )
+        },
         "login.username",
         "login.password",
         "login.totp",
@@ -269,7 +341,7 @@ def get_field(item: dict, field: str) -> str:
     elif field == "notes":
         value = item.get("notes")
     elif field.startswith("custom:"):
-        matches = [f for f in item.get("fields", []) if f.get("name") == field[7:]]
+        matches = [f for f in (item.get("fields") or []) if f.get("name") == field[7:]]
         if len(matches) != 1:
             raise VaultError("Custom field is missing or ambiguous")
         value = matches[0].get("value")

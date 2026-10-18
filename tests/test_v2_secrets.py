@@ -29,7 +29,7 @@ def scoped_key(space):
     return {"Authorization": "Bearer " + key}
 
 
-def test_scoped_builtin_secrets_and_versions(secrets_client):
+def test_global_builtin_secrets_and_versions(secrets_client):
     personal = scoped_key("space_personal")
     work = scoped_key("space_work")
     response = secrets_client.post(
@@ -40,10 +40,10 @@ def test_scoped_builtin_secrets_and_versions(secrets_client):
     assert response.status_code == 201, response.text
     secret = response.json()
     assert "test-secret-material" not in response.text
-    assert secrets_client.get("/api/v2/secrets", headers=work).json()["secrets"] == []
+    assert len(secrets_client.get("/api/v2/secrets", headers=work).json()["secrets"]) == 1
     assert (
         secrets_client.post("/api/v2/secrets/" + secret["id"] + "/reveal", headers=work).status_code
-        == 404
+        == 200
     )
     result = secrets_client.post("/api/v2/secrets/" + secret["id"] + "/reveal", headers=personal)
     assert result.json()["value"] == "test-secret-material"
@@ -91,7 +91,9 @@ def test_provider_config_masked_and_encrypted(secrets_client):
     assert vault.get_config(private=True)["master_password"] == "provider-password-test"
 
 
-def test_external_link_enforces_account_folder_and_explicit_field(secrets_client, monkeypatch):
+def test_legacy_external_link_preserves_account_and_field_without_folder_restrictions(
+    secrets_client, monkeypatch
+):
     vault.save_config(
         {
             "enabled": True,
@@ -132,7 +134,7 @@ def test_external_link_enforces_account_folder_and_explicit_field(secrets_client
         secrets_client.post(
             "/api/v2/secrets/" + linked["id"] + "/reveal", headers=headers
         ).status_code
-        == 503
+        == 200
     )
     vault.save_config({"enabled": False})
     assert (
@@ -194,7 +196,12 @@ def test_encrypted_secret_transfer_repeatability_and_wrong_passphrase(secrets_cl
     with pytest.raises(ValueError, match="decrypt"):
         import_package(package, "incorrect-password", "source-home", "space_work")
     headers = scoped_key("space_work")
-    result = secrets_client.post("/api/v2/secrets/TRANSFER_TEST/reveal", headers=headers)
+    assert (
+        secrets_client.post("/api/v2/secrets/TRANSFER_TEST/reveal", headers=headers).status_code
+        == 409
+    )
+    rows = secrets_client.get("/api/v2/secrets", headers=headers).json()["secrets"]
+    result = secrets_client.post("/api/v2/secrets/" + rows[0]["id"] + "/reveal", headers=headers)
     assert result.json()["value"] == "source-secret-value"
 
 
@@ -242,7 +249,7 @@ def test_builtin_to_external_transfer_verifies_before_switch(secrets_client, mon
 
     monkeypatch.setattr(vault.vault, "call", call)
     payload = ExternalTransfer(items=[{"id": source["id"], "expected_version": 1}])
-    assert preview_external_transfer(payload)["items"][0]["folder_id"] == "home"
+    assert preview_external_transfer(payload)["items"][0]["folder_id"] is None
     result = apply_external_transfer(payload)
     assert len(result["migrated"]) == 1
     with connection() as conn:
@@ -292,11 +299,11 @@ def test_migrated_secret_preserves_legacy_caller_restrictions(secrets_client):
     )
     assert result.status_code == 200
     assert result.json()["value"] == "restricted-value"
-    # An owner label cannot replace the authenticated ownership-space grant.
+    # Secret scopes apply globally; memory space grants do not restrict secrets.
     other = scoped_key("space_work")
     assert (
         secrets_client.post(
             endpoint, headers=other, json={"requesting_agent": "Melchior", "tool": "ssh"}
         ).status_code
-        == 404
+        == 200
     )

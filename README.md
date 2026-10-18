@@ -34,12 +34,12 @@ key and saved logins. Do not use `-v` when preserving an installation.
 
 The image contains the web application, dashboard, Codex CLI and Bitwarden CLI.
 Only one service and one persistent data volume are required. Pin a tested image
-version such as `ghcr.io/dosk3n/glyphhold:2.0.5`.
+version such as `ghcr.io/dosk3n/glyphhold:2.1.0`.
 
 ```yaml
 services:
   glyphhold:
-    image: ghcr.io/dosk3n/glyphhold:2.0.5
+    image: ghcr.io/dosk3n/glyphhold:2.1.0
     ports:
       - "127.0.0.1:5995:5995"
     volumes:
@@ -115,18 +115,34 @@ saved credentials are never returned to the browser. Automatic unlock uses the
 official CLI and an in-memory unlock session. A separate password file is not
 required. Bitwarden Secrets Manager is a different product and is not used.
 
-Select approved folders per space and one write folder. Folders organise a
-personal vault; they are not upstream security boundaries. GH2 only exposes
-explicitly linked item fields. A login username and password can have separate
-handles, as can SSH key fields and named custom fields. The metadata browser
-never returns secret values. External writes have a separate enable switch.
+Secrets are global and independent of memory spaces. When enabled, searches
+query all accessible vault entries directly, including existing logins, SSH keys,
+secure notes, cards, identities and custom fields. No registration, linking or
+import into Glyph Hold is needed. Metadata excludes values; reveal selects one
+field. Existing built-in secrets remain available, identified by provider.
 
-Existing secrets keep their provider bindings when the integration is toggled.
-Provider outages/disablement return errors for external bindings; they never
-silently select local values. Deleting an external GH2 handle only unlinks it;
-it does not trash the original vault item. External value updates cannot promise
-atomic conflict detection against simultaneous edits in other Bitwarden clients.
-Use disposable vault items for compatibility testing before real mutations.
+Folders are optional organisation: list/create folders, pass a folder ID when
+creating a secret, or use the configured default/unfiled destination. They do
+not map to memory spaces or restrict secret access. API keys still need the
+separate `secrets:reveal` and `secrets:write` permissions. External writes have
+an additional enable switch. Save settings before testing; the saved connection
+can be tested while the provider remains disabled.
+
+Duplicate names produce conflicts instead of creating or choosing an item.
+Use IDs and a selected field to resolve ambiguity. `migrate_secret` transfers
+built-in values server-to-server: verify an existing target has the identical
+value, or create only if no same-name item exists. Different values stop for
+review; no plaintext export or silent overwrite occurs. Transfers are explicit,
+not a consequence of enabling the provider. Existing IDs remain compatible.
+
+Vaultwarden outages produce errors, not empty searches or silent local writes.
+Built-in-only searches remain available with `provider_name=builtin`. Provider
+IDs are account-bound, and metadata versions detect stale edits. The official
+CLI maintains its own encrypted cache and syncs before operations; external
+values are not saved in Glyph Hold's SQL tables. Atomic conflict detection
+against simultaneous edits in another Bitwarden client cannot be guaranteed.
+Direct vault deletion stays in Bitwarden/Vaultwarden; removing a legacy Glyph
+Hold reference retains its upstream item. Back up the full data volume and key.
 
 ## Migration and backups
 
@@ -165,7 +181,7 @@ Use `/api/v2`; see `/docs` for the running API. Key capabilities:
 - `POST /recall` and `/search` with `query`, optional `space_id`, explicit `broaden`.
 - `POST /memories` with a stable `idempotency_key` (or `Idempotency-Key` header).
 - `PATCH /memories/{id}` with `expected_version`; stale writes return HTTP409.
-- Memory revisions, explicit moves/restores and scoped secret metadata/reveal.
+- Memory revisions, explicit moves/restores and global provider-neutral secret metadata/reveal.
 
 `glyphhold_client.GlyphHoldV2Client` is the standard-library client. The sibling
 `glyphhold-hermes-memory` provider is upgraded separately. Tool packs should
