@@ -141,6 +141,9 @@ IDs are account-bound, and metadata versions detect stale edits. The official
 CLI maintains its own encrypted cache and syncs before operations; external
 values are not saved in Glyph Hold's SQL tables. Atomic conflict detection
 against simultaneous edits in another Bitwarden client cannot be guaranteed.
+Compatibility validation: Bitwarden CLI 2026.10.0 with Vaultwarden 1.37.4;
+also verified against an existing 600-item self-hosted vault. The latter check
+used search and retrieval; write/conflict/transfer tests used disposable items.
 Direct vault deletion stays in Bitwarden/Vaultwarden; removing a legacy Glyph
 Hold reference retains its upstream item. Back up the full data volume and key.
 

@@ -353,10 +353,11 @@ allows decryption. Protect backups accordingly.
 
 ### Optional Bitwarden / Vaultwarden secret provider
 
-Research status: technically feasible from documented interfaces and source
-review; not yet tested against the user's running Vaultwarden installation.
-This is an agreed GH2 feature: an optional integration, disabled by default
-behind Settings. Its implementation route still requires compatibility testing.
+Implementation status (18 October 2026): released in Glyph Hold 2.1.0 and
+deployed on Pepper. Verified with the bundled Bitwarden CLI 2026.10.0 against
+Vaultwarden 1.37.4 in disposable tests, and with direct discovery of 600 entries
+in the user's existing vault. The integration remains optional and disabled
+by default behind Settings.
 The built-in encrypted secret provider remains the default. Disabling the
 external integration does not mean disabling all secret functionality.
 
