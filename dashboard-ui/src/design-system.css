@@ -40,3 +40,6 @@ dialog.modal{margin:auto;color:var(--ink)}dialog.modal::backdrop{background:#253
 @media(max-width:740px){.memory-library-layout .resource-row{grid-template-columns:minmax(0,1fr);min-height:0;gap:10px}.memory-library-layout .memory-metadata{justify-items:start}.memory-badges{justify-content:flex-start}.memory-updated{white-space:normal;overflow-wrap:anywhere}}
 
 .nav-review-count{margin-left:auto;display:inline-flex;min-width:21px;height:21px;align-items:center;justify-content:center;padding:0 5px;border-radius:4px;background:#d0dfd5;color:#284f3f;font-size:11px;font-variant-numeric:tabular-nums}.sidebar nav button>span:not(.nav-review-count){min-width:0}.memory-activity .panel .v2-run:last-child{border-bottom:0}
+
+/* Long identifiers must not set a flex heading wider than its card. */
+.panel-heading>div{min-width:0;max-width:100%;overflow-wrap:anywhere}
