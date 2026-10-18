@@ -1,6 +1,6 @@
 services:
   glyphhold:
-    image: ghcr.io/dosk3n/glyphhold:2.0.2
+    image: ghcr.io/dosk3n/glyphhold:2.0.3
     ports:
       - "127.0.0.1:5995:5995"
     volumes:

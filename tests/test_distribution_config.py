@@ -15,7 +15,7 @@ def test_dockerfile_has_runtime_healthcheck() -> None:
 def test_compose_example_uses_versioned_image_and_healthcheck() -> None:
     compose = (ROOT / "docker-compose.example.yml").read_text()
 
-    assert "image: ghcr.io/dosk3n/glyphhold:2.0.2" in compose
+    assert "image: ghcr.io/dosk3n/glyphhold:2.0.3" in compose
     assert "127.0.0.1:5995:5995" in compose
     assert "glyphhold2-data:/data" in compose
     assert "container_name: glyphhold" not in compose
