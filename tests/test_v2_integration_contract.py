@@ -39,8 +39,8 @@ class URLResponse:
     def __exit__(self, *args):
         return None
 
-    def read(self):
-        return self.response.content
+    def read(self, size=-1):
+        return self.response.content if size < 0 else self.response.content[:size]
 
 
 def test_hermes_native_prefetch_and_tool_write_against_gh2(client, monkeypatch):
@@ -176,7 +176,6 @@ def test_nexus_tools_against_gh2(client, monkeypatch):
     import importlib
     import sys
     import types
-    import urllib.request
 
     sibling = ROOT.parent / "nexus-tools-glyphhold"
     if not sibling.is_dir():
@@ -213,7 +212,7 @@ def test_nexus_tools_against_gh2(client, monkeypatch):
         assert response.status_code < 400, response.text
         return URLResponse(response)
 
-    monkeypatch.setattr(urllib.request, "urlopen", bridge)
+    monkeypatch.setattr(transport.GlyphHoldClient, "_open", lambda self, req, **kwargs: bridge(req))
     monkeypatch.setattr(
         api, "get_client", lambda: transport.GlyphHoldClient(base_url="http://gh", api_key=key)
     )

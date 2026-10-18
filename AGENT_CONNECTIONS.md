@@ -24,7 +24,7 @@ GH2 cannot remove already injected information from a running model conversation
 The following sibling repositories have GH2 implementations:
 
 - `glyphhold-hermes-memory` **2.0.1**: native Hermes prefetch plus explicit durable tools.
-- `nexus-tools-glyphhold` **0.2.0**: Nexus tool pack for scoped recall and lifecycle.
+- `nexus-tools-glyphhold` **2.0.0**: Nexus tool pack for scoped recall and lifecycle.
 - `glyphhold-mcp` **2.0.0**: direct MCP server for Codex and other MCP clients.
 
 They remain separate packages and must be installed/restarted in their host
