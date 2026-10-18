@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import sqlite3
 from typing import Annotated
 
@@ -187,9 +188,34 @@ def metadata(id_or_name: str, p: Auth, space_id: str | None = None):
     return public(load(p, id_or_name, space_id=space_id))
 
 
+class Reveal(BaseModel):
+    requesting_agent: str | None = Field(default=None, max_length=128)
+    tool: str | None = Field(default=None, max_length=128)
+
+
 @router.post("/{id_or_name}/reveal")
-def reveal(id_or_name: str, p: Auth, space_id: str | None = None):
+def reveal(id_or_name: str, p: Auth, payload: Reveal | None = None, space_id: str | None = None):
     row = dict(load(p, id_or_name, space_id=space_id))
+    # Retain v1 caller-label restrictions in addition to authenticated v2 space
+    # grants. Labels are compatibility constraints, not authentication credentials.
+    if not p.admin:
+        from app.storage.repositories.secrets import _check_reveal_allowed
+
+        with connection() as conn:
+            legacy = conn.execute(
+                "SELECT metadata_json FROM gh2_secret_provenance WHERE handle_id=?", (row["id"],)
+            ).fetchone()
+        if legacy:
+            try:
+                _check_reveal_allowed(
+                    json.loads(legacy["metadata_json"]),
+                    requesting_agent=(payload.requesting_agent if payload else None) or p.actor,
+                    tool=payload.tool if payload else None,
+                )
+            except PermissionError as exc:
+                raise HTTPException(
+                    403, "Legacy secret caller restrictions were not satisfied"
+                ) from exc
     try:
         value = (
             decrypt_secret(row["encrypted_value"])

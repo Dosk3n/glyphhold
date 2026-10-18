@@ -255,3 +255,48 @@ def test_builtin_to_external_transfer_verifies_before_switch(secrets_client, mon
             and row["version"] == 2
         )
     assert len(upstream) == 1
+
+
+def test_migrated_secret_preserves_legacy_caller_restrictions(secrets_client):
+    headers = scoped_key("space_import_review")
+    created = secrets_client.post(
+        "/api/v2/secrets",
+        headers=headers,
+        json={
+            "name": "MIGRATED_RESTRICTED",
+            "value": "restricted-value",
+            "space_id": "space_import_review",
+        },
+    ).json()
+    with connection() as conn:
+        conn.execute(
+            "INSERT INTO gh2_secret_provenance VALUES (?,?)",
+            (
+                created["id"],
+                json.dumps(
+                    {"allowed_agents_json": '["Melchior"]', "allowed_tools_json": '["ssh"]'}
+                ),
+            ),
+        )
+    endpoint = "/api/v2/secrets/" + created["id"] + "/reveal"
+    for payload in [
+        {},
+        {"requesting_agent": "Melchior"},
+        {"requesting_agent": "other", "tool": "ssh"},
+    ]:
+        result = secrets_client.post(endpoint, headers=headers, json=payload)
+        assert result.status_code == 403
+        assert "restricted-value" not in result.text
+    result = secrets_client.post(
+        endpoint, headers=headers, json={"requesting_agent": "Melchior", "tool": "ssh"}
+    )
+    assert result.status_code == 200
+    assert result.json()["value"] == "restricted-value"
+    # An owner label cannot replace the authenticated ownership-space grant.
+    other = scoped_key("space_work")
+    assert (
+        secrets_client.post(
+            endpoint, headers=other, json={"requesting_agent": "Melchior", "tool": "ssh"}
+        ).status_code
+        == 404
+    )
