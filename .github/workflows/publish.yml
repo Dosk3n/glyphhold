@@ -44,14 +44,13 @@ jobs:
         uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
         with:
           context: git
-          flavor: latest=false
+          flavor: latest=true
           images: ghcr.io/dosk3n/glyphhold
           tags: |
             type=raw,value=${{ inputs.version }},enable=${{ github.event_name == 'workflow_dispatch' && inputs.version != '' }}
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=sha,prefix=sha-
-            # Keep GH1 latest unchanged during the GH2 migration.
 
       - name: Set up QEMU for ARM64 builds
         uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3

@@ -34,7 +34,8 @@ key and saved logins. Do not use `-v` when preserving an installation.
 
 The image contains the web application, dashboard, Codex CLI and Bitwarden CLI.
 Only one service and one persistent data volume are required. Pin a tested image
-version such as `ghcr.io/dosk3n/glyphhold:2.2.0`.
+version such as `ghcr.io/dosk3n/glyphhold:2.2.0`. The `latest` tag also tracks
+the current release; use a version tag when you want upgrades to be explicit.
 
 ```yaml
 services:
