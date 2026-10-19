@@ -1,0 +1,447 @@
+{
+  "description": "Synthetic evaluation fixtures, not assertions about the user or live infrastructure. Labels set before baseline execution. No production memories or secrets.",
+  "memories": [
+    {
+      "key": "host",
+      "title": "Pepper hosting",
+      "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "backup",
+      "title": "Pepper backup instructions",
+      "body": "Pepper backups run at 02:30. Verify the restore before upgrading.",
+      "space_id": "space_personal",
+      "auto_prefetch_level": "pinned"
+    },
+    {
+      "key": "jess",
+      "title": "Jess relationship",
+      "body": "Jess is the user’s fiancée. They are engaged.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "jess-food",
+      "title": "Jess dining preferences",
+      "body": "Jess avoids peanuts and likes Italian restaurants.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "jay",
+      "title": "Jay cycling",
+      "body": "Jay rides a bicycle and prefers quiet routes.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "dan",
+      "title": "Dan Goodman router",
+      "body": "Dan Goodman owns a MikroTik router at his house.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "vault",
+      "title": "Vaultwarden setup",
+      "body": "Vaultwarden stores passwords. The default folder is Glyph Hold. Search website addresses and hostnames.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "atlas-home",
+      "title": "Atlas home server",
+      "body": "Atlas is the home media server. It runs Jellyfin on port 8096.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "atlas-work",
+      "title": "Atlas office server",
+      "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432.",
+      "space_id": "space_work"
+    },
+    {
+      "key": "work-backup",
+      "title": "Office database backup",
+      "body": "The office database backup is at 01:00 on weekdays.",
+      "space_id": "space_work"
+    },
+    {
+      "key": "style",
+      "title": "Response style",
+      "body": "Prefer concise answers and UK English.",
+      "space_id": "space_general"
+    },
+    {
+      "key": "research",
+      "title": "Battery research",
+      "body": "Research batteries for a solar installation; compare capacity and warranty.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "dns",
+      "title": "Home DNS",
+      "body": "Home DNS is provided by AdGuard. The resolver is 192.168.1.2.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "ssh",
+      "title": "SSH access procedure",
+      "body": "Use SSH keys to access Pepper. Ask before restarting services.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "stale",
+      "title": "Superseded endpoint",
+      "body": "The old legacy endpoint uses port 4444.",
+      "space_id": "space_personal",
+      "archived": true
+    },
+    {
+      "key": "never",
+      "title": "Internal scratchpad",
+      "body": "Unfinished scratchpad about Pepper; do not automatically recall.",
+      "space_id": "space_personal",
+      "auto_prefetch_level": "never"
+    },
+    {
+      "key": "prefix",
+      "title": "Delivery statistics",
+      "body": "The shipment contains a peppermill and kitchen accessories.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "checklist",
+      "title": "General planning checklist",
+      "body": "I can check the plan for you and then we can work on the next part. This is a garden renovation checklist.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "long",
+      "title": "Storage recovery runbook",
+      "body": "Storage recovery preparation. Verify hardware inventory and record disk positions. ",
+      "space_id": "space_personal",
+      "repeat": 90,
+      "tail": " Critical recovery command: RESTORE-VERIFY-OMEGA."
+    },
+    {
+      "key": "priority-high",
+      "title": "Priority probe",
+      "body": "Identical priority probe text.",
+      "space_id": "space_personal",
+      "auto_prefetch_level": "high"
+    },
+    {
+      "key": "priority-low",
+      "title": "Priority probe",
+      "body": "Identical priority probe text.",
+      "space_id": "space_personal",
+      "auto_prefetch_level": "low"
+    },
+    {
+      "key": "new-dns",
+      "title": "Current resolver migration",
+      "body": "Resolver moved to Unbound on 192.168.1.3.",
+      "space_id": "space_personal",
+      "tags": [
+        "network-new"
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "direct-host",
+      "group": "direct",
+      "query": "Pepper Hermes hosting",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "ssh"
+      ]
+    },
+    {
+      "id": "direct-address",
+      "group": "direct",
+      "query": "192.168.1.190",
+      "required": [
+        "host"
+      ],
+      "acceptable": []
+    },
+    {
+      "id": "direct-person",
+      "group": "direct",
+      "query": "Who is Jess?",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess-food"
+      ]
+    },
+    {
+      "id": "direct-folder",
+      "group": "direct",
+      "query": "Vaultwarden default folder",
+      "required": [
+        "vault"
+      ],
+      "acceptable": []
+    },
+    {
+      "id": "direct-dan",
+      "group": "direct",
+      "query": "Dan Goodman router",
+      "required": [
+        "dan"
+      ],
+      "acceptable": []
+    },
+    {
+      "id": "direct-dns",
+      "group": "direct",
+      "query": "Home DNS resolver",
+      "required": [
+        "dns"
+      ],
+      "acceptable": [
+        "new-dns"
+      ]
+    },
+    {
+      "id": "semantic-host",
+      "group": "paraphrase",
+      "query": "Where is my assistant hosted?",
+      "required": [
+        "host"
+      ],
+      "acceptable": []
+    },
+    {
+      "id": "semantic-relationship",
+      "group": "paraphrase",
+      "query": "Who am I engaged to?",
+      "required": [
+        "jess"
+      ],
+      "acceptable": []
+    },
+    {
+      "id": "semantic-media",
+      "group": "paraphrase",
+      "query": "Where do I watch my films?",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": []
+    },
+    {
+      "id": "semantic-diet",
+      "group": "paraphrase",
+      "query": "What food should my partner avoid?",
+      "required": [
+        "jess-food"
+      ],
+      "acceptable": []
+    },
+    {
+      "id": "semantic-access",
+      "group": "paraphrase",
+      "query": "How do I connect securely to my always-on machine?",
+      "required": [
+        "ssh"
+      ],
+      "acceptable": [
+        "host"
+      ]
+    },
+    {
+      "id": "unrelated-science",
+      "group": "abstention",
+      "query": "Explain why a solar eclipse happens.",
+      "required": [],
+      "acceptable": []
+    },
+    {
+      "id": "unrelated-code",
+      "group": "abstention",
+      "query": "Write a Python function that sorts numbers.",
+      "required": [],
+      "acceptable": []
+    },
+    {
+      "id": "unrelated-polite",
+      "group": "abstention",
+      "query": "Can you explain how to bake a cake for me?",
+      "required": [],
+      "acceptable": []
+    },
+    {
+      "id": "unrelated-exact",
+      "group": "abstention",
+      "query": "quasars",
+      "required": [],
+      "acceptable": []
+    },
+    {
+      "id": "ambiguous-atlas",
+      "group": "scope",
+      "query": "Atlas",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": []
+    },
+    {
+      "id": "explicit-work",
+      "group": "scope",
+      "query": "Atlas office reporting PostgreSQL",
+      "required": [
+        "atlas-work"
+      ],
+      "acceptable": [],
+      "space_id": "space_work"
+    },
+    {
+      "id": "work-from-home",
+      "group": "scope",
+      "query": "What port does the office Atlas PostgreSQL use?",
+      "required": [
+        "atlas-work"
+      ],
+      "acceptable": [],
+      "desired_policy": "Explicit work intent should trigger a deliberate permitted fallback; current call has only the personal default."
+    },
+    {
+      "id": "home-from-work",
+      "group": "scope",
+      "query": "What port does the home Atlas Jellyfin use?",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [],
+      "space_id": "space_work",
+      "desired_policy": "Explicit personal intent should trigger a deliberate permitted fallback."
+    },
+    {
+      "id": "general-style",
+      "group": "general",
+      "query": "What response style do I prefer?",
+      "required": [
+        "style"
+      ],
+      "acceptable": []
+    },
+    {
+      "id": "followup-bare",
+      "group": "followup",
+      "query": "Can you check its backups too?",
+      "required": [
+        "backup"
+      ],
+      "acceptable": [],
+      "previous_user_message": "Please check Pepper."
+    },
+    {
+      "id": "followup-person",
+      "group": "followup",
+      "query": "What does she like to eat?",
+      "required": [
+        "jess-food"
+      ],
+      "acceptable": [],
+      "previous_user_message": "Tell me about Jess."
+    },
+    {
+      "id": "followup-resolved",
+      "group": "followup",
+      "query": "Can you check Pepper backups too?",
+      "required": [
+        "backup"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ]
+    },
+    {
+      "id": "long-evidence",
+      "group": "budget",
+      "query": "Storage recovery runbook",
+      "required": [
+        "long"
+      ],
+      "acceptable": [],
+      "evidence": {
+        "long": "RESTORE-VERIFY-OMEGA"
+      }
+    },
+    {
+      "id": "exact-short",
+      "group": "precision",
+      "query": "Pepper",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "ssh"
+      ]
+    },
+    {
+      "id": "prefix-collision",
+      "group": "precision",
+      "query": "pepper",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "ssh"
+      ]
+    },
+    {
+      "id": "long-natural",
+      "group": "precision",
+      "query": "I was thinking about the home server and I would like you to check where Hermes is running and tell me the address please.",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "ssh"
+      ]
+    },
+    {
+      "id": "punctuation",
+      "group": "robustness",
+      "query": "\" OR (Pepper NEAR NOT:*)",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "ssh"
+      ]
+    },
+    {
+      "id": "archived",
+      "group": "lifecycle",
+      "query": "legacy endpoint",
+      "required": [],
+      "acceptable": []
+    },
+    {
+      "id": "never",
+      "group": "lifecycle",
+      "query": "Unfinished scratchpad",
+      "required": [],
+      "acceptable": []
+    },
+    {
+      "id": "freshness",
+      "group": "freshness",
+      "query": "Which resolver do I use now?",
+      "required": [
+        "new-dns"
+      ],
+      "acceptable": [
+        "dns"
+      ],
+      "note": "Old DNS remains an active fact; tests the unresolved conflicting-fact problem, not a lifecycle guarantee."
+    }
+  ]
+}

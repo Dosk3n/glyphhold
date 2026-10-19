@@ -1,0 +1,14 @@
+# Conversational case review
+
+Original labels and results are unchanged. Under Hermes defaults, required recall is 8/12 (66.7%), precision is 18%, and all 15 cases contain irrelevant records, yielding zero strict passes. The four missing facts concern Jess's dining needs, the fiancée's identity, saved-password lookup, and permission before service restarts. More results improves required recall to 11/12 but reduces precision to 12.4%; a larger budget alone reaches 9/12. Disabling pins allows the rainbow question to abstain successfully, but unrelated records still appear on the note and arithmetic requests.
+
+Two concrete examples:
+
+- Failure: `conv-evening-out` returns only the garden checklist and truncated storage runbook. Neither supplies Jess's Italian preference or peanut avoidance, so the visible context cannot answer the personalised question safely. This is an actual missing-answer failure, independent of strict precision scoring.
+- Success with noise: `conv-office-copy` visibly includes “The office database backup is at 01:00 on weekdays.” This directly answers both the time and whether it runs daily. Atlas's reporting role and the style record accompany it; the former adds no answer to this question. Scope is correct: Work plus General, with no personal records.
+
+The eight successful default topical recalls contain usable body evidence, not merely matching titles: Jay's cycling preference, Dan's router make, home film streaming, battery comparison criteria, the restore check before upgrading, Hermes's host, and both office facts. All three no-topical requests receive unrelated context under defaults; none of that context is needed to answer them.
+
+Required labels remain defensible and minimal. Optional-label strictness can overstate harmless context: `style` could reasonably be accepted on further factual prose answers, and the pinned Pepper backup can be a deliberate global inclusion rather than a ranking mistake. I deliberately allowed style for explanatory/creative prose and omitted it for short factual answers. These decisions affect strict precision, not the four real missing-answer failures. Related but unneeded records should not be mistaken for evidence that answers the question.
+
+Limitations: 15 synthetic cases, small synthetic corpus, no generated final-answer assessment, and no production access. No per-case evidence markers were authored, so zero `missing_visible_evidence` does not independently prove answer sufficiency; the bodies were inspected for this review. Existing corpus cases were inadvertently visible before authoring, although no retrieval outputs were seen until labels were final. That provenance disclosure is stored in the source set's `style` field, rather than a `label_provenance` field; results copy it into `style` and use the generic `label_provenance` value “See source case set”. This set is therefore not fully blind to prior cases.

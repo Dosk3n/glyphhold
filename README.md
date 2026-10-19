@@ -34,12 +34,12 @@ key and saved logins. Do not use `-v` when preserving an installation.
 
 The image contains the web application, dashboard, Codex CLI and Bitwarden CLI.
 Only one service and one persistent data volume are required. Pin a tested image
-version such as `ghcr.io/dosk3n/glyphhold:2.1.3`.
+version such as `ghcr.io/dosk3n/glyphhold:2.2.0`.
 
 ```yaml
 services:
   glyphhold:
-    image: ghcr.io/dosk3n/glyphhold:2.1.3
+    image: ghcr.io/dosk3n/glyphhold:2.2.0
     ports:
       - "127.0.0.1:5995:5995"
     volumes:
@@ -67,6 +67,33 @@ Automatic recall includes the active space and permitted General records within
 a size budget. Broader discovery is explicit. Searching another space does not
 change where subsequent writes go. Categories classify information and never
 act as permission boundaries. General is not a destination for unknown ownership.
+
+## Automatic recall
+
+Automatic recall uses quoted whole-word full-text queries, conservative inflections,
+exact address/hostname matching and confirmed subject aliases. Conversational filler
+and repeated terms do not increase ranking. BM25 leads the ordering, with bounded
+priority and subject boosts; weak matches can return no topical context. Explicit
+search remains available for wider discovery and does not change the write space.
+
+Category `allow_auto_prefetch=false`, archived/superseded/merged records, stale
+derived records and per-record `never` are excluded. `high` and `low` adjust the
+ranking of relevant records. A `pinned` record in General provides bounded background
+context; a pin in another space still needs to match the request. No memories are
+automatically moved to General. Existing task pins may consequently appear less
+often than in older versions.
+
+Selected memories share the context budget before packing. Long bodies return
+query-matching passages and ending context, labelled `excerpted` and `truncated`;
+clients can retrieve the full record by ID. Excerpts copy source text rather than
+generate a new account of the facts. The serialized result size stays within the
+requested character budget.
+
+This lexical path needs no model or API credits. It does not understand every
+paraphrase or resolve conversational pronouns. Local semantic fallback is currently
+an evaluation experiment, not a runtime dependency. See
+[the retrieval evaluation](evaluations/prefetch/CANDIDATE_REVIEW.md) for measured
+trade-offs and deployment status.
 
 The dashboard supports spaces, grants, confirmed placement guidance, memory
 editing with version checks, history, migration and optional integration settings.

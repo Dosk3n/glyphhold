@@ -1,0 +1,15 @@
+{
+  "backend_tests": 184,
+  "hermes_tests": 18,
+  "mcp_tests": 17,
+  "nexus_tests": 17,
+  "total_passed": 236,
+  "production_deployed": false,
+  "github_pushed": false,
+  "private_snapshot_removed": true,
+  "test_container_removed": true,
+  "test_image": "glyphhold-prefetch-candidate:local",
+  "image_id": "sha256:1c57b6ba9a8dad59a7c6ede2c39348ea2b261a7d2ec4ab8697499b340a8b4aca",
+  "retrieval_source_sha256": "0370df8254788e408a78dba810c0fd6bca790b61e0077961bacc45fbad1b0230",
+  "deployment_gate": "required-record coverage not fully preserved; keep production unchanged"
+}

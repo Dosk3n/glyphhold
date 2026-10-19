@@ -1,0 +1,4346 @@
+{
+  "schema_version": 1,
+  "glyphhold_version": "2.1.3",
+  "corpus_sha256": "f8b2cb43693491e66b4af3b9ab240389424910e6b75439f35b7d9234ea9aed74",
+  "synthetic_only": true,
+  "memory_count": 22,
+  "hermes_wrapper_exercised": true,
+  "diagnostics": {
+    "empty_raw_recall_count": 0,
+    "priority_high_low_order": [
+      "priority-high"
+    ],
+    "disabled_category_recalled": false,
+    "restricted_broaden_returned_spaces": [
+      "space_work"
+    ],
+    "restricted_broaden_respects_grants": true,
+    "empty_hermes_prefetch_returns_blank": true
+  },
+  "summary": {
+    "hermes_defaults": {
+      "cases": 15,
+      "strict_passes": 11,
+      "cases_with_irrelevant": 1,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8667,
+      "micro_required_recall": 0.75,
+      "median_local_retrieval_ms": 3.693
+    },
+    "larger_budget": {
+      "cases": 15,
+      "strict_passes": 11,
+      "cases_with_irrelevant": 1,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8667,
+      "micro_required_recall": 0.75,
+      "median_local_retrieval_ms": 3.734
+    },
+    "more_results": {
+      "cases": 15,
+      "strict_passes": 11,
+      "cases_with_irrelevant": 1,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8667,
+      "micro_required_recall": 0.75,
+      "median_local_retrieval_ms": 4.625
+    },
+    "explicit_broaden": {
+      "cases": 15,
+      "strict_passes": 9,
+      "cases_with_irrelevant": 3,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.7647,
+      "micro_required_recall": 0.75,
+      "median_local_retrieval_ms": 4.534
+    },
+    "pins_disabled": {
+      "cases": 15,
+      "strict_passes": 11,
+      "cases_with_irrelevant": 1,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8667,
+      "micro_required_recall": 0.75,
+      "median_local_retrieval_ms": 5.226
+    }
+  },
+  "measurements": [
+    {
+      "variant": "hermes_defaults",
+      "case": "varied-01",
+      "group": "direct-personal",
+      "query": "What address is Pepper on, and which services does it host?",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "host",
+        "style"
+      ],
+      "returned": [
+        "host",
+        "ssh",
+        "backup"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "ssh",
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.3333333333333333,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 4.573,
+      "result_chars": 1124,
+      "wrapper_chars": 1461,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        },
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        },
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "varied-02",
+      "group": "typo",
+      "query": "Need to SSH into Peper for an upgrade — how do I log in and what should I check before doing it?",
+      "required": [
+        "backup",
+        "ssh"
+      ],
+      "acceptable": [
+        "backup",
+        "host",
+        "ssh",
+        "style"
+      ],
+      "returned": [
+        "ssh"
+      ],
+      "missing": [
+        "backup"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 0.5,
+      "pass": false,
+      "retrieval_ms": 3.305,
+      "result_chars": 373,
+      "wrapper_chars": 706,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "varied-03",
+      "group": "indirect-person",
+      "query": "Thinking of taking my fiancée out for dinner. What food preferences do you remember for her?",
+      "required": [
+        "jess",
+        "jess-food"
+      ],
+      "acceptable": [
+        "jess",
+        "jess-food",
+        "style"
+      ],
+      "returned": [],
+      "missing": [
+        "jess",
+        "jess-food"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 3.314,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "varied-04",
+      "group": "multi-intent",
+      "query": "Remind me what kind of bike route Jay likes, and what router Dan Goodman has at home.",
+      "required": [
+        "dan",
+        "jay"
+      ],
+      "acceptable": [
+        "dan",
+        "jay",
+        "style"
+      ],
+      "returned": [
+        "dan",
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.873,
+      "result_chars": 704,
+      "wrapper_chars": 1039,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 5,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "dan",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Dan Goodman router",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:05+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Dan Goodman owns a MikroTik router at his house."
+        },
+        {
+          "id": "jay",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jay cycling",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:04+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jay rides a bicycle and prefers quiet routes."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "varied-05",
+      "group": "topic-change",
+      "query": "Leave the server stuff for now. What did I want to compare when researching batteries for the solar installation?",
+      "required": [
+        "research"
+      ],
+      "acceptable": [
+        "research",
+        "style"
+      ],
+      "returned": [
+        "research"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.55,
+      "result_chars": 382,
+      "wrapper_chars": 715,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "research",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Battery research",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:11+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Research batteries for a solar installation; compare capacity and warranty."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "varied-06",
+      "group": "direct-personal",
+      "query": "Which app serves media from Atlas at home, and what port does it use?",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "atlas-home",
+        "style"
+      ],
+      "returned": [
+        "atlas-home"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.947,
+      "result_chars": 370,
+      "wrapper_chars": 703,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "atlas-home",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Atlas home server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:07+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the home media server. It runs Jellyfin on port 8096."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "varied-07",
+      "group": "work-multi-intent",
+      "query": "For the office Atlas reporting server, remind me of the database port and the weekday backup time.",
+      "required": [
+        "atlas-work",
+        "work-backup"
+      ],
+      "acceptable": [
+        "atlas-work",
+        "style",
+        "work-backup"
+      ],
+      "returned": [
+        "atlas-work",
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.632,
+      "result_chars": 728,
+      "wrapper_chars": 1055,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        },
+        {
+          "id": "work-backup",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office database backup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:09+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The office database backup is at 01:00 on weekdays."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "varied-08",
+      "group": "indirect-service",
+      "query": "I need to look up a saved login in Vaultwarden. Which folder do I normally use and what should I search for?",
+      "required": [
+        "vault"
+      ],
+      "acceptable": [
+        "style",
+        "vault"
+      ],
+      "returned": [
+        "vault"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.289,
+      "result_chars": 411,
+      "wrapper_chars": 744,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "vault",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Vaultwarden setup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:06+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Vaultwarden stores passwords. The default folder is Glyph Hold. Search website addresses and hostnames."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "varied-09",
+      "group": "typo",
+      "query": "Whats the current home DNS resolvr after the move to Unbound?",
+      "required": [
+        "new-dns"
+      ],
+      "acceptable": [
+        "dns",
+        "new-dns",
+        "style"
+      ],
+      "returned": [
+        "dns",
+        "new-dns"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.382,
+      "result_chars": 718,
+      "wrapper_chars": 1053,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "dns",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Home DNS",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:12+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Home DNS is provided by AdGuard. The resolver is 192.168.1.2."
+        },
+        {
+          "id": "new-dns",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Current resolver migration",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:21+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Resolver moved to Unbound on 192.168.1.3."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "varied-10",
+      "group": "long-runbook",
+      "query": "What is the critical recovery command from my storage recovery runbook?",
+      "required": [
+        "long"
+      ],
+      "acceptable": [
+        "long",
+        "style"
+      ],
+      "returned": [
+        "long"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 13.189,
+      "result_chars": 2393,
+      "wrapper_chars": 2726,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "long",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Storage recovery runbook",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:18+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "torage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions.  Critical recovery command: RESTORE-VERIFY-OMEGA.",
+          "truncated": true,
+          "excerpted": true
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "varied-11",
+      "group": "lexical-near-match",
+      "query": "What does the shipment contain besides the peppermill?",
+      "required": [
+        "prefix"
+      ],
+      "acceptable": [
+        "prefix",
+        "style"
+      ],
+      "returned": [
+        "prefix"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.411,
+      "result_chars": 369,
+      "wrapper_chars": 702,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "prefix",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Delivery statistics",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:16+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The shipment contains a peppermill and kitchen accessories."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "varied-12",
+      "group": "followup",
+      "query": "And what should I verify before starting?",
+      "required": [
+        "backup"
+      ],
+      "acceptable": [
+        "backup",
+        "host",
+        "ssh",
+        "style"
+      ],
+      "returned": [],
+      "missing": [
+        "backup"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 8.132,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "varied-13",
+      "group": "no-topical-memory",
+      "query": "Calculate 19 times 23.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.98,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "varied-14",
+      "group": "no-topical-memory",
+      "query": "Translate “good morning” into Spanish.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.693,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "varied-15",
+      "group": "no-topical-memory",
+      "query": "Write a two-line poem about a cloud shaped like a teapot.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.776,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "varied-01",
+      "group": "direct-personal",
+      "query": "What address is Pepper on, and which services does it host?",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "host",
+        "style"
+      ],
+      "returned": [
+        "host",
+        "ssh",
+        "backup"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "ssh",
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.3333333333333333,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 4.695,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        },
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        },
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "varied-02",
+      "group": "typo",
+      "query": "Need to SSH into Peper for an upgrade — how do I log in and what should I check before doing it?",
+      "required": [
+        "backup",
+        "ssh"
+      ],
+      "acceptable": [
+        "backup",
+        "host",
+        "ssh",
+        "style"
+      ],
+      "returned": [
+        "ssh"
+      ],
+      "missing": [
+        "backup"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 0.5,
+      "pass": false,
+      "retrieval_ms": 4.345,
+      "result_chars": 373,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "varied-03",
+      "group": "indirect-person",
+      "query": "Thinking of taking my fiancée out for dinner. What food preferences do you remember for her?",
+      "required": [
+        "jess",
+        "jess-food"
+      ],
+      "acceptable": [
+        "jess",
+        "jess-food",
+        "style"
+      ],
+      "returned": [],
+      "missing": [
+        "jess",
+        "jess-food"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 4.365,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "varied-04",
+      "group": "multi-intent",
+      "query": "Remind me what kind of bike route Jay likes, and what router Dan Goodman has at home.",
+      "required": [
+        "dan",
+        "jay"
+      ],
+      "acceptable": [
+        "dan",
+        "jay",
+        "style"
+      ],
+      "returned": [
+        "dan",
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.406,
+      "result_chars": 704,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 5,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "dan",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Dan Goodman router",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:05+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Dan Goodman owns a MikroTik router at his house."
+        },
+        {
+          "id": "jay",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jay cycling",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:04+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jay rides a bicycle and prefers quiet routes."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "varied-05",
+      "group": "topic-change",
+      "query": "Leave the server stuff for now. What did I want to compare when researching batteries for the solar installation?",
+      "required": [
+        "research"
+      ],
+      "acceptable": [
+        "research",
+        "style"
+      ],
+      "returned": [
+        "research"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.794,
+      "result_chars": 382,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "research",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Battery research",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:11+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Research batteries for a solar installation; compare capacity and warranty."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "varied-06",
+      "group": "direct-personal",
+      "query": "Which app serves media from Atlas at home, and what port does it use?",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "atlas-home",
+        "style"
+      ],
+      "returned": [
+        "atlas-home"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.485,
+      "result_chars": 370,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "atlas-home",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Atlas home server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:07+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the home media server. It runs Jellyfin on port 8096."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "varied-07",
+      "group": "work-multi-intent",
+      "query": "For the office Atlas reporting server, remind me of the database port and the weekday backup time.",
+      "required": [
+        "atlas-work",
+        "work-backup"
+      ],
+      "acceptable": [
+        "atlas-work",
+        "style",
+        "work-backup"
+      ],
+      "returned": [
+        "atlas-work",
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.734,
+      "result_chars": 728,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        },
+        {
+          "id": "work-backup",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office database backup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:09+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The office database backup is at 01:00 on weekdays."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "varied-08",
+      "group": "indirect-service",
+      "query": "I need to look up a saved login in Vaultwarden. Which folder do I normally use and what should I search for?",
+      "required": [
+        "vault"
+      ],
+      "acceptable": [
+        "style",
+        "vault"
+      ],
+      "returned": [
+        "vault"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.652,
+      "result_chars": 411,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "vault",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Vaultwarden setup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:06+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Vaultwarden stores passwords. The default folder is Glyph Hold. Search website addresses and hostnames."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "varied-09",
+      "group": "typo",
+      "query": "Whats the current home DNS resolvr after the move to Unbound?",
+      "required": [
+        "new-dns"
+      ],
+      "acceptable": [
+        "dns",
+        "new-dns",
+        "style"
+      ],
+      "returned": [
+        "dns",
+        "new-dns"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.626,
+      "result_chars": 718,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "dns",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Home DNS",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:12+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Home DNS is provided by AdGuard. The resolver is 192.168.1.2."
+        },
+        {
+          "id": "new-dns",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Current resolver migration",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:21+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Resolver moved to Unbound on 192.168.1.3."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "varied-10",
+      "group": "long-runbook",
+      "query": "What is the critical recovery command from my storage recovery runbook?",
+      "required": [
+        "long"
+      ],
+      "acceptable": [
+        "long",
+        "style"
+      ],
+      "returned": [
+        "long"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 5.413,
+      "result_chars": 7834,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "long",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Storage recovery runbook",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:18+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions.  Critical recovery command: RESTORE-VERIFY-OMEGA."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "varied-11",
+      "group": "lexical-near-match",
+      "query": "What does the shipment contain besides the peppermill?",
+      "required": [
+        "prefix"
+      ],
+      "acceptable": [
+        "prefix",
+        "style"
+      ],
+      "returned": [
+        "prefix"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 2.985,
+      "result_chars": 369,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "prefix",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Delivery statistics",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:16+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The shipment contains a peppermill and kitchen accessories."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "varied-12",
+      "group": "followup",
+      "query": "And what should I verify before starting?",
+      "required": [
+        "backup"
+      ],
+      "acceptable": [
+        "backup",
+        "host",
+        "ssh",
+        "style"
+      ],
+      "returned": [],
+      "missing": [
+        "backup"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 5.695,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "varied-13",
+      "group": "no-topical-memory",
+      "query": "Calculate 19 times 23.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.905,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "varied-14",
+      "group": "no-topical-memory",
+      "query": "Translate “good morning” into Spanish.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.56,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "varied-15",
+      "group": "no-topical-memory",
+      "query": "Write a two-line poem about a cloud shaped like a teapot.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.633,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "varied-01",
+      "group": "direct-personal",
+      "query": "What address is Pepper on, and which services does it host?",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "host",
+        "style"
+      ],
+      "returned": [
+        "host",
+        "ssh",
+        "backup"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "ssh",
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.3333333333333333,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 5.551,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        },
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        },
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "varied-02",
+      "group": "typo",
+      "query": "Need to SSH into Peper for an upgrade — how do I log in and what should I check before doing it?",
+      "required": [
+        "backup",
+        "ssh"
+      ],
+      "acceptable": [
+        "backup",
+        "host",
+        "ssh",
+        "style"
+      ],
+      "returned": [
+        "ssh"
+      ],
+      "missing": [
+        "backup"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 0.5,
+      "pass": false,
+      "retrieval_ms": 4.465,
+      "result_chars": 373,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "varied-03",
+      "group": "indirect-person",
+      "query": "Thinking of taking my fiancée out for dinner. What food preferences do you remember for her?",
+      "required": [
+        "jess",
+        "jess-food"
+      ],
+      "acceptable": [
+        "jess",
+        "jess-food",
+        "style"
+      ],
+      "returned": [],
+      "missing": [
+        "jess",
+        "jess-food"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 4.429,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "varied-04",
+      "group": "multi-intent",
+      "query": "Remind me what kind of bike route Jay likes, and what router Dan Goodman has at home.",
+      "required": [
+        "dan",
+        "jay"
+      ],
+      "acceptable": [
+        "dan",
+        "jay",
+        "style"
+      ],
+      "returned": [
+        "dan",
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 5.246,
+      "result_chars": 704,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 5,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "dan",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Dan Goodman router",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:05+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Dan Goodman owns a MikroTik router at his house."
+        },
+        {
+          "id": "jay",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jay cycling",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:04+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jay rides a bicycle and prefers quiet routes."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "varied-05",
+      "group": "topic-change",
+      "query": "Leave the server stuff for now. What did I want to compare when researching batteries for the solar installation?",
+      "required": [
+        "research"
+      ],
+      "acceptable": [
+        "research",
+        "style"
+      ],
+      "returned": [
+        "research"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.785,
+      "result_chars": 382,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "research",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Battery research",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:11+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Research batteries for a solar installation; compare capacity and warranty."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "varied-06",
+      "group": "direct-personal",
+      "query": "Which app serves media from Atlas at home, and what port does it use?",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "atlas-home",
+        "style"
+      ],
+      "returned": [
+        "atlas-home"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.516,
+      "result_chars": 370,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "atlas-home",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Atlas home server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:07+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the home media server. It runs Jellyfin on port 8096."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "varied-07",
+      "group": "work-multi-intent",
+      "query": "For the office Atlas reporting server, remind me of the database port and the weekday backup time.",
+      "required": [
+        "atlas-work",
+        "work-backup"
+      ],
+      "acceptable": [
+        "atlas-work",
+        "style",
+        "work-backup"
+      ],
+      "returned": [
+        "atlas-work",
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 5.02,
+      "result_chars": 728,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        },
+        {
+          "id": "work-backup",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office database backup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:09+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The office database backup is at 01:00 on weekdays."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "varied-08",
+      "group": "indirect-service",
+      "query": "I need to look up a saved login in Vaultwarden. Which folder do I normally use and what should I search for?",
+      "required": [
+        "vault"
+      ],
+      "acceptable": [
+        "style",
+        "vault"
+      ],
+      "returned": [
+        "vault"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.625,
+      "result_chars": 411,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "vault",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Vaultwarden setup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:06+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Vaultwarden stores passwords. The default folder is Glyph Hold. Search website addresses and hostnames."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "varied-09",
+      "group": "typo",
+      "query": "Whats the current home DNS resolvr after the move to Unbound?",
+      "required": [
+        "new-dns"
+      ],
+      "acceptable": [
+        "dns",
+        "new-dns",
+        "style"
+      ],
+      "returned": [
+        "dns",
+        "new-dns"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.878,
+      "result_chars": 718,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "dns",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Home DNS",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:12+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Home DNS is provided by AdGuard. The resolver is 192.168.1.2."
+        },
+        {
+          "id": "new-dns",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Current resolver migration",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:21+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Resolver moved to Unbound on 192.168.1.3."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "varied-10",
+      "group": "long-runbook",
+      "query": "What is the critical recovery command from my storage recovery runbook?",
+      "required": [
+        "long"
+      ],
+      "acceptable": [
+        "long",
+        "style"
+      ],
+      "returned": [
+        "long"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 8.6,
+      "result_chars": 7834,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "long",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Storage recovery runbook",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:18+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions.  Critical recovery command: RESTORE-VERIFY-OMEGA."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "varied-11",
+      "group": "lexical-near-match",
+      "query": "What does the shipment contain besides the peppermill?",
+      "required": [
+        "prefix"
+      ],
+      "acceptable": [
+        "prefix",
+        "style"
+      ],
+      "returned": [
+        "prefix"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.397,
+      "result_chars": 369,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "prefix",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Delivery statistics",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:16+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The shipment contains a peppermill and kitchen accessories."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "varied-12",
+      "group": "followup",
+      "query": "And what should I verify before starting?",
+      "required": [
+        "backup"
+      ],
+      "acceptable": [
+        "backup",
+        "host",
+        "ssh",
+        "style"
+      ],
+      "returned": [],
+      "missing": [
+        "backup"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 7.713,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "varied-13",
+      "group": "no-topical-memory",
+      "query": "Calculate 19 times 23.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 4.118,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "varied-14",
+      "group": "no-topical-memory",
+      "query": "Translate “good morning” into Spanish.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.984,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "varied-15",
+      "group": "no-topical-memory",
+      "query": "Write a two-line poem about a cloud shaped like a teapot.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.906,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "varied-01",
+      "group": "direct-personal",
+      "query": "What address is Pepper on, and which services does it host?",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "host",
+        "style"
+      ],
+      "returned": [
+        "host",
+        "ssh",
+        "backup"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "ssh",
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.3333333333333333,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 4.534,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        },
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        },
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "varied-02",
+      "group": "typo",
+      "query": "Need to SSH into Peper for an upgrade — how do I log in and what should I check before doing it?",
+      "required": [
+        "backup",
+        "ssh"
+      ],
+      "acceptable": [
+        "backup",
+        "host",
+        "ssh",
+        "style"
+      ],
+      "returned": [
+        "ssh"
+      ],
+      "missing": [
+        "backup"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 0.5,
+      "pass": false,
+      "retrieval_ms": 4.53,
+      "result_chars": 373,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "varied-03",
+      "group": "indirect-person",
+      "query": "Thinking of taking my fiancée out for dinner. What food preferences do you remember for her?",
+      "required": [
+        "jess",
+        "jess-food"
+      ],
+      "acceptable": [
+        "jess",
+        "jess-food",
+        "style"
+      ],
+      "returned": [],
+      "missing": [
+        "jess",
+        "jess-food"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 4.654,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "varied-04",
+      "group": "multi-intent",
+      "query": "Remind me what kind of bike route Jay likes, and what router Dan Goodman has at home.",
+      "required": [
+        "dan",
+        "jay"
+      ],
+      "acceptable": [
+        "dan",
+        "jay",
+        "style"
+      ],
+      "returned": [
+        "dan",
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 5.358,
+      "result_chars": 704,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 5,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "dan",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Dan Goodman router",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:05+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Dan Goodman owns a MikroTik router at his house."
+        },
+        {
+          "id": "jay",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jay cycling",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:04+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jay rides a bicycle and prefers quiet routes."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "varied-05",
+      "group": "topic-change",
+      "query": "Leave the server stuff for now. What did I want to compare when researching batteries for the solar installation?",
+      "required": [
+        "research"
+      ],
+      "acceptable": [
+        "research",
+        "style"
+      ],
+      "returned": [
+        "research"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 5.068,
+      "result_chars": 382,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "research",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Battery research",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:11+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Research batteries for a solar installation; compare capacity and warranty."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "varied-06",
+      "group": "direct-personal",
+      "query": "Which app serves media from Atlas at home, and what port does it use?",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "atlas-home",
+        "style"
+      ],
+      "returned": [
+        "atlas-home",
+        "atlas-work"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "atlas-work"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 4.923,
+      "result_chars": 742,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "atlas-home",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Atlas home server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:07+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the home media server. It runs Jellyfin on port 8096."
+        },
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "varied-07",
+      "group": "work-multi-intent",
+      "query": "For the office Atlas reporting server, remind me of the database port and the weekday backup time.",
+      "required": [
+        "atlas-work",
+        "work-backup"
+      ],
+      "acceptable": [
+        "atlas-work",
+        "style",
+        "work-backup"
+      ],
+      "returned": [
+        "atlas-work",
+        "atlas-home",
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "atlas-home"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.6666666666666666,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 5.467,
+      "result_chars": 1098,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 4,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        },
+        {
+          "id": "atlas-home",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Atlas home server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:07+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the home media server. It runs Jellyfin on port 8096."
+        },
+        {
+          "id": "work-backup",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office database backup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:09+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The office database backup is at 01:00 on weekdays."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "varied-08",
+      "group": "indirect-service",
+      "query": "I need to look up a saved login in Vaultwarden. Which folder do I normally use and what should I search for?",
+      "required": [
+        "vault"
+      ],
+      "acceptable": [
+        "style",
+        "vault"
+      ],
+      "returned": [
+        "vault"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.413,
+      "result_chars": 411,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "vault",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Vaultwarden setup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:06+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Vaultwarden stores passwords. The default folder is Glyph Hold. Search website addresses and hostnames."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "varied-09",
+      "group": "typo",
+      "query": "Whats the current home DNS resolvr after the move to Unbound?",
+      "required": [
+        "new-dns"
+      ],
+      "acceptable": [
+        "dns",
+        "new-dns",
+        "style"
+      ],
+      "returned": [
+        "dns",
+        "new-dns"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.077,
+      "result_chars": 718,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "dns",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Home DNS",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:12+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Home DNS is provided by AdGuard. The resolver is 192.168.1.2."
+        },
+        {
+          "id": "new-dns",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Current resolver migration",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:21+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Resolver moved to Unbound on 192.168.1.3."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "varied-10",
+      "group": "long-runbook",
+      "query": "What is the critical recovery command from my storage recovery runbook?",
+      "required": [
+        "long"
+      ],
+      "acceptable": [
+        "long",
+        "style"
+      ],
+      "returned": [
+        "long"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 6.631,
+      "result_chars": 2393,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "long",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Storage recovery runbook",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:18+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "torage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions.  Critical recovery command: RESTORE-VERIFY-OMEGA.",
+          "truncated": true,
+          "excerpted": true
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "varied-11",
+      "group": "lexical-near-match",
+      "query": "What does the shipment contain besides the peppermill?",
+      "required": [
+        "prefix"
+      ],
+      "acceptable": [
+        "prefix",
+        "style"
+      ],
+      "returned": [
+        "prefix"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 2.781,
+      "result_chars": 369,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "prefix",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Delivery statistics",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:16+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The shipment contains a peppermill and kitchen accessories."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "varied-12",
+      "group": "followup",
+      "query": "And what should I verify before starting?",
+      "required": [
+        "backup"
+      ],
+      "acceptable": [
+        "backup",
+        "host",
+        "ssh",
+        "style"
+      ],
+      "returned": [],
+      "missing": [
+        "backup"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 4.69,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "varied-13",
+      "group": "no-topical-memory",
+      "query": "Calculate 19 times 23.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.68,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "varied-14",
+      "group": "no-topical-memory",
+      "query": "Translate “good morning” into Spanish.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.516,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "varied-15",
+      "group": "no-topical-memory",
+      "query": "Write a two-line poem about a cloud shaped like a teapot.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.467,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "varied-01",
+      "group": "direct-personal",
+      "query": "What address is Pepper on, and which services does it host?",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "host",
+        "style"
+      ],
+      "returned": [
+        "host",
+        "ssh",
+        "backup"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "ssh",
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.3333333333333333,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 3.16,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        },
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        },
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "varied-02",
+      "group": "typo",
+      "query": "Need to SSH into Peper for an upgrade — how do I log in and what should I check before doing it?",
+      "required": [
+        "backup",
+        "ssh"
+      ],
+      "acceptable": [
+        "backup",
+        "host",
+        "ssh",
+        "style"
+      ],
+      "returned": [
+        "ssh"
+      ],
+      "missing": [
+        "backup"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 0.5,
+      "pass": false,
+      "retrieval_ms": 2.891,
+      "result_chars": 373,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "varied-03",
+      "group": "indirect-person",
+      "query": "Thinking of taking my fiancée out for dinner. What food preferences do you remember for her?",
+      "required": [
+        "jess",
+        "jess-food"
+      ],
+      "acceptable": [
+        "jess",
+        "jess-food",
+        "style"
+      ],
+      "returned": [],
+      "missing": [
+        "jess",
+        "jess-food"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 3.843,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "varied-04",
+      "group": "multi-intent",
+      "query": "Remind me what kind of bike route Jay likes, and what router Dan Goodman has at home.",
+      "required": [
+        "dan",
+        "jay"
+      ],
+      "acceptable": [
+        "dan",
+        "jay",
+        "style"
+      ],
+      "returned": [
+        "dan",
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.901,
+      "result_chars": 704,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 5,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "dan",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Dan Goodman router",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:05+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Dan Goodman owns a MikroTik router at his house."
+        },
+        {
+          "id": "jay",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jay cycling",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:04+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jay rides a bicycle and prefers quiet routes."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "varied-05",
+      "group": "topic-change",
+      "query": "Leave the server stuff for now. What did I want to compare when researching batteries for the solar installation?",
+      "required": [
+        "research"
+      ],
+      "acceptable": [
+        "research",
+        "style"
+      ],
+      "returned": [
+        "research"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.82,
+      "result_chars": 382,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "research",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Battery research",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:11+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Research batteries for a solar installation; compare capacity and warranty."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "varied-06",
+      "group": "direct-personal",
+      "query": "Which app serves media from Atlas at home, and what port does it use?",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "atlas-home",
+        "style"
+      ],
+      "returned": [
+        "atlas-home"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.464,
+      "result_chars": 370,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "atlas-home",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Atlas home server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:07+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the home media server. It runs Jellyfin on port 8096."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "varied-07",
+      "group": "work-multi-intent",
+      "query": "For the office Atlas reporting server, remind me of the database port and the weekday backup time.",
+      "required": [
+        "atlas-work",
+        "work-backup"
+      ],
+      "acceptable": [
+        "atlas-work",
+        "style",
+        "work-backup"
+      ],
+      "returned": [
+        "atlas-work",
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 5.226,
+      "result_chars": 728,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        },
+        {
+          "id": "work-backup",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office database backup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:09+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The office database backup is at 01:00 on weekdays."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "varied-08",
+      "group": "indirect-service",
+      "query": "I need to look up a saved login in Vaultwarden. Which folder do I normally use and what should I search for?",
+      "required": [
+        "vault"
+      ],
+      "acceptable": [
+        "style",
+        "vault"
+      ],
+      "returned": [
+        "vault"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 6.777,
+      "result_chars": 411,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "vault",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Vaultwarden setup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:06+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Vaultwarden stores passwords. The default folder is Glyph Hold. Search website addresses and hostnames."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "varied-09",
+      "group": "typo",
+      "query": "Whats the current home DNS resolvr after the move to Unbound?",
+      "required": [
+        "new-dns"
+      ],
+      "acceptable": [
+        "dns",
+        "new-dns",
+        "style"
+      ],
+      "returned": [
+        "dns",
+        "new-dns"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 6.2,
+      "result_chars": 718,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "dns",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Home DNS",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:12+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Home DNS is provided by AdGuard. The resolver is 192.168.1.2."
+        },
+        {
+          "id": "new-dns",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Current resolver migration",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:21+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Resolver moved to Unbound on 192.168.1.3."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "varied-10",
+      "group": "long-runbook",
+      "query": "What is the critical recovery command from my storage recovery runbook?",
+      "required": [
+        "long"
+      ],
+      "acceptable": [
+        "long",
+        "style"
+      ],
+      "returned": [
+        "long"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 14.323,
+      "result_chars": 2393,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "long",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Storage recovery runbook",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:18+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "torage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions.  Critical recovery command: RESTORE-VERIFY-OMEGA.",
+          "truncated": true,
+          "excerpted": true
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "varied-11",
+      "group": "lexical-near-match",
+      "query": "What does the shipment contain besides the peppermill?",
+      "required": [
+        "prefix"
+      ],
+      "acceptable": [
+        "prefix",
+        "style"
+      ],
+      "returned": [
+        "prefix"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 6.357,
+      "result_chars": 369,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "prefix",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Delivery statistics",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:16+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The shipment contains a peppermill and kitchen accessories."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "varied-12",
+      "group": "followup",
+      "query": "And what should I verify before starting?",
+      "required": [
+        "backup"
+      ],
+      "acceptable": [
+        "backup",
+        "host",
+        "ssh",
+        "style"
+      ],
+      "returned": [],
+      "missing": [
+        "backup"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 10.194,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "varied-13",
+      "group": "no-topical-memory",
+      "query": "Calculate 19 times 23.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 5.237,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "varied-14",
+      "group": "no-topical-memory",
+      "query": "Translate “good morning” into Spanish.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 4.868,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "varied-15",
+      "group": "no-topical-memory",
+      "query": "Write a two-line poem about a cloud shaped like a teapot.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 6.018,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    }
+  ]
+}

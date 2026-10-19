@@ -1,0 +1,251 @@
+{
+  "model": "BAAI/bge-small-en-v1.5",
+  "retrieval_source_sha256": "0370df8254788e408a78dba810c0fd6bca790b61e0077961bacc45fbad1b0230",
+  "runtime_integration": false,
+  "threshold": 0.62,
+  "margin_threshold": 0.025,
+  "summary": {
+    "cases": 12,
+    "semantic_accepted": 3,
+    "strict_passes": 9,
+    "cases_with_missing": 1,
+    "cases_with_irrelevant": 2,
+    "required_found": 7,
+    "required_total": 8,
+    "local_model_and_batch_seconds": 0.681
+  },
+  "measurements": [
+    {
+      "case": "c01",
+      "query": "What time does Garden Assistant water the greenhouse?",
+      "lexical_returned": [
+        "gardenassistant"
+      ],
+      "returned": [
+        "gardenassistant"
+      ],
+      "required": [
+        "gardenassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.9388,
+      "margin": 0.361,
+      "pass": true
+    },
+    {
+      "case": "c02",
+      "query": "Garden Assistant greenhouse schedule",
+      "lexical_returned": [
+        "gardenassistant"
+      ],
+      "returned": [
+        "gardenassistant"
+      ],
+      "required": [
+        "gardenassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8715,
+      "margin": 0.2278,
+      "pass": true
+    },
+    {
+      "case": "c03",
+      "query": "Where are my receipts for garden tools?",
+      "lexical_returned": [
+        "gardenledger",
+        "gardenassistant"
+      ],
+      "returned": [
+        "gardenledger",
+        "gardenassistant"
+      ],
+      "required": [
+        "gardenledger"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "gardenassistant"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8596,
+      "margin": 0.2145,
+      "pass": false
+    },
+    {
+      "case": "c04",
+      "query": "When does Office Assistant summarise meetings?",
+      "lexical_returned": [
+        "officeassistant"
+      ],
+      "returned": [
+        "officeassistant"
+      ],
+      "required": [
+        "officeassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8843,
+      "margin": 0.2856,
+      "pass": true
+    },
+    {
+      "case": "c05",
+      "query": "Which port should I use for Signalbox?",
+      "lexical_returned": [
+        "signalbox"
+      ],
+      "returned": [
+        "signalbox"
+      ],
+      "required": [
+        "signalbox"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7628,
+      "margin": 0.1583,
+      "pass": true
+    },
+    {
+      "case": "c06",
+      "query": "Where can I view my electricity consumption?",
+      "lexical_returned": [],
+      "returned": [
+        "signalbox"
+      ],
+      "required": [
+        "signalbox"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": true,
+      "similarity": 0.7572,
+      "margin": 0.1337,
+      "pass": true
+    },
+    {
+      "case": "c07",
+      "query": "Who am I going to marry?",
+      "lexical_returned": [],
+      "returned": [
+        "jess"
+      ],
+      "required": [
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": true,
+      "similarity": 0.6386,
+      "margin": 0.1122,
+      "pass": true
+    },
+    {
+      "case": "c08",
+      "query": "Where can I watch my movie collection?",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [
+        "atlas-home"
+      ],
+      "missing": [
+        "atlas-home"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "atlas-home"
+      ],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.505,
+      "margin": 0.0111,
+      "pass": false
+    },
+    {
+      "case": "c09",
+      "query": "Calculate 53 multiplied by 11.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.5363,
+      "margin": 0.0,
+      "pass": true
+    },
+    {
+      "case": "c10",
+      "query": "Explain what a lunar eclipse is.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.5173,
+      "margin": 0.0312,
+      "pass": true
+    },
+    {
+      "case": "c11",
+      "query": "Write a short greeting for a new neighbour.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.592,
+      "margin": 0.0495,
+      "pass": true
+    },
+    {
+      "case": "c12",
+      "query": "Translate thank you into German.",
+      "lexical_returned": [],
+      "returned": [
+        "style"
+      ],
+      "required": [],
+      "missing": [],
+      "irrelevant": [
+        "style"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": true,
+      "similarity": 0.623,
+      "margin": 0.0725,
+      "pass": false
+    }
+  ]
+}

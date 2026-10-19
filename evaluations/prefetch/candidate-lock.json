@@ -1,0 +1,14 @@
+{
+  "retrieval_source_sha256": "0370df8254788e408a78dba810c0fd6bca790b61e0077961bacc45fbad1b0230",
+  "baseline_commit": "941829b5519873d4d7878ae697a79b0dfb5ab958",
+  "baseline_core_sha256": "6e8cb96eb56fe5f359cf9dce3909231a737381ab58beecf5dcc3405960787c38",
+  "holdout_sha256": "0ca5afd35523935ee4ea79ae139f899055f295c3e2aabe1bebb9bee68e863107",
+  "stage": "Final phrase-corrected candidate frozen before confirmation scoring; original holdout now a regression set",
+  "semantic_experiment": {
+    "model": "BAAI/bge-small-en-v1.5",
+    "threshold": 0.62,
+    "margin": 0.025,
+    "runtime_enabled": false
+  },
+  "confirmation_sha256": "557273345af478bff8f5bf4a4c80107d94e0bc28122bfa57448fb548b20dadcc"
+}

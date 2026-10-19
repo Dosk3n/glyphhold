@@ -936,6 +936,10 @@ def search(
     subject_ids: list[str] | None = None,
     session_id: str | None = None,
 ) -> dict:
+    if recall:
+        from app.v2.retrieval import recall as retrieve
+
+        return retrieve(p, query, space_id, broaden, limit, max_chars, subject_ids, session_id)
     check_scope(p, "memories:read")
     active = resolve_space(p, space_id, session_id=session_id)
     spaces = readable_spaces(p) if broaden else [active]

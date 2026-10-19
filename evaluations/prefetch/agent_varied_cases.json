@@ -1,0 +1,187 @@
+{
+  "author": "agent_varied",
+  "style": "Varied realistic wording: direct questions, indirect references, typos, multiple intents, topic change, and one contextual follow-up. Authored from memories only before retrieval exposure. General concise UK-English style is acceptable for all cases.",
+  "cases": [
+    {
+      "id": "varied-01",
+      "group": "direct-personal",
+      "query": "What address is Pepper on, and which services does it host?",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "style"
+      ],
+      "note": "The pinned backup may appear globally but is not needed to answer this host question."
+    },
+    {
+      "id": "varied-02",
+      "group": "typo",
+      "query": "Need to SSH into Peper for an upgrade \u2014 how do I log in and what should I check before doing it?",
+      "required": [
+        "ssh",
+        "backup"
+      ],
+      "acceptable": [
+        "host",
+        "style"
+      ],
+      "note": "Minor host-name typo; access and upgrade prerequisites are explicit."
+    },
+    {
+      "id": "varied-03",
+      "group": "indirect-person",
+      "query": "Thinking of taking my fianc\u00e9e out for dinner. What food preferences do you remember for her?",
+      "required": [
+        "jess",
+        "jess-food"
+      ],
+      "acceptable": [
+        "style"
+      ],
+      "note": "Relationship memory resolves the unnamed fianc\u00e9e to Jess."
+    },
+    {
+      "id": "varied-04",
+      "group": "multi-intent",
+      "query": "Remind me what kind of bike route Jay likes, and what router Dan Goodman has at home.",
+      "required": [
+        "jay",
+        "dan"
+      ],
+      "acceptable": [
+        "style"
+      ]
+    },
+    {
+      "id": "varied-05",
+      "group": "topic-change",
+      "query": "Leave the server stuff for now. What did I want to compare when researching batteries for the solar installation?",
+      "required": [
+        "research"
+      ],
+      "acceptable": [
+        "style"
+      ],
+      "note": "No server recall is needed for the new topic."
+    },
+    {
+      "id": "varied-06",
+      "group": "direct-personal",
+      "query": "Which app serves media from Atlas at home, and what port does it use?",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "style"
+      ],
+      "note": "Default personal space should exclude office Atlas."
+    },
+    {
+      "id": "varied-07",
+      "group": "work-multi-intent",
+      "query": "For the office Atlas reporting server, remind me of the database port and the weekday backup time.",
+      "required": [
+        "atlas-work",
+        "work-backup"
+      ],
+      "acceptable": [
+        "style"
+      ],
+      "space_id": "space_work"
+    },
+    {
+      "id": "varied-08",
+      "group": "indirect-service",
+      "query": "I need to look up a saved login in Vaultwarden. Which folder do I normally use and what should I search for?",
+      "required": [
+        "vault"
+      ],
+      "acceptable": [
+        "style"
+      ]
+    },
+    {
+      "id": "varied-09",
+      "group": "typo",
+      "query": "Whats the current home DNS resolvr after the move to Unbound?",
+      "required": [
+        "new-dns"
+      ],
+      "acceptable": [
+        "dns",
+        "style"
+      ],
+      "note": "Earlier AdGuard details may supply migration context but must not replace the current resolver."
+    },
+    {
+      "id": "varied-10",
+      "group": "long-runbook",
+      "query": "What is the critical recovery command from my storage recovery runbook?",
+      "required": [
+        "long"
+      ],
+      "acceptable": [
+        "style"
+      ],
+      "note": "The answer is in the runbook tail, not its opening summary."
+    },
+    {
+      "id": "varied-11",
+      "group": "lexical-near-match",
+      "query": "What does the shipment contain besides the peppermill?",
+      "required": [
+        "prefix"
+      ],
+      "acceptable": [
+        "style"
+      ],
+      "note": "Kitchen shipment wording is unrelated to the Pepper server."
+    },
+    {
+      "id": "varied-12",
+      "group": "followup",
+      "previous_user_message": "I am getting ready to upgrade Pepper.",
+      "query": "And what should I verify before starting?",
+      "required": [
+        "backup"
+      ],
+      "acceptable": [
+        "host",
+        "ssh",
+        "style"
+      ],
+      "note": "Context-dependent expectation requires previous_user_message to be supplied by the harness. Query-only prefetch cannot reliably resolve this follow-up."
+    },
+    {
+      "id": "varied-13",
+      "group": "no-topical-memory",
+      "query": "Calculate 19 times 23.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "note": "Arithmetic requires no topical memory. General style is explicitly acceptable."
+    },
+    {
+      "id": "varied-14",
+      "group": "no-topical-memory",
+      "query": "Translate \u201cgood morning\u201d into Spanish.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "note": "Self-contained translation; General response style is acceptable."
+    },
+    {
+      "id": "varied-15",
+      "group": "no-topical-memory",
+      "query": "Write a two-line poem about a cloud shaped like a teapot.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "note": "Creative request has no connection to corpus topics. General style is acceptable."
+    }
+  ]
+}

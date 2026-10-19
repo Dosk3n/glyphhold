@@ -1,0 +1,21 @@
+{
+  "author": "prefetch_conversational",
+  "style": "Everyday conversational requests. Labels set before retrieval. Existing corpus cases were inadvertently visible during initial read; no retrieval outputs were seen.",
+  "cases": [
+    {"id":"conv-evening-out","group":"people","query":"I want to take Jess out for a meal this weekend. What sort of place would suit her, and is there anything to steer clear of?","required":["jess-food"],"acceptable":["jess","style"]},
+    {"id":"conv-jay-outing","group":"people","query":"Help me think of an afternoon out that Jay would enjoy.","required":["jay"],"acceptable":["style"]},
+    {"id":"conv-dan-box","group":"people","query":"Do you remember what make of internet router Dan Goodman has at home?","required":["dan"],"acceptable":[]},
+    {"id":"conv-wedding-person","group":"people","query":"Remind me who I am planning to marry.","required":["jess"],"acceptable":[]},
+    {"id":"conv-film-night","group":"paraphrase","query":"I fancy putting a film on tonight. Remind me what I use at home to stream my collection.","required":["atlas-home"],"acceptable":[]},
+    {"id":"conv-password-hunt","group":"paraphrase","query":"I cannot find a saved login. Where do I usually keep passwords, and what should I try searching for?","required":["vault"],"acceptable":[]},
+    {"id":"conv-solar-shopping","group":"paraphrase","query":"What were the things I wanted to compare when looking at batteries for the solar panels?","required":["research"],"acceptable":[]},
+    {"id":"conv-pepper-upgrade","group":"operational","query":"I am thinking of upgrading Pepper this evening. What was I meant to check first?","required":["backup"],"acceptable":["ssh","host"]},
+    {"id":"conv-pepper-restart","group":"operational","query":"If you need to restart something on Pepper while helping me, what did I ask you to do first?","required":["ssh"],"acceptable":["host"]},
+    {"id":"conv-hermes-location","group":"operational","query":"Which box did I put Hermes and Glyph Hold on again?","required":["host"],"acceptable":[]},
+    {"id":"conv-office-copy","group":"scope","query":"What time is the office database copied for safekeeping, and does that happen every day?","required":["work-backup"],"acceptable":[],"space_id":"space_work"},
+    {"id":"conv-office-atlas","group":"scope","query":"What does Atlas do for us at the office?","required":["atlas-work"],"acceptable":[],"space_id":"space_work"},
+    {"id":"conv-rainbow","group":"abstention","query":"Why do rainbows have different colours?","required":[],"acceptable":["style"],"note":"No topical memory needed; style is optional for an explanation."},
+    {"id":"conv-thanks-note","group":"abstention","query":"Write a short thank-you note to a neighbour who watered my plants.","required":[],"acceptable":["style"],"note":"No known neighbour or plants memory; concise UK English style is relevant to prose."},
+    {"id":"conv-timer-maths","group":"abstention","query":"How many minutes are there in two and a half hours?","required":[],"acceptable":[],"note":"Self-contained arithmetic; a style memory adds no useful context."}
+  ]
+}

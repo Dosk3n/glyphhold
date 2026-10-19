@@ -1,0 +1,23 @@
+{
+  "baseline": {
+    "cases": 108,
+    "cases_with_irrelevant": 103,
+    "cases_with_missing": 14,
+    "required_found": 74,
+    "required_total": 88,
+    "strict_passes": 3,
+    "no_required_cases": 25,
+    "clean_no_required_cases": 0
+  },
+  "candidate": {
+    "cases": 108,
+    "cases_with_irrelevant": 15,
+    "cases_with_missing": 19,
+    "required_found": 68,
+    "required_total": 88,
+    "strict_passes": 76,
+    "no_required_cases": 25,
+    "clean_no_required_cases": 25
+  },
+  "scope": "Synthetic development, regression and confirmation sets combined; not a representative accuracy estimate."
+}

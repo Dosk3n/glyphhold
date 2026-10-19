@@ -726,7 +726,7 @@ export function MemoryLibrary({
               )}
             </Field>
           ))}
-          <Field name="Recall priority">
+          <Field name="Recall priority" hint="Pinned memories in General provide bounded background context. Pins in other spaces still need to match the request. Never excludes automatic recall.">
             <select
               value={form.auto_prefetch_level}
               onChange={(e) =>
@@ -1767,7 +1767,7 @@ export function MemoryRecord({
               )}
             </Field>
           ))}
-          <Field name="Recall priority">
+          <Field name="Recall priority" hint="Pinned memories in General provide bounded background context. Pins in other spaces still need to match the request. Never excludes automatic recall.">
             <select
               value={form.auto_prefetch_level}
               onChange={(e) =>

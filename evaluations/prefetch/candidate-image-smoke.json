@@ -1,0 +1,18 @@
+{
+  "http_recall": true,
+  "unrelated_topical_abstention": true,
+  "category_exclusion": true,
+  "permission_boundary": true,
+  "literal_fts": true,
+  "answer_excerpt": true,
+  "full_record_preserved": true,
+  "character_budget": true,
+  "authenticated_http_ms": [
+    10.59,
+    10.64,
+    10.91,
+    10.71,
+    10.63
+  ],
+  "retrieval_sha256": "0370df8254788e408a78dba810c0fd6bca790b61e0077961bacc45fbad1b0230"
+}

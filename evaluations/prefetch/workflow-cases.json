@@ -1,0 +1,21 @@
+{
+  "description": "Frozen before agent execution. Synthetic-only answer evidence and abstention checks, including indirect questions and context recovery.",
+  "cases": [
+    {"id":"w01","query":"What is Pepper's address?","answer_contains":["192.168.1.190"]},
+    {"id":"w02","query":"Who am I going to marry?","answer_contains":["Jess"],"answer_excludes":["sister"]},
+    {"id":"w03","query":"Where can I view my electricity consumption?","answer_contains":["Signalbox","8220"]},
+    {"id":"w04","query":"Where can I watch my movie collection?","answer_contains":["Atlas","Jellyfin","8096"],"answer_excludes":["5432"]},
+    {"id":"w05","query":"What must I avoid serving my fiancée?","answer_contains":["peanut"]},
+    {"id":"w06","query":"What is the critical command in my storage recovery runbook?","answer_contains":["RESTORE-VERIFY-OMEGA"]},
+    {"id":"w07","query":"When does Office Assistant summarise meetings?","space_id":"space_work","answer_contains":["Friday","12:00"],"answer_excludes":["06:10"]},
+    {"id":"w08","query":"What's the home Atlas media port?","space_id":"space_work","answer_contains":["8096"],"answer_excludes":["5432"]},
+    {"id":"w09","history":"User: We are discussing Garden Assistant, the controller for my greenhouse watering.","query":"What time does it run?","answer_contains":["06:10"],"answer_excludes":["02:30"]},
+    {"id":"w10","query":"Calculate 53 multiplied by 11.","answer_contains":["583"],"answer_excludes":["Pepper","backup"]},
+    {"id":"w11","query":"What is my neighbour Alex's birthday?","answer_excludes":["January","February","March","April","May","June","July","August","September","October","November","December"]},
+    {"id":"w12","query":"Which router does Dan Goodman own?","answer_contains":["MikroTik"]},
+    {"id":"w13","query":"Before upgrading Pepper what should I verify and when do its backups run?","answer_contains":["restore","02:30"]},
+    {"id":"w14","query":"What is the default folder for passwords in my vault service?","answer_contains":["Glyph Hold"]},
+    {"id":"w15","query":"Where are my receipts for garden tools?","answer_contains":["ledger"]},
+    {"id":"w16","query":"Translate thank you into German.","answer_contains":["Danke"],"answer_excludes":["Pepper","backup"]}
+  ]
+}

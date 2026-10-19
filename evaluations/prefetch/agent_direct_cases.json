@@ -1,0 +1,22 @@
+{
+  "author": "agent_direct",
+  "style": "Technical, direct, terse. Global style is acceptable for natural requests unless an exact output contract removes its usefulness.",
+  "label_provenance": "Labels set before any retrieval output. Initial corpus read accidentally exposed existing cases alongside memories; disclosed to coordinator. Independently authored, not fully blind/unseen testing.",
+  "cases": [
+    {"id":"agent-direct-01","group":"direct","query":"List services hosted on 192.168.1.190.","required":["host"],"acceptable":["style"]},
+    {"id":"agent-direct-02","group":"direct","query":"Identify the resolver previously assigned 192.168.1.2.","required":["dns"],"acceptable":["new-dns","style"]},
+    {"id":"agent-direct-03","group":"freshness","query":"192.168.1.3 resolver software?","required":["new-dns"],"acceptable":["style"]},
+    {"id":"agent-direct-04","group":"direct","query":"Pepper: authentication method and restart approval rule.","required":["ssh"],"acceptable":["host","style"]},
+    {"id":"agent-direct-05","group":"direct","query":"Pepper upgrade prerequisites and backup schedule.","required":["backup"],"acceptable":["ssh","style"]},
+    {"id":"agent-direct-06","group":"person","query":"What cycling route conditions does Jay prefer?","required":["jay"],"acceptable":["style"]},
+    {"id":"agent-direct-07","group":"person","query":"Which router brand is installed at Dan Goodman's home?","required":["dan"],"acceptable":["style"]},
+    {"id":"agent-direct-08","group":"person","query":"Jess: relationship status and excluded ingredient.","required":["jess","jess-food"],"acceptable":["style"]},
+    {"id":"agent-direct-09","group":"paraphrase","query":"Which machine serves my video library, and on which TCP port?","required":["atlas-home"],"acceptable":["style"]},
+    {"id":"agent-direct-10","group":"scope","query":"Office Atlas database engine and listening port.","required":["atlas-work"],"acceptable":["style"],"space_id":"space_work"},
+    {"id":"agent-direct-11","group":"scope","query":"Weekday database backup start time?","required":["work-backup"],"acceptable":["style"],"space_id":"space_work"},
+    {"id":"agent-direct-12","group":"paraphrase","query":"When looking up a saved login, should I search its domain name?","required":["vault"],"acceptable":["style"]},
+    {"id":"agent-direct-13","group":"abstention","query":"Convert 4096 bytes to KiB.","required":[],"acceptable":["style"],"note":"No topical memory needed; global concise UK English preference is permitted."},
+    {"id":"agent-direct-14","group":"abstention","query":"Define an idempotent HTTP method.","required":[],"acceptable":["style"],"note":"No topical memory needed; global response preference may apply."},
+    {"id":"agent-direct-15","group":"abstention","query":"Return only the decimal result: 17 * 23.","required":[],"acceptable":[],"note":"Exact output instruction leaves no useful role for global response-style memory."}
+  ]
+}

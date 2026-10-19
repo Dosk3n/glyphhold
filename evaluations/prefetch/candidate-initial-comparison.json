@@ -1,0 +1,112 @@
+{
+  "original": {
+    "baseline": {
+      "cases": 31,
+      "strict_passes": 0,
+      "cases_with_irrelevant": 30,
+      "cases_with_missing": 4,
+      "cases_missing_visible_evidence": 1,
+      "micro_precision": 0.2762,
+      "micro_required_recall": 0.84,
+      "median_local_retrieval_ms": 2.18
+    },
+    "candidate": {
+      "cases": 31,
+      "strict_passes": 19,
+      "cases_with_irrelevant": 6,
+      "cases_with_missing": 8,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.7931,
+      "micro_required_recall": 0.68,
+      "median_local_retrieval_ms": 2.683
+    }
+  },
+  "direct": {
+    "baseline": {
+      "cases": 15,
+      "strict_passes": 1,
+      "cases_with_irrelevant": 14,
+      "cases_with_missing": 0,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.3115,
+      "micro_required_recall": 1.0,
+      "median_local_retrieval_ms": 3.001
+    },
+    "candidate": {
+      "cases": 15,
+      "strict_passes": 11,
+      "cases_with_irrelevant": 2,
+      "cases_with_missing": 2,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8667,
+      "micro_required_recall": 0.8462,
+      "median_local_retrieval_ms": 3.436
+    }
+  },
+  "conversational": {
+    "baseline": {
+      "cases": 15,
+      "strict_passes": 0,
+      "cases_with_irrelevant": 15,
+      "cases_with_missing": 4,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.18,
+      "micro_required_recall": 0.6667,
+      "median_local_retrieval_ms": 4.856
+    },
+    "candidate": {
+      "cases": 15,
+      "strict_passes": 10,
+      "cases_with_irrelevant": 2,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8667,
+      "micro_required_recall": 0.75,
+      "median_local_retrieval_ms": 3.21
+    }
+  },
+  "varied": {
+    "baseline": {
+      "cases": 15,
+      "strict_passes": 2,
+      "cases_with_irrelevant": 13,
+      "cases_with_missing": 1,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.2969,
+      "micro_required_recall": 0.9375,
+      "median_local_retrieval_ms": 3.223
+    },
+    "candidate": {
+      "cases": 15,
+      "strict_passes": 11,
+      "cases_with_irrelevant": 1,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8667,
+      "micro_required_recall": 0.75,
+      "median_local_retrieval_ms": 2.934
+    }
+  },
+  "holdout": {
+    "baseline": {
+      "cases": 20,
+      "strict_passes": 0,
+      "cases_with_irrelevant": 19,
+      "cases_with_missing": 2,
+      "cases_missing_visible_evidence": 3,
+      "micro_precision": 0.1867,
+      "micro_required_recall": 0.8571,
+      "median_local_retrieval_ms": 4.522
+    },
+    "candidate": {
+      "cases": 20,
+      "strict_passes": 19,
+      "cases_with_irrelevant": 1,
+      "cases_with_missing": 0,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.9412,
+      "micro_required_recall": 1.0,
+      "median_local_retrieval_ms": 2.888
+    }
+  }
+}

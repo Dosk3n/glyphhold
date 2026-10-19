@@ -13,7 +13,7 @@ def test_health_reports_database_and_schema(client: TestClient) -> None:
     assert response.headers["X-Request-ID"].startswith("req_")
     assert response.json() == {
         "status": "ok",
-        "version": "2.1.3",
+        "version": "2.2.0",
         "database": "ok",
         "schema_version": 6,
         "secrets_enabled": False,

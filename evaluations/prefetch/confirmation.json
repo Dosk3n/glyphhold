@@ -1,0 +1,302 @@
+{
+  "description": "Confirmation labels locked before phrase correction; includes indirect questions and unrelated prompts. Synthetic only.",
+  "memories": [
+    {
+      "key": "host",
+      "title": "Pepper hosting",
+      "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "backup",
+      "title": "Pepper backup instructions",
+      "body": "Pepper backups run at 02:30. Verify the restore before upgrading.",
+      "space_id": "space_personal",
+      "auto_prefetch_level": "pinned"
+    },
+    {
+      "key": "jess",
+      "title": "Jess relationship",
+      "body": "Jess is the user’s fiancée. They are engaged.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "jess-food",
+      "title": "Jess dining preferences",
+      "body": "Jess avoids peanuts and likes Italian restaurants.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "jay",
+      "title": "Jay cycling",
+      "body": "Jay rides a bicycle and prefers quiet routes.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "dan",
+      "title": "Dan Goodman router",
+      "body": "Dan Goodman owns a MikroTik router at his house.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "vault",
+      "title": "Vaultwarden setup",
+      "body": "Vaultwarden stores passwords. The default folder is Glyph Hold. Search website addresses and hostnames.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "atlas-home",
+      "title": "Atlas home server",
+      "body": "Atlas is the home media server. It runs Jellyfin on port 8096.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "atlas-work",
+      "title": "Atlas office server",
+      "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432.",
+      "space_id": "space_work"
+    },
+    {
+      "key": "work-backup",
+      "title": "Office database backup",
+      "body": "The office database backup is at 01:00 on weekdays.",
+      "space_id": "space_work"
+    },
+    {
+      "key": "style",
+      "title": "Response style",
+      "body": "Prefer concise answers and UK English.",
+      "space_id": "space_general"
+    },
+    {
+      "key": "research",
+      "title": "Battery research",
+      "body": "Research batteries for a solar installation; compare capacity and warranty.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "dns",
+      "title": "Home DNS",
+      "body": "Home DNS is provided by AdGuard. The resolver is 192.168.1.2.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "ssh",
+      "title": "SSH access procedure",
+      "body": "Use SSH keys to access Pepper. Ask before restarting services.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "stale",
+      "title": "Superseded endpoint",
+      "body": "The old legacy endpoint uses port 4444.",
+      "space_id": "space_personal",
+      "archived": true
+    },
+    {
+      "key": "never",
+      "title": "Internal scratchpad",
+      "body": "Unfinished scratchpad about Pepper; do not automatically recall.",
+      "space_id": "space_personal",
+      "auto_prefetch_level": "never"
+    },
+    {
+      "key": "prefix",
+      "title": "Delivery statistics",
+      "body": "The shipment contains a peppermill and kitchen accessories.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "checklist",
+      "title": "General planning checklist",
+      "body": "I can check the plan for you and then we can work on the next part. This is a garden renovation checklist.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "long",
+      "title": "Storage recovery runbook",
+      "body": "Storage recovery preparation. Verify hardware inventory and record disk positions. ",
+      "space_id": "space_personal",
+      "repeat": 90,
+      "tail": " Critical recovery command: RESTORE-VERIFY-OMEGA."
+    },
+    {
+      "key": "priority-high",
+      "title": "Priority probe",
+      "body": "Identical priority probe text.",
+      "space_id": "space_personal",
+      "auto_prefetch_level": "high"
+    },
+    {
+      "key": "priority-low",
+      "title": "Priority probe",
+      "body": "Identical priority probe text.",
+      "space_id": "space_personal",
+      "auto_prefetch_level": "low"
+    },
+    {
+      "key": "new-dns",
+      "title": "Current resolver migration",
+      "body": "Resolver moved to Unbound on 192.168.1.3.",
+      "space_id": "space_personal",
+      "tags": [
+        "network-new"
+      ]
+    },
+    {
+      "key": "gardenassistant",
+      "title": "Garden Assistant watering controller",
+      "body": "Garden Assistant waters the greenhouse plants at 06:10.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "gardenledger",
+      "title": "Garden ledger",
+      "body": "Purchase receipts for garden tools live in this ledger.",
+      "space_id": "space_personal"
+    },
+    {
+      "key": "officeassistant",
+      "title": "Office Assistant meeting notes",
+      "body": "Office Assistant summarises meetings every Friday at 12:00.",
+      "space_id": "space_work"
+    },
+    {
+      "key": "signalbox",
+      "title": "Signalbox energy dashboard",
+      "body": "Signalbox shows home power usage. It listens on port 8220.",
+      "space_id": "space_personal"
+    }
+  ],
+  "cases": [
+    {
+      "id": "c01",
+      "group": "confirmation",
+      "query": "What time does Garden Assistant water the greenhouse?",
+      "required": [
+        "gardenassistant"
+      ],
+      "acceptable": [],
+      "evidence": {
+        "gardenassistant": "06:10"
+      }
+    },
+    {
+      "id": "c02",
+      "group": "confirmation",
+      "query": "Garden Assistant greenhouse schedule",
+      "required": [
+        "gardenassistant"
+      ],
+      "acceptable": [],
+      "evidence": {
+        "gardenassistant": "06:10"
+      }
+    },
+    {
+      "id": "c03",
+      "group": "confirmation",
+      "query": "Where are my receipts for garden tools?",
+      "required": [
+        "gardenledger"
+      ],
+      "acceptable": [],
+      "evidence": {
+        "gardenledger": "Purchase receipts"
+      }
+    },
+    {
+      "id": "c04",
+      "group": "confirmation",
+      "query": "When does Office Assistant summarise meetings?",
+      "required": [
+        "officeassistant"
+      ],
+      "acceptable": [],
+      "space_id": "space_work",
+      "evidence": {
+        "officeassistant": "Friday at 12:00"
+      }
+    },
+    {
+      "id": "c05",
+      "group": "confirmation",
+      "query": "Which port should I use for Signalbox?",
+      "required": [
+        "signalbox"
+      ],
+      "acceptable": [],
+      "evidence": {
+        "signalbox": "8220"
+      }
+    },
+    {
+      "id": "c06",
+      "group": "confirmation",
+      "query": "Where can I view my electricity consumption?",
+      "required": [
+        "signalbox"
+      ],
+      "acceptable": [],
+      "evidence": {
+        "signalbox": "power usage"
+      }
+    },
+    {
+      "id": "c07",
+      "group": "confirmation",
+      "query": "Who am I going to marry?",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [],
+      "evidence": {
+        "jess": "fiancée"
+      }
+    },
+    {
+      "id": "c08",
+      "group": "confirmation",
+      "query": "Where can I watch my movie collection?",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [],
+      "evidence": {
+        "atlas-home": "Jellyfin"
+      }
+    },
+    {
+      "id": "c09",
+      "group": "confirmation",
+      "query": "Calculate 53 multiplied by 11.",
+      "required": [],
+      "acceptable": []
+    },
+    {
+      "id": "c10",
+      "group": "confirmation",
+      "query": "Explain what a lunar eclipse is.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ]
+    },
+    {
+      "id": "c11",
+      "group": "confirmation",
+      "query": "Write a short greeting for a new neighbour.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ]
+    },
+    {
+      "id": "c12",
+      "group": "confirmation",
+      "query": "Translate thank you into German.",
+      "required": [],
+      "acceptable": []
+    }
+  ]
+}

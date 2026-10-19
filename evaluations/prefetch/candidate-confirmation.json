@@ -1,0 +1,2882 @@
+{
+  "schema_version": 1,
+  "glyphhold_version": "2.1.3",
+  "corpus_sha256": "bf2d1f593ab0c400fb3acddbeb3aa4683f3ef8bdfa91925d52f81a02bc82cebb",
+  "synthetic_only": true,
+  "memory_count": 26,
+  "hermes_wrapper_exercised": true,
+  "diagnostics": {
+    "empty_raw_recall_count": 0,
+    "priority_high_low_order": [
+      "priority-high"
+    ],
+    "disabled_category_recalled": false,
+    "restricted_broaden_returned_spaces": [
+      "space_work"
+    ],
+    "restricted_broaden_respects_grants": true,
+    "empty_hermes_prefetch_returns_blank": true
+  },
+  "summary": {
+    "hermes_defaults": {
+      "cases": 12,
+      "strict_passes": 8,
+      "cases_with_irrelevant": 1,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 3,
+      "micro_precision": 0.8333,
+      "micro_required_recall": 0.625,
+      "median_local_retrieval_ms": 3.133
+    },
+    "larger_budget": {
+      "cases": 12,
+      "strict_passes": 8,
+      "cases_with_irrelevant": 1,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 3,
+      "micro_precision": 0.8333,
+      "micro_required_recall": 0.625,
+      "median_local_retrieval_ms": 3.578
+    },
+    "more_results": {
+      "cases": 12,
+      "strict_passes": 8,
+      "cases_with_irrelevant": 1,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 3,
+      "micro_precision": 0.8333,
+      "micro_required_recall": 0.625,
+      "median_local_retrieval_ms": 2.812
+    },
+    "explicit_broaden": {
+      "cases": 12,
+      "strict_passes": 6,
+      "cases_with_irrelevant": 3,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 3,
+      "micro_precision": 0.625,
+      "micro_required_recall": 0.625,
+      "median_local_retrieval_ms": 2.845
+    },
+    "pins_disabled": {
+      "cases": 12,
+      "strict_passes": 8,
+      "cases_with_irrelevant": 1,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 3,
+      "micro_precision": 0.8333,
+      "micro_required_recall": 0.625,
+      "median_local_retrieval_ms": 2.993
+    }
+  },
+  "measurements": [
+    {
+      "variant": "hermes_defaults",
+      "case": "c01",
+      "group": "confirmation",
+      "query": "What time does Garden Assistant water the greenhouse?",
+      "required": [
+        "gardenassistant"
+      ],
+      "acceptable": [
+        "gardenassistant"
+      ],
+      "returned": [
+        "gardenassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.279,
+      "result_chars": 382,
+      "wrapper_chars": 715,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "gardenassistant",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden Assistant watering controller",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Garden Assistant waters the greenhouse plants at 06:10."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "c02",
+      "group": "confirmation",
+      "query": "Garden Assistant greenhouse schedule",
+      "required": [
+        "gardenassistant"
+      ],
+      "acceptable": [
+        "gardenassistant"
+      ],
+      "returned": [
+        "gardenassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.17,
+      "result_chars": 382,
+      "wrapper_chars": 715,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "gardenassistant",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden Assistant watering controller",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Garden Assistant waters the greenhouse plants at 06:10."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "c03",
+      "group": "confirmation",
+      "query": "Where are my receipts for garden tools?",
+      "required": [
+        "gardenledger"
+      ],
+      "acceptable": [
+        "gardenledger"
+      ],
+      "returned": [
+        "gardenledger",
+        "gardenassistant"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "gardenassistant"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 4.259,
+      "result_chars": 741,
+      "wrapper_chars": 1076,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "gardenledger",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden ledger",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:23+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Purchase receipts for garden tools live in this ledger."
+        },
+        {
+          "id": "gardenassistant",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden Assistant watering controller",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Garden Assistant waters the greenhouse plants at 06:10."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "c04",
+      "group": "confirmation",
+      "query": "When does Office Assistant summarise meetings?",
+      "required": [
+        "officeassistant"
+      ],
+      "acceptable": [
+        "officeassistant"
+      ],
+      "returned": [
+        "officeassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.102,
+      "result_chars": 372,
+      "wrapper_chars": 697,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "officeassistant",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office Assistant meeting notes",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Office Assistant summarises meetings every Friday at 12:00."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "c05",
+      "group": "confirmation",
+      "query": "Which port should I use for Signalbox?",
+      "required": [
+        "signalbox"
+      ],
+      "acceptable": [
+        "signalbox"
+      ],
+      "returned": [
+        "signalbox"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.19,
+      "result_chars": 375,
+      "wrapper_chars": 708,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "signalbox",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Signalbox energy dashboard",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:25+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Signalbox shows home power usage. It listens on port 8220."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "c06",
+      "group": "confirmation",
+      "query": "Where can I view my electricity consumption?",
+      "required": [
+        "signalbox"
+      ],
+      "acceptable": [
+        "signalbox"
+      ],
+      "returned": [],
+      "missing": [
+        "signalbox"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "signalbox"
+      ],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 3.07,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "c07",
+      "group": "confirmation",
+      "query": "Who am I going to marry?",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess"
+      ],
+      "returned": [],
+      "missing": [
+        "jess"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "jess"
+      ],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 2.936,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "c08",
+      "group": "confirmation",
+      "query": "Where can I watch my movie collection?",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "atlas-home"
+      ],
+      "returned": [],
+      "missing": [
+        "atlas-home"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "atlas-home"
+      ],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 2.707,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "c09",
+      "group": "confirmation",
+      "query": "Calculate 53 multiplied by 11.",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.142,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "c10",
+      "group": "confirmation",
+      "query": "Explain what a lunar eclipse is.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.736,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "c11",
+      "group": "confirmation",
+      "query": "Write a short greeting for a new neighbour.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.125,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "c12",
+      "group": "confirmation",
+      "query": "Translate thank you into German.",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.109,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "c01",
+      "group": "confirmation",
+      "query": "What time does Garden Assistant water the greenhouse?",
+      "required": [
+        "gardenassistant"
+      ],
+      "acceptable": [
+        "gardenassistant"
+      ],
+      "returned": [
+        "gardenassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.669,
+      "result_chars": 382,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "gardenassistant",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden Assistant watering controller",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Garden Assistant waters the greenhouse plants at 06:10."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "c02",
+      "group": "confirmation",
+      "query": "Garden Assistant greenhouse schedule",
+      "required": [
+        "gardenassistant"
+      ],
+      "acceptable": [
+        "gardenassistant"
+      ],
+      "returned": [
+        "gardenassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.192,
+      "result_chars": 382,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "gardenassistant",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden Assistant watering controller",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Garden Assistant waters the greenhouse plants at 06:10."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "c03",
+      "group": "confirmation",
+      "query": "Where are my receipts for garden tools?",
+      "required": [
+        "gardenledger"
+      ],
+      "acceptable": [
+        "gardenledger"
+      ],
+      "returned": [
+        "gardenledger",
+        "gardenassistant"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "gardenassistant"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 3.995,
+      "result_chars": 741,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "gardenledger",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden ledger",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:23+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Purchase receipts for garden tools live in this ledger."
+        },
+        {
+          "id": "gardenassistant",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden Assistant watering controller",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Garden Assistant waters the greenhouse plants at 06:10."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "c04",
+      "group": "confirmation",
+      "query": "When does Office Assistant summarise meetings?",
+      "required": [
+        "officeassistant"
+      ],
+      "acceptable": [
+        "officeassistant"
+      ],
+      "returned": [
+        "officeassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.753,
+      "result_chars": 372,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "officeassistant",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office Assistant meeting notes",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Office Assistant summarises meetings every Friday at 12:00."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "c05",
+      "group": "confirmation",
+      "query": "Which port should I use for Signalbox?",
+      "required": [
+        "signalbox"
+      ],
+      "acceptable": [
+        "signalbox"
+      ],
+      "returned": [
+        "signalbox"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.487,
+      "result_chars": 375,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "signalbox",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Signalbox energy dashboard",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:25+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Signalbox shows home power usage. It listens on port 8220."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "c06",
+      "group": "confirmation",
+      "query": "Where can I view my electricity consumption?",
+      "required": [
+        "signalbox"
+      ],
+      "acceptable": [
+        "signalbox"
+      ],
+      "returned": [],
+      "missing": [
+        "signalbox"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "signalbox"
+      ],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 3.919,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "c07",
+      "group": "confirmation",
+      "query": "Who am I going to marry?",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess"
+      ],
+      "returned": [],
+      "missing": [
+        "jess"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "jess"
+      ],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 4.097,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "c08",
+      "group": "confirmation",
+      "query": "Where can I watch my movie collection?",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "atlas-home"
+      ],
+      "returned": [],
+      "missing": [
+        "atlas-home"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "atlas-home"
+      ],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 2.703,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "c09",
+      "group": "confirmation",
+      "query": "Calculate 53 multiplied by 11.",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.84,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "c10",
+      "group": "confirmation",
+      "query": "Explain what a lunar eclipse is.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.286,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "c11",
+      "group": "confirmation",
+      "query": "Write a short greeting for a new neighbour.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.789,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "c12",
+      "group": "confirmation",
+      "query": "Translate thank you into German.",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.96,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "c01",
+      "group": "confirmation",
+      "query": "What time does Garden Assistant water the greenhouse?",
+      "required": [
+        "gardenassistant"
+      ],
+      "acceptable": [
+        "gardenassistant"
+      ],
+      "returned": [
+        "gardenassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.16,
+      "result_chars": 382,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "gardenassistant",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden Assistant watering controller",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Garden Assistant waters the greenhouse plants at 06:10."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "c02",
+      "group": "confirmation",
+      "query": "Garden Assistant greenhouse schedule",
+      "required": [
+        "gardenassistant"
+      ],
+      "acceptable": [
+        "gardenassistant"
+      ],
+      "returned": [
+        "gardenassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.681,
+      "result_chars": 382,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "gardenassistant",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden Assistant watering controller",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Garden Assistant waters the greenhouse plants at 06:10."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "c03",
+      "group": "confirmation",
+      "query": "Where are my receipts for garden tools?",
+      "required": [
+        "gardenledger"
+      ],
+      "acceptable": [
+        "gardenledger"
+      ],
+      "returned": [
+        "gardenledger",
+        "gardenassistant"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "gardenassistant"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 3.536,
+      "result_chars": 741,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "gardenledger",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden ledger",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:23+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Purchase receipts for garden tools live in this ledger."
+        },
+        {
+          "id": "gardenassistant",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden Assistant watering controller",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Garden Assistant waters the greenhouse plants at 06:10."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "c04",
+      "group": "confirmation",
+      "query": "When does Office Assistant summarise meetings?",
+      "required": [
+        "officeassistant"
+      ],
+      "acceptable": [
+        "officeassistant"
+      ],
+      "returned": [
+        "officeassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.886,
+      "result_chars": 372,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "officeassistant",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office Assistant meeting notes",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Office Assistant summarises meetings every Friday at 12:00."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "c05",
+      "group": "confirmation",
+      "query": "Which port should I use for Signalbox?",
+      "required": [
+        "signalbox"
+      ],
+      "acceptable": [
+        "signalbox"
+      ],
+      "returned": [
+        "signalbox"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.406,
+      "result_chars": 375,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "signalbox",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Signalbox energy dashboard",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:25+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Signalbox shows home power usage. It listens on port 8220."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "c06",
+      "group": "confirmation",
+      "query": "Where can I view my electricity consumption?",
+      "required": [
+        "signalbox"
+      ],
+      "acceptable": [
+        "signalbox"
+      ],
+      "returned": [],
+      "missing": [
+        "signalbox"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "signalbox"
+      ],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 2.72,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "c07",
+      "group": "confirmation",
+      "query": "Who am I going to marry?",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess"
+      ],
+      "returned": [],
+      "missing": [
+        "jess"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "jess"
+      ],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 2.349,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "c08",
+      "group": "confirmation",
+      "query": "Where can I watch my movie collection?",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "atlas-home"
+      ],
+      "returned": [],
+      "missing": [
+        "atlas-home"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "atlas-home"
+      ],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 2.46,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "c09",
+      "group": "confirmation",
+      "query": "Calculate 53 multiplied by 11.",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.448,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "c10",
+      "group": "confirmation",
+      "query": "Explain what a lunar eclipse is.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.271,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "c11",
+      "group": "confirmation",
+      "query": "Write a short greeting for a new neighbour.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.903,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "c12",
+      "group": "confirmation",
+      "query": "Translate thank you into German.",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.299,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "c01",
+      "group": "confirmation",
+      "query": "What time does Garden Assistant water the greenhouse?",
+      "required": [
+        "gardenassistant"
+      ],
+      "acceptable": [
+        "gardenassistant"
+      ],
+      "returned": [
+        "gardenassistant",
+        "officeassistant"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "officeassistant"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 3.182,
+      "result_chars": 754,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 4,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "gardenassistant",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden Assistant watering controller",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Garden Assistant waters the greenhouse plants at 06:10."
+        },
+        {
+          "id": "officeassistant",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office Assistant meeting notes",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Office Assistant summarises meetings every Friday at 12:00."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "c02",
+      "group": "confirmation",
+      "query": "Garden Assistant greenhouse schedule",
+      "required": [
+        "gardenassistant"
+      ],
+      "acceptable": [
+        "gardenassistant"
+      ],
+      "returned": [
+        "gardenassistant",
+        "officeassistant"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "officeassistant"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 2.91,
+      "result_chars": 754,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 4,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "gardenassistant",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden Assistant watering controller",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Garden Assistant waters the greenhouse plants at 06:10."
+        },
+        {
+          "id": "officeassistant",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office Assistant meeting notes",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Office Assistant summarises meetings every Friday at 12:00."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "c03",
+      "group": "confirmation",
+      "query": "Where are my receipts for garden tools?",
+      "required": [
+        "gardenledger"
+      ],
+      "acceptable": [
+        "gardenledger"
+      ],
+      "returned": [
+        "gardenledger",
+        "gardenassistant"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "gardenassistant"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 2.861,
+      "result_chars": 741,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "gardenledger",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden ledger",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:23+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Purchase receipts for garden tools live in this ledger."
+        },
+        {
+          "id": "gardenassistant",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden Assistant watering controller",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Garden Assistant waters the greenhouse plants at 06:10."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "c04",
+      "group": "confirmation",
+      "query": "When does Office Assistant summarise meetings?",
+      "required": [
+        "officeassistant"
+      ],
+      "acceptable": [
+        "officeassistant"
+      ],
+      "returned": [
+        "officeassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 2.977,
+      "result_chars": 372,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 4,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "officeassistant",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office Assistant meeting notes",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Office Assistant summarises meetings every Friday at 12:00."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "c05",
+      "group": "confirmation",
+      "query": "Which port should I use for Signalbox?",
+      "required": [
+        "signalbox"
+      ],
+      "acceptable": [
+        "signalbox"
+      ],
+      "returned": [
+        "signalbox"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 2.931,
+      "result_chars": 375,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "signalbox",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Signalbox energy dashboard",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:25+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Signalbox shows home power usage. It listens on port 8220."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "c06",
+      "group": "confirmation",
+      "query": "Where can I view my electricity consumption?",
+      "required": [
+        "signalbox"
+      ],
+      "acceptable": [
+        "signalbox"
+      ],
+      "returned": [],
+      "missing": [
+        "signalbox"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "signalbox"
+      ],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 2.389,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "c07",
+      "group": "confirmation",
+      "query": "Who am I going to marry?",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess"
+      ],
+      "returned": [],
+      "missing": [
+        "jess"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "jess"
+      ],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 2.749,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "c08",
+      "group": "confirmation",
+      "query": "Where can I watch my movie collection?",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "atlas-home"
+      ],
+      "returned": [],
+      "missing": [
+        "atlas-home"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "atlas-home"
+      ],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 2.828,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "c09",
+      "group": "confirmation",
+      "query": "Calculate 53 multiplied by 11.",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.517,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "c10",
+      "group": "confirmation",
+      "query": "Explain what a lunar eclipse is.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.773,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "c11",
+      "group": "confirmation",
+      "query": "Write a short greeting for a new neighbour.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.996,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "c12",
+      "group": "confirmation",
+      "query": "Translate thank you into German.",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.572,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "c01",
+      "group": "confirmation",
+      "query": "What time does Garden Assistant water the greenhouse?",
+      "required": [
+        "gardenassistant"
+      ],
+      "acceptable": [
+        "gardenassistant"
+      ],
+      "returned": [
+        "gardenassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 2.936,
+      "result_chars": 382,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "gardenassistant",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden Assistant watering controller",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Garden Assistant waters the greenhouse plants at 06:10."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "c02",
+      "group": "confirmation",
+      "query": "Garden Assistant greenhouse schedule",
+      "required": [
+        "gardenassistant"
+      ],
+      "acceptable": [
+        "gardenassistant"
+      ],
+      "returned": [
+        "gardenassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.016,
+      "result_chars": 382,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "gardenassistant",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden Assistant watering controller",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Garden Assistant waters the greenhouse plants at 06:10."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "c03",
+      "group": "confirmation",
+      "query": "Where are my receipts for garden tools?",
+      "required": [
+        "gardenledger"
+      ],
+      "acceptable": [
+        "gardenledger"
+      ],
+      "returned": [
+        "gardenledger",
+        "gardenassistant"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "gardenassistant"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 2.836,
+      "result_chars": 741,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "gardenledger",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden ledger",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:23+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Purchase receipts for garden tools live in this ledger."
+        },
+        {
+          "id": "gardenassistant",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Garden Assistant watering controller",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Garden Assistant waters the greenhouse plants at 06:10."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "c04",
+      "group": "confirmation",
+      "query": "When does Office Assistant summarise meetings?",
+      "required": [
+        "officeassistant"
+      ],
+      "acceptable": [
+        "officeassistant"
+      ],
+      "returned": [
+        "officeassistant"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.371,
+      "result_chars": 372,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "officeassistant",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office Assistant meeting notes",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Office Assistant summarises meetings every Friday at 12:00."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "c05",
+      "group": "confirmation",
+      "query": "Which port should I use for Signalbox?",
+      "required": [
+        "signalbox"
+      ],
+      "acceptable": [
+        "signalbox"
+      ],
+      "returned": [
+        "signalbox"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 2.778,
+      "result_chars": 375,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "signalbox",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Signalbox energy dashboard",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:25+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Signalbox shows home power usage. It listens on port 8220."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "c06",
+      "group": "confirmation",
+      "query": "Where can I view my electricity consumption?",
+      "required": [
+        "signalbox"
+      ],
+      "acceptable": [
+        "signalbox"
+      ],
+      "returned": [],
+      "missing": [
+        "signalbox"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "signalbox"
+      ],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 2.435,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "c07",
+      "group": "confirmation",
+      "query": "Who am I going to marry?",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess"
+      ],
+      "returned": [],
+      "missing": [
+        "jess"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "jess"
+      ],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 3.539,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "c08",
+      "group": "confirmation",
+      "query": "Where can I watch my movie collection?",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "atlas-home"
+      ],
+      "returned": [],
+      "missing": [
+        "atlas-home"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [
+        "atlas-home"
+      ],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 2.97,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "c09",
+      "group": "confirmation",
+      "query": "Calculate 53 multiplied by 11.",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.888,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "c10",
+      "group": "confirmation",
+      "query": "Explain what a lunar eclipse is.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.551,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "c11",
+      "group": "confirmation",
+      "query": "Write a short greeting for a new neighbour.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.272,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "c12",
+      "group": "confirmation",
+      "query": "Translate thank you into German.",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.365,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    }
+  ]
+}

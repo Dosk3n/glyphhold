@@ -1,0 +1,4212 @@
+{
+  "schema_version": 1,
+  "glyphhold_version": "2.1.3",
+  "corpus_sha256": "f0ed9f8ce7bbf7dfc1726501792ff8313c6f40aba34658aa7d09e5f78f5f6754",
+  "synthetic_only": true,
+  "memory_count": 22,
+  "hermes_wrapper_exercised": true,
+  "diagnostics": {
+    "empty_raw_recall_count": 0,
+    "priority_high_low_order": [
+      "priority-high"
+    ],
+    "disabled_category_recalled": false,
+    "restricted_broaden_returned_spaces": [
+      "space_work"
+    ],
+    "restricted_broaden_respects_grants": true,
+    "empty_hermes_prefetch_returns_blank": true
+  },
+  "summary": {
+    "hermes_defaults": {
+      "cases": 15,
+      "strict_passes": 10,
+      "cases_with_irrelevant": 2,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8667,
+      "micro_required_recall": 0.75,
+      "median_local_retrieval_ms": 3.852
+    },
+    "larger_budget": {
+      "cases": 15,
+      "strict_passes": 10,
+      "cases_with_irrelevant": 2,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8667,
+      "micro_required_recall": 0.75,
+      "median_local_retrieval_ms": 3.277
+    },
+    "more_results": {
+      "cases": 15,
+      "strict_passes": 10,
+      "cases_with_irrelevant": 2,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8667,
+      "micro_required_recall": 0.75,
+      "median_local_retrieval_ms": 4.074
+    },
+    "explicit_broaden": {
+      "cases": 15,
+      "strict_passes": 9,
+      "cases_with_irrelevant": 3,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8125,
+      "micro_required_recall": 0.75,
+      "median_local_retrieval_ms": 4.616
+    },
+    "pins_disabled": {
+      "cases": 15,
+      "strict_passes": 10,
+      "cases_with_irrelevant": 2,
+      "cases_with_missing": 3,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8667,
+      "micro_required_recall": 0.75,
+      "median_local_retrieval_ms": 4.396
+    }
+  },
+  "measurements": [
+    {
+      "variant": "hermes_defaults",
+      "case": "conv-evening-out",
+      "group": "people",
+      "query": "I want to take Jess out for a meal this weekend. What sort of place would suit her, and is there anything to steer clear of?",
+      "required": [
+        "jess-food"
+      ],
+      "acceptable": [
+        "jess",
+        "jess-food",
+        "style"
+      ],
+      "returned": [
+        "jess-food",
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.758,
+      "result_chars": 717,
+      "wrapper_chars": 1052,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jess-food",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess dining preferences",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:03+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess avoids peanuts and likes Italian restaurants."
+        },
+        {
+          "id": "jess",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess relationship",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:02+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess is the user’s fiancée. They are engaged."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "conv-jay-outing",
+      "group": "people",
+      "query": "Help me think of an afternoon out that Jay would enjoy.",
+      "required": [
+        "jay"
+      ],
+      "acceptable": [
+        "jay",
+        "style"
+      ],
+      "returned": [
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 5.178,
+      "result_chars": 347,
+      "wrapper_chars": 680,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jay",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jay cycling",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:04+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jay rides a bicycle and prefers quiet routes."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "conv-dan-box",
+      "group": "people",
+      "query": "Do you remember what make of internet router Dan Goodman has at home?",
+      "required": [
+        "dan"
+      ],
+      "acceptable": [
+        "dan"
+      ],
+      "returned": [
+        "dan"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.502,
+      "result_chars": 357,
+      "wrapper_chars": 690,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "dan",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Dan Goodman router",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:05+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Dan Goodman owns a MikroTik router at his house."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "conv-wedding-person",
+      "group": "people",
+      "query": "Remind me who I am planning to marry.",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess"
+      ],
+      "returned": [],
+      "missing": [
+        "jess"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 4.644,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "conv-film-night",
+      "group": "paraphrase",
+      "query": "I fancy putting a film on tonight. Remind me what I use at home to stream my collection.",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "atlas-home"
+      ],
+      "returned": [],
+      "missing": [
+        "atlas-home"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 3.251,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "conv-password-hunt",
+      "group": "paraphrase",
+      "query": "I cannot find a saved login. Where do I usually keep passwords, and what should I try searching for?",
+      "required": [
+        "vault"
+      ],
+      "acceptable": [
+        "vault"
+      ],
+      "returned": [],
+      "missing": [
+        "vault"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 4.494,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "conv-solar-shopping",
+      "group": "paraphrase",
+      "query": "What were the things I wanted to compare when looking at batteries for the solar panels?",
+      "required": [
+        "research"
+      ],
+      "acceptable": [
+        "research"
+      ],
+      "returned": [
+        "research"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.413,
+      "result_chars": 382,
+      "wrapper_chars": 715,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "research",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Battery research",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:11+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Research batteries for a solar installation; compare capacity and warranty."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "conv-pepper-upgrade",
+      "group": "operational",
+      "query": "I am thinking of upgrading Pepper this evening. What was I meant to check first?",
+      "required": [
+        "backup"
+      ],
+      "acceptable": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.764,
+      "result_chars": 1124,
+      "wrapper_chars": 1461,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        },
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        },
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "conv-pepper-restart",
+      "group": "operational",
+      "query": "If you need to restart something on Pepper while helping me, what did I ask you to do first?",
+      "required": [
+        "ssh"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "ssh",
+        "backup",
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.6666666666666666,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 3.932,
+      "result_chars": 1124,
+      "wrapper_chars": 1461,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        },
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        },
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "conv-hermes-location",
+      "group": "operational",
+      "query": "Which box did I put Hermes and Glyph Hold on again?",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "host"
+      ],
+      "returned": [
+        "host",
+        "vault"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "vault"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 4.351,
+      "result_chars": 780,
+      "wrapper_chars": 1115,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        },
+        {
+          "id": "vault",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Vaultwarden setup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:06+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Vaultwarden stores passwords. The default folder is Glyph Hold. Search website addresses and hostnames."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "conv-office-copy",
+      "group": "scope",
+      "query": "What time is the office database copied for safekeeping, and does that happen every day?",
+      "required": [
+        "work-backup"
+      ],
+      "acceptable": [
+        "work-backup"
+      ],
+      "returned": [
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.84,
+      "result_chars": 356,
+      "wrapper_chars": 681,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "work-backup",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office database backup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:09+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The office database backup is at 01:00 on weekdays."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "conv-office-atlas",
+      "group": "scope",
+      "query": "What does Atlas do for us at the office?",
+      "required": [
+        "atlas-work"
+      ],
+      "acceptable": [
+        "atlas-work"
+      ],
+      "returned": [
+        "atlas-work"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.852,
+      "result_chars": 372,
+      "wrapper_chars": 697,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "conv-rainbow",
+      "group": "abstention",
+      "query": "Why do rainbows have different colours?",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.885,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "conv-thanks-note",
+      "group": "abstention",
+      "query": "Write a short thank-you note to a neighbour who watered my plants.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 4.899,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "conv-timer-maths",
+      "group": "abstention",
+      "query": "How many minutes are there in two and a half hours?",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.009,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "conv-evening-out",
+      "group": "people",
+      "query": "I want to take Jess out for a meal this weekend. What sort of place would suit her, and is there anything to steer clear of?",
+      "required": [
+        "jess-food"
+      ],
+      "acceptable": [
+        "jess",
+        "jess-food",
+        "style"
+      ],
+      "returned": [
+        "jess-food",
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.759,
+      "result_chars": 717,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jess-food",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess dining preferences",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:03+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess avoids peanuts and likes Italian restaurants."
+        },
+        {
+          "id": "jess",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess relationship",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:02+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess is the user’s fiancée. They are engaged."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "conv-jay-outing",
+      "group": "people",
+      "query": "Help me think of an afternoon out that Jay would enjoy.",
+      "required": [
+        "jay"
+      ],
+      "acceptable": [
+        "jay",
+        "style"
+      ],
+      "returned": [
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 2.813,
+      "result_chars": 347,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jay",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jay cycling",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:04+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jay rides a bicycle and prefers quiet routes."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "conv-dan-box",
+      "group": "people",
+      "query": "Do you remember what make of internet router Dan Goodman has at home?",
+      "required": [
+        "dan"
+      ],
+      "acceptable": [
+        "dan"
+      ],
+      "returned": [
+        "dan"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.196,
+      "result_chars": 357,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "dan",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Dan Goodman router",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:05+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Dan Goodman owns a MikroTik router at his house."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "conv-wedding-person",
+      "group": "people",
+      "query": "Remind me who I am planning to marry.",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess"
+      ],
+      "returned": [],
+      "missing": [
+        "jess"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 2.732,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "conv-film-night",
+      "group": "paraphrase",
+      "query": "I fancy putting a film on tonight. Remind me what I use at home to stream my collection.",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "atlas-home"
+      ],
+      "returned": [],
+      "missing": [
+        "atlas-home"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 3.237,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "conv-password-hunt",
+      "group": "paraphrase",
+      "query": "I cannot find a saved login. Where do I usually keep passwords, and what should I try searching for?",
+      "required": [
+        "vault"
+      ],
+      "acceptable": [
+        "vault"
+      ],
+      "returned": [],
+      "missing": [
+        "vault"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 3.731,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "conv-solar-shopping",
+      "group": "paraphrase",
+      "query": "What were the things I wanted to compare when looking at batteries for the solar panels?",
+      "required": [
+        "research"
+      ],
+      "acceptable": [
+        "research"
+      ],
+      "returned": [
+        "research"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.012,
+      "result_chars": 382,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "research",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Battery research",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:11+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Research batteries for a solar installation; compare capacity and warranty."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "conv-pepper-upgrade",
+      "group": "operational",
+      "query": "I am thinking of upgrading Pepper this evening. What was I meant to check first?",
+      "required": [
+        "backup"
+      ],
+      "acceptable": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.685,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        },
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        },
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "conv-pepper-restart",
+      "group": "operational",
+      "query": "If you need to restart something on Pepper while helping me, what did I ask you to do first?",
+      "required": [
+        "ssh"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "ssh",
+        "backup",
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.6666666666666666,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 3.616,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        },
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        },
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "conv-hermes-location",
+      "group": "operational",
+      "query": "Which box did I put Hermes and Glyph Hold on again?",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "host"
+      ],
+      "returned": [
+        "host",
+        "vault"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "vault"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 3.323,
+      "result_chars": 780,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        },
+        {
+          "id": "vault",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Vaultwarden setup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:06+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Vaultwarden stores passwords. The default folder is Glyph Hold. Search website addresses and hostnames."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "conv-office-copy",
+      "group": "scope",
+      "query": "What time is the office database copied for safekeeping, and does that happen every day?",
+      "required": [
+        "work-backup"
+      ],
+      "acceptable": [
+        "work-backup"
+      ],
+      "returned": [
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.466,
+      "result_chars": 356,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "work-backup",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office database backup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:09+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The office database backup is at 01:00 on weekdays."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "conv-office-atlas",
+      "group": "scope",
+      "query": "What does Atlas do for us at the office?",
+      "required": [
+        "atlas-work"
+      ],
+      "acceptable": [
+        "atlas-work"
+      ],
+      "returned": [
+        "atlas-work"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.277,
+      "result_chars": 372,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "conv-rainbow",
+      "group": "abstention",
+      "query": "Why do rainbows have different colours?",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.553,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "conv-thanks-note",
+      "group": "abstention",
+      "query": "Write a short thank-you note to a neighbour who watered my plants.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.806,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "conv-timer-maths",
+      "group": "abstention",
+      "query": "How many minutes are there in two and a half hours?",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.704,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "conv-evening-out",
+      "group": "people",
+      "query": "I want to take Jess out for a meal this weekend. What sort of place would suit her, and is there anything to steer clear of?",
+      "required": [
+        "jess-food"
+      ],
+      "acceptable": [
+        "jess",
+        "jess-food",
+        "style"
+      ],
+      "returned": [
+        "jess-food",
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.301,
+      "result_chars": 717,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jess-food",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess dining preferences",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:03+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess avoids peanuts and likes Italian restaurants."
+        },
+        {
+          "id": "jess",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess relationship",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:02+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess is the user’s fiancée. They are engaged."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "conv-jay-outing",
+      "group": "people",
+      "query": "Help me think of an afternoon out that Jay would enjoy.",
+      "required": [
+        "jay"
+      ],
+      "acceptable": [
+        "jay",
+        "style"
+      ],
+      "returned": [
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.064,
+      "result_chars": 347,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jay",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jay cycling",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:04+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jay rides a bicycle and prefers quiet routes."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "conv-dan-box",
+      "group": "people",
+      "query": "Do you remember what make of internet router Dan Goodman has at home?",
+      "required": [
+        "dan"
+      ],
+      "acceptable": [
+        "dan"
+      ],
+      "returned": [
+        "dan"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.643,
+      "result_chars": 357,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "dan",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Dan Goodman router",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:05+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Dan Goodman owns a MikroTik router at his house."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "conv-wedding-person",
+      "group": "people",
+      "query": "Remind me who I am planning to marry.",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess"
+      ],
+      "returned": [],
+      "missing": [
+        "jess"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 3.112,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "conv-film-night",
+      "group": "paraphrase",
+      "query": "I fancy putting a film on tonight. Remind me what I use at home to stream my collection.",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "atlas-home"
+      ],
+      "returned": [],
+      "missing": [
+        "atlas-home"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 3.349,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "conv-password-hunt",
+      "group": "paraphrase",
+      "query": "I cannot find a saved login. Where do I usually keep passwords, and what should I try searching for?",
+      "required": [
+        "vault"
+      ],
+      "acceptable": [
+        "vault"
+      ],
+      "returned": [],
+      "missing": [
+        "vault"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 3.075,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "conv-solar-shopping",
+      "group": "paraphrase",
+      "query": "What were the things I wanted to compare when looking at batteries for the solar panels?",
+      "required": [
+        "research"
+      ],
+      "acceptable": [
+        "research"
+      ],
+      "returned": [
+        "research"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.745,
+      "result_chars": 382,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "research",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Battery research",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:11+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Research batteries for a solar installation; compare capacity and warranty."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "conv-pepper-upgrade",
+      "group": "operational",
+      "query": "I am thinking of upgrading Pepper this evening. What was I meant to check first?",
+      "required": [
+        "backup"
+      ],
+      "acceptable": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.074,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        },
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        },
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "conv-pepper-restart",
+      "group": "operational",
+      "query": "If you need to restart something on Pepper while helping me, what did I ask you to do first?",
+      "required": [
+        "ssh"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "ssh",
+        "backup",
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.6666666666666666,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 4.316,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        },
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        },
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "conv-hermes-location",
+      "group": "operational",
+      "query": "Which box did I put Hermes and Glyph Hold on again?",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "host"
+      ],
+      "returned": [
+        "host",
+        "vault"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "vault"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 6.642,
+      "result_chars": 780,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        },
+        {
+          "id": "vault",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Vaultwarden setup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:06+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Vaultwarden stores passwords. The default folder is Glyph Hold. Search website addresses and hostnames."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "conv-office-copy",
+      "group": "scope",
+      "query": "What time is the office database copied for safekeeping, and does that happen every day?",
+      "required": [
+        "work-backup"
+      ],
+      "acceptable": [
+        "work-backup"
+      ],
+      "returned": [
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.853,
+      "result_chars": 356,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "work-backup",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office database backup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:09+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The office database backup is at 01:00 on weekdays."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "conv-office-atlas",
+      "group": "scope",
+      "query": "What does Atlas do for us at the office?",
+      "required": [
+        "atlas-work"
+      ],
+      "acceptable": [
+        "atlas-work"
+      ],
+      "returned": [
+        "atlas-work"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.291,
+      "result_chars": 372,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "conv-rainbow",
+      "group": "abstention",
+      "query": "Why do rainbows have different colours?",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 4.263,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "conv-thanks-note",
+      "group": "abstention",
+      "query": "Write a short thank-you note to a neighbour who watered my plants.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.279,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "conv-timer-maths",
+      "group": "abstention",
+      "query": "How many minutes are there in two and a half hours?",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 7.939,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "conv-evening-out",
+      "group": "people",
+      "query": "I want to take Jess out for a meal this weekend. What sort of place would suit her, and is there anything to steer clear of?",
+      "required": [
+        "jess-food"
+      ],
+      "acceptable": [
+        "jess",
+        "jess-food",
+        "style"
+      ],
+      "returned": [
+        "jess-food",
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 6.237,
+      "result_chars": 717,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jess-food",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess dining preferences",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:03+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess avoids peanuts and likes Italian restaurants."
+        },
+        {
+          "id": "jess",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess relationship",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:02+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess is the user’s fiancée. They are engaged."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "conv-jay-outing",
+      "group": "people",
+      "query": "Help me think of an afternoon out that Jay would enjoy.",
+      "required": [
+        "jay"
+      ],
+      "acceptable": [
+        "jay",
+        "style"
+      ],
+      "returned": [
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.514,
+      "result_chars": 347,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jay",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jay cycling",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:04+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jay rides a bicycle and prefers quiet routes."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "conv-dan-box",
+      "group": "people",
+      "query": "Do you remember what make of internet router Dan Goodman has at home?",
+      "required": [
+        "dan"
+      ],
+      "acceptable": [
+        "dan"
+      ],
+      "returned": [
+        "dan"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.956,
+      "result_chars": 357,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "dan",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Dan Goodman router",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:05+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Dan Goodman owns a MikroTik router at his house."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "conv-wedding-person",
+      "group": "people",
+      "query": "Remind me who I am planning to marry.",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess"
+      ],
+      "returned": [],
+      "missing": [
+        "jess"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 4.897,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "conv-film-night",
+      "group": "paraphrase",
+      "query": "I fancy putting a film on tonight. Remind me what I use at home to stream my collection.",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "atlas-home"
+      ],
+      "returned": [],
+      "missing": [
+        "atlas-home"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 3.846,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "conv-password-hunt",
+      "group": "paraphrase",
+      "query": "I cannot find a saved login. Where do I usually keep passwords, and what should I try searching for?",
+      "required": [
+        "vault"
+      ],
+      "acceptable": [
+        "vault"
+      ],
+      "returned": [],
+      "missing": [
+        "vault"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 4.251,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "conv-solar-shopping",
+      "group": "paraphrase",
+      "query": "What were the things I wanted to compare when looking at batteries for the solar panels?",
+      "required": [
+        "research"
+      ],
+      "acceptable": [
+        "research"
+      ],
+      "returned": [
+        "research"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 5.494,
+      "result_chars": 382,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "research",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Battery research",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:11+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Research batteries for a solar installation; compare capacity and warranty."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "conv-pepper-upgrade",
+      "group": "operational",
+      "query": "I am thinking of upgrading Pepper this evening. What was I meant to check first?",
+      "required": [
+        "backup"
+      ],
+      "acceptable": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 5.031,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        },
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        },
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "conv-pepper-restart",
+      "group": "operational",
+      "query": "If you need to restart something on Pepper while helping me, what did I ask you to do first?",
+      "required": [
+        "ssh"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "ssh",
+        "backup",
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.6666666666666666,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 3.902,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        },
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        },
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "conv-hermes-location",
+      "group": "operational",
+      "query": "Which box did I put Hermes and Glyph Hold on again?",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "host"
+      ],
+      "returned": [
+        "host",
+        "vault"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "vault"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 3.675,
+      "result_chars": 780,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        },
+        {
+          "id": "vault",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Vaultwarden setup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:06+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Vaultwarden stores passwords. The default folder is Glyph Hold. Search website addresses and hostnames."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "conv-office-copy",
+      "group": "scope",
+      "query": "What time is the office database copied for safekeeping, and does that happen every day?",
+      "required": [
+        "work-backup"
+      ],
+      "acceptable": [
+        "work-backup"
+      ],
+      "returned": [
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.616,
+      "result_chars": 356,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "work-backup",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office database backup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:09+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The office database backup is at 01:00 on weekdays."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "conv-office-atlas",
+      "group": "scope",
+      "query": "What does Atlas do for us at the office?",
+      "required": [
+        "atlas-work"
+      ],
+      "acceptable": [
+        "atlas-work"
+      ],
+      "returned": [
+        "atlas-work",
+        "atlas-home"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "atlas-home"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 5.719,
+      "result_chars": 742,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        },
+        {
+          "id": "atlas-home",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Atlas home server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:07+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the home media server. It runs Jellyfin on port 8096."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "conv-rainbow",
+      "group": "abstention",
+      "query": "Why do rainbows have different colours?",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.713,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "conv-thanks-note",
+      "group": "abstention",
+      "query": "Write a short thank-you note to a neighbour who watered my plants.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.158,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "conv-timer-maths",
+      "group": "abstention",
+      "query": "How many minutes are there in two and a half hours?",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 5.877,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "conv-evening-out",
+      "group": "people",
+      "query": "I want to take Jess out for a meal this weekend. What sort of place would suit her, and is there anything to steer clear of?",
+      "required": [
+        "jess-food"
+      ],
+      "acceptable": [
+        "jess",
+        "jess-food",
+        "style"
+      ],
+      "returned": [
+        "jess-food",
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.144,
+      "result_chars": 717,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jess-food",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess dining preferences",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:03+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess avoids peanuts and likes Italian restaurants."
+        },
+        {
+          "id": "jess",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess relationship",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:02+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess is the user’s fiancée. They are engaged."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "conv-jay-outing",
+      "group": "people",
+      "query": "Help me think of an afternoon out that Jay would enjoy.",
+      "required": [
+        "jay"
+      ],
+      "acceptable": [
+        "jay",
+        "style"
+      ],
+      "returned": [
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.976,
+      "result_chars": 347,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jay",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jay cycling",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:04+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jay rides a bicycle and prefers quiet routes."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "conv-dan-box",
+      "group": "people",
+      "query": "Do you remember what make of internet router Dan Goodman has at home?",
+      "required": [
+        "dan"
+      ],
+      "acceptable": [
+        "dan"
+      ],
+      "returned": [
+        "dan"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.977,
+      "result_chars": 357,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "dan",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Dan Goodman router",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:05+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Dan Goodman owns a MikroTik router at his house."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "conv-wedding-person",
+      "group": "people",
+      "query": "Remind me who I am planning to marry.",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess"
+      ],
+      "returned": [],
+      "missing": [
+        "jess"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 4.396,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "conv-film-night",
+      "group": "paraphrase",
+      "query": "I fancy putting a film on tonight. Remind me what I use at home to stream my collection.",
+      "required": [
+        "atlas-home"
+      ],
+      "acceptable": [
+        "atlas-home"
+      ],
+      "returned": [],
+      "missing": [
+        "atlas-home"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 4.373,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "conv-password-hunt",
+      "group": "paraphrase",
+      "query": "I cannot find a saved login. Where do I usually keep passwords, and what should I try searching for?",
+      "required": [
+        "vault"
+      ],
+      "acceptable": [
+        "vault"
+      ],
+      "returned": [],
+      "missing": [
+        "vault"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": 0.0,
+      "pass": false,
+      "retrieval_ms": 4.849,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "conv-solar-shopping",
+      "group": "paraphrase",
+      "query": "What were the things I wanted to compare when looking at batteries for the solar panels?",
+      "required": [
+        "research"
+      ],
+      "acceptable": [
+        "research"
+      ],
+      "returned": [
+        "research"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 7.368,
+      "result_chars": 382,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "research",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Battery research",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:11+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Research batteries for a solar installation; compare capacity and warranty."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "conv-pepper-upgrade",
+      "group": "operational",
+      "query": "I am thinking of upgrading Pepper this evening. What was I meant to check first?",
+      "required": [
+        "backup"
+      ],
+      "acceptable": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 5.404,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        },
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        },
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "conv-pepper-restart",
+      "group": "operational",
+      "query": "If you need to restart something on Pepper while helping me, what did I ask you to do first?",
+      "required": [
+        "ssh"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "ssh",
+        "backup",
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.6666666666666666,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 4.142,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        },
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        },
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "conv-hermes-location",
+      "group": "operational",
+      "query": "Which box did I put Hermes and Glyph Hold on again?",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "host"
+      ],
+      "returned": [
+        "host",
+        "vault"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "vault"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 3.925,
+      "result_chars": 780,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        },
+        {
+          "id": "vault",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Vaultwarden setup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:06+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Vaultwarden stores passwords. The default folder is Glyph Hold. Search website addresses and hostnames."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "conv-office-copy",
+      "group": "scope",
+      "query": "What time is the office database copied for safekeeping, and does that happen every day?",
+      "required": [
+        "work-backup"
+      ],
+      "acceptable": [
+        "work-backup"
+      ],
+      "returned": [
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.806,
+      "result_chars": 356,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "work-backup",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office database backup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:09+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The office database backup is at 01:00 on weekdays."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "conv-office-atlas",
+      "group": "scope",
+      "query": "What does Atlas do for us at the office?",
+      "required": [
+        "atlas-work"
+      ],
+      "acceptable": [
+        "atlas-work"
+      ],
+      "returned": [
+        "atlas-work"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 5.24,
+      "result_chars": 372,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "conv-rainbow",
+      "group": "abstention",
+      "query": "Why do rainbows have different colours?",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.729,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "conv-thanks-note",
+      "group": "abstention",
+      "query": "Write a short thank-you note to a neighbour who watered my plants.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 6.115,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "conv-timer-maths",
+      "group": "abstention",
+      "query": "How many minutes are there in two and a half hours?",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 4.254,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+[
+  {
+    "author": "prefetch_conversational",
+    "style": "Everyday conversational requests. Labels set before retrieval. Existing corpus cases were inadvertently visible during initial read; no retrieval outputs were seen.",
+    "source": "agent_conversational_cases.json",
+    "results": "agent_conversational_results.json",
+    "summary": {
+      "hermes_defaults": {
+        "cases": 15,
+        "strict_passes": 0,
+        "cases_with_irrelevant": 15,
+        "cases_with_missing": 4,
+        "cases_missing_visible_evidence": 0,
+        "micro_precision": 0.18,
+        "micro_required_recall": 0.6667,
+        "median_local_retrieval_ms": 2.477
+      },
+      "larger_budget": {
+        "cases": 15,
+        "strict_passes": 0,
+        "cases_with_irrelevant": 15,
+        "cases_with_missing": 3,
+        "cases_missing_visible_evidence": 0,
+        "micro_precision": 0.1818,
+        "micro_required_recall": 0.75,
+        "median_local_retrieval_ms": 2.307
+      },
+      "more_results": {
+        "cases": 15,
+        "strict_passes": 0,
+        "cases_with_irrelevant": 15,
+        "cases_with_missing": 1,
+        "cases_missing_visible_evidence": 0,
+        "micro_precision": 0.124,
+        "micro_required_recall": 0.9167,
+        "median_local_retrieval_ms": 2.314
+      },
+      "explicit_broaden": {
+        "cases": 15,
+        "strict_passes": 0,
+        "cases_with_irrelevant": 15,
+        "cases_with_missing": 4,
+        "cases_missing_visible_evidence": 0,
+        "micro_precision": 0.1552,
+        "micro_required_recall": 0.6667,
+        "median_local_retrieval_ms": 2.963
+      },
+      "pins_disabled": {
+        "cases": 15,
+        "strict_passes": 1,
+        "cases_with_irrelevant": 14,
+        "cases_with_missing": 4,
+        "cases_missing_visible_evidence": 0,
+        "micro_precision": 0.1837,
+        "micro_required_recall": 0.6667,
+        "median_local_retrieval_ms": 2.495
+      }
+    }
+  },
+  {
+    "author": "agent_direct",
+    "style": "Technical, direct, terse. Global style is acceptable for natural requests unless an exact output contract removes its usefulness.",
+    "source": "agent_direct_cases.json",
+    "results": "agent_direct_results.json",
+    "summary": {
+      "hermes_defaults": {
+        "cases": 15,
+        "strict_passes": 1,
+        "cases_with_irrelevant": 14,
+        "cases_with_missing": 0,
+        "cases_missing_visible_evidence": 0,
+        "micro_precision": 0.3115,
+        "micro_required_recall": 1.0,
+        "median_local_retrieval_ms": 2.11
+      },
+      "larger_budget": {
+        "cases": 15,
+        "strict_passes": 1,
+        "cases_with_irrelevant": 14,
+        "cases_with_missing": 0,
+        "cases_missing_visible_evidence": 0,
+        "micro_precision": 0.3182,
+        "micro_required_recall": 1.0,
+        "median_local_retrieval_ms": 2.069
+      },
+      "more_results": {
+        "cases": 15,
+        "strict_passes": 1,
+        "cases_with_irrelevant": 14,
+        "cases_with_missing": 0,
+        "cases_missing_visible_evidence": 0,
+        "micro_precision": 0.211,
+        "micro_required_recall": 1.0,
+        "median_local_retrieval_ms": 2.103
+      },
+      "explicit_broaden": {
+        "cases": 15,
+        "strict_passes": 0,
+        "cases_with_irrelevant": 15,
+        "cases_with_missing": 0,
+        "cases_missing_visible_evidence": 0,
+        "micro_precision": 0.2857,
+        "micro_required_recall": 1.0,
+        "median_local_retrieval_ms": 2.776
+      },
+      "pins_disabled": {
+        "cases": 15,
+        "strict_passes": 1,
+        "cases_with_irrelevant": 14,
+        "cases_with_missing": 0,
+        "cases_missing_visible_evidence": 0,
+        "micro_precision": 0.322,
+        "micro_required_recall": 1.0,
+        "median_local_retrieval_ms": 2.671
+      }
+    }
+  },
+  {
+    "author": "agent_varied",
+    "style": "Varied realistic wording: direct questions, indirect references, typos, multiple intents, topic change, and one contextual follow-up. Authored from memories only before retrieval exposure. General concise UK-English style is acceptable for all cases.",
+    "source": "agent_varied_cases.json",
+    "results": "agent_varied_results.json",
+    "summary": {
+      "hermes_defaults": {
+        "cases": 15,
+        "strict_passes": 2,
+        "cases_with_irrelevant": 13,
+        "cases_with_missing": 1,
+        "cases_missing_visible_evidence": 0,
+        "micro_precision": 0.2969,
+        "micro_required_recall": 0.9375,
+        "median_local_retrieval_ms": 2.526
+      },
+      "larger_budget": {
+        "cases": 15,
+        "strict_passes": 1,
+        "cases_with_irrelevant": 14,
+        "cases_with_missing": 1,
+        "cases_missing_visible_evidence": 0,
+        "micro_precision": 0.2754,
+        "micro_required_recall": 0.9375,
+        "median_local_retrieval_ms": 2.489
+      },
+      "more_results": {
+        "cases": 15,
+        "strict_passes": 1,
+        "cases_with_irrelevant": 14,
+        "cases_with_missing": 0,
+        "cases_missing_visible_evidence": 0,
+        "micro_precision": 0.1833,
+        "micro_required_recall": 1.0,
+        "median_local_retrieval_ms": 2.315
+      },
+      "explicit_broaden": {
+        "cases": 15,
+        "strict_passes": 1,
+        "cases_with_irrelevant": 14,
+        "cases_with_missing": 3,
+        "cases_missing_visible_evidence": 0,
+        "micro_precision": 0.2388,
+        "micro_required_recall": 0.8125,
+        "median_local_retrieval_ms": 3.188
+      },
+      "pins_disabled": {
+        "cases": 15,
+        "strict_passes": 2,
+        "cases_with_irrelevant": 13,
+        "cases_with_missing": 1,
+        "cases_missing_visible_evidence": 0,
+        "micro_precision": 0.3065,
+        "micro_required_recall": 0.9375,
+        "median_local_retrieval_ms": 2.705
+      }
+    }
+  }
+]

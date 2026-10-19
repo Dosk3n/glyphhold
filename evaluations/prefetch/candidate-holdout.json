@@ -1,0 +1,5335 @@
+{
+  "schema_version": 1,
+  "glyphhold_version": "2.1.3",
+  "corpus_sha256": "6969ab420beb4665be687d7e565c8d88ed30940d7227a835a4fe9e9a154087fa",
+  "synthetic_only": true,
+  "memory_count": 26,
+  "hermes_wrapper_exercised": true,
+  "diagnostics": {
+    "empty_raw_recall_count": 0,
+    "priority_high_low_order": [
+      "priority-high"
+    ],
+    "disabled_category_recalled": false,
+    "restricted_broaden_returned_spaces": [
+      "space_work"
+    ],
+    "restricted_broaden_respects_grants": true,
+    "empty_hermes_prefetch_returns_blank": true
+  },
+  "summary": {
+    "hermes_defaults": {
+      "cases": 20,
+      "strict_passes": 18,
+      "cases_with_irrelevant": 2,
+      "cases_with_missing": 0,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8889,
+      "micro_required_recall": 1.0,
+      "median_local_retrieval_ms": 4.037
+    },
+    "larger_budget": {
+      "cases": 20,
+      "strict_passes": 18,
+      "cases_with_irrelevant": 2,
+      "cases_with_missing": 0,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8889,
+      "micro_required_recall": 1.0,
+      "median_local_retrieval_ms": 3.68
+    },
+    "more_results": {
+      "cases": 20,
+      "strict_passes": 18,
+      "cases_with_irrelevant": 2,
+      "cases_with_missing": 0,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8889,
+      "micro_required_recall": 1.0,
+      "median_local_retrieval_ms": 3.981
+    },
+    "explicit_broaden": {
+      "cases": 20,
+      "strict_passes": 18,
+      "cases_with_irrelevant": 2,
+      "cases_with_missing": 0,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8889,
+      "micro_required_recall": 1.0,
+      "median_local_retrieval_ms": 3.712
+    },
+    "pins_disabled": {
+      "cases": 20,
+      "strict_passes": 18,
+      "cases_with_irrelevant": 2,
+      "cases_with_missing": 0,
+      "cases_missing_visible_evidence": 0,
+      "micro_precision": 0.8889,
+      "micro_required_recall": 1.0,
+      "median_local_retrieval_ms": 3.896
+    }
+  },
+  "measurements": [
+    {
+      "variant": "hermes_defaults",
+      "case": "u01",
+      "group": "unseen",
+      "query": "What transport does Mira prefer?",
+      "required": [
+        "mira"
+      ],
+      "acceptable": [
+        "mira"
+      ],
+      "returned": [
+        "mira"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.162,
+      "result_chars": 375,
+      "wrapper_chars": 708,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "mira",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Mira travel preference",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Mira prefers travelling by train and avoids overnight flights."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u02",
+      "group": "unseen",
+      "query": "I am arranging a trip with Mira. Which journeys should I avoid booking?",
+      "required": [
+        "mira"
+      ],
+      "acceptable": [
+        "mira"
+      ],
+      "returned": [
+        "mira"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.281,
+      "result_chars": 375,
+      "wrapper_chars": 708,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "mira",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Mira travel preference",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Mira prefers travelling by train and avoids overnight flights."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u03",
+      "group": "unseen",
+      "query": "energy.example.test",
+      "required": [
+        "orchid"
+      ],
+      "acceptable": [
+        "orchid"
+      ],
+      "returned": [
+        "orchid"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.367,
+      "result_chars": 396,
+      "wrapper_chars": 729,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "orchid",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Orchid home dashboard",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:23+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Orchid is the home energy dashboard. It listens on port 8128 at energy.example.test."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u04",
+      "group": "unseen",
+      "query": "Orchid dashboard port?",
+      "required": [
+        "orchid"
+      ],
+      "acceptable": [
+        "orchid"
+      ],
+      "returned": [
+        "orchid"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.879,
+      "result_chars": 396,
+      "wrapper_chars": 729,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "orchid",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Orchid home dashboard",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:23+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Orchid is the home energy dashboard. It listens on port 8128 at energy.example.test."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u05",
+      "group": "unseen",
+      "query": "Which application handles office equipment inventory?",
+      "required": [
+        "beacon"
+      ],
+      "acceptable": [
+        "beacon"
+      ],
+      "returned": [
+        "beacon"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.959,
+      "result_chars": 361,
+      "wrapper_chars": 686,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "beacon",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Beacon office inventory",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Beacon handles office equipment inventory on port 9443."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u06",
+      "group": "unseen",
+      "query": "What port does Beacon listen on at the office?",
+      "required": [
+        "beacon"
+      ],
+      "acceptable": [
+        "beacon"
+      ],
+      "returned": [
+        "beacon",
+        "atlas-work"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "atlas-work"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 4.689,
+      "result_chars": 733,
+      "wrapper_chars": 1060,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "beacon",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Beacon office inventory",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Beacon handles office equipment inventory on port 9443."
+        },
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u07",
+      "group": "unseen",
+      "query": "How should I print this document by default?",
+      "required": [
+        "printing"
+      ],
+      "acceptable": [
+        "printing"
+      ],
+      "returned": [
+        "printing"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.911,
+      "result_chars": 387,
+      "wrapper_chars": 720,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "printing",
+          "version": 1,
+          "space_id": "space_general",
+          "space_name": "General",
+          "title": "Document printing preference",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:25+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Print documents double-sided in monochrome unless colour is requested."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u08",
+      "group": "unseen",
+      "query": "Please remind me what Jay enjoys doing outdoors.",
+      "required": [
+        "jay"
+      ],
+      "acceptable": [
+        "jay"
+      ],
+      "returned": [
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.398,
+      "result_chars": 347,
+      "wrapper_chars": 680,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jay",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jay cycling",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:04+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jay rides a bicycle and prefers quiet routes."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u09",
+      "group": "unseen",
+      "query": "Do I need permission before restarting services on Pepper?",
+      "required": [
+        "ssh"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "ssh",
+        "backup",
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.6666666666666666,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 5.892,
+      "result_chars": 1124,
+      "wrapper_chars": 1461,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        },
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        },
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u10",
+      "group": "unseen",
+      "query": "For Jess, what ingredients should dinner avoid?",
+      "required": [
+        "jess-food"
+      ],
+      "acceptable": [
+        "jess",
+        "jess-food"
+      ],
+      "returned": [
+        "jess-food",
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.744,
+      "result_chars": 717,
+      "wrapper_chars": 1052,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jess-food",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess dining preferences",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:03+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess avoids peanuts and likes Italian restaurants."
+        },
+        {
+          "id": "jess",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess relationship",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:02+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess is the user’s fiancée. They are engaged."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u11",
+      "group": "unseen",
+      "query": "Who is my fiancée?",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess"
+      ],
+      "returned": [
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.556,
+      "result_chars": 353,
+      "wrapper_chars": 686,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jess",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess relationship",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:02+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess is the user’s fiancée. They are engaged."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u12",
+      "group": "unseen",
+      "query": "Tell me the hostname or address of the machine running Hermes.",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.624,
+      "result_chars": 369,
+      "wrapper_chars": 702,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u13",
+      "group": "unseen",
+      "query": "What is the critical recovery command in the storage runbook?",
+      "required": [
+        "long"
+      ],
+      "acceptable": [
+        "long"
+      ],
+      "returned": [
+        "long"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 8.121,
+      "result_chars": 2393,
+      "wrapper_chars": 2726,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "long",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Storage recovery runbook",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:18+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "torage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions.  Critical recovery command: RESTORE-VERIFY-OMEGA.",
+          "truncated": true,
+          "excerpted": true
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u14",
+      "group": "unseen",
+      "query": "What backup schedule applies to the office database?",
+      "required": [
+        "work-backup"
+      ],
+      "acceptable": [
+        "work-backup"
+      ],
+      "returned": [
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.512,
+      "result_chars": 356,
+      "wrapper_chars": 681,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "work-backup",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office database backup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:09+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The office database backup is at 01:00 on weekdays."
+        }
+      ]
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u15",
+      "group": "unseen",
+      "query": "Multiply 41 by 7.",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.042,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u16",
+      "group": "unseen",
+      "query": "Explain photosynthesis in two sentences.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 4.531,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u17",
+      "group": "unseen",
+      "query": "Write a thank-you message for a birthday gift.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.985,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u18",
+      "group": "unseen",
+      "query": "What is the capital of Peru?",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.148,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u19",
+      "group": "unseen",
+      "query": "Which orbital period does Neptune have?",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.941,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "hermes_defaults",
+      "case": "u20",
+      "group": "unseen",
+      "query": "Suggest a name for a fictional dragon.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.748,
+      "result_chars": 0,
+      "wrapper_chars": 0,
+      "wrapper_matches": true,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u01",
+      "group": "unseen",
+      "query": "What transport does Mira prefer?",
+      "required": [
+        "mira"
+      ],
+      "acceptable": [
+        "mira"
+      ],
+      "returned": [
+        "mira"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.847,
+      "result_chars": 375,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "mira",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Mira travel preference",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Mira prefers travelling by train and avoids overnight flights."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u02",
+      "group": "unseen",
+      "query": "I am arranging a trip with Mira. Which journeys should I avoid booking?",
+      "required": [
+        "mira"
+      ],
+      "acceptable": [
+        "mira"
+      ],
+      "returned": [
+        "mira"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.765,
+      "result_chars": 375,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "mira",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Mira travel preference",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Mira prefers travelling by train and avoids overnight flights."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u03",
+      "group": "unseen",
+      "query": "energy.example.test",
+      "required": [
+        "orchid"
+      ],
+      "acceptable": [
+        "orchid"
+      ],
+      "returned": [
+        "orchid"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 6.406,
+      "result_chars": 396,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "orchid",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Orchid home dashboard",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:23+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Orchid is the home energy dashboard. It listens on port 8128 at energy.example.test."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u04",
+      "group": "unseen",
+      "query": "Orchid dashboard port?",
+      "required": [
+        "orchid"
+      ],
+      "acceptable": [
+        "orchid"
+      ],
+      "returned": [
+        "orchid"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.812,
+      "result_chars": 396,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "orchid",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Orchid home dashboard",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:23+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Orchid is the home energy dashboard. It listens on port 8128 at energy.example.test."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u05",
+      "group": "unseen",
+      "query": "Which application handles office equipment inventory?",
+      "required": [
+        "beacon"
+      ],
+      "acceptable": [
+        "beacon"
+      ],
+      "returned": [
+        "beacon"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.564,
+      "result_chars": 361,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "beacon",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Beacon office inventory",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Beacon handles office equipment inventory on port 9443."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u06",
+      "group": "unseen",
+      "query": "What port does Beacon listen on at the office?",
+      "required": [
+        "beacon"
+      ],
+      "acceptable": [
+        "beacon"
+      ],
+      "returned": [
+        "beacon",
+        "atlas-work"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "atlas-work"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 3.719,
+      "result_chars": 733,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "beacon",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Beacon office inventory",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Beacon handles office equipment inventory on port 9443."
+        },
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u07",
+      "group": "unseen",
+      "query": "How should I print this document by default?",
+      "required": [
+        "printing"
+      ],
+      "acceptable": [
+        "printing"
+      ],
+      "returned": [
+        "printing"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.87,
+      "result_chars": 387,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "printing",
+          "version": 1,
+          "space_id": "space_general",
+          "space_name": "General",
+          "title": "Document printing preference",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:25+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Print documents double-sided in monochrome unless colour is requested."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u08",
+      "group": "unseen",
+      "query": "Please remind me what Jay enjoys doing outdoors.",
+      "required": [
+        "jay"
+      ],
+      "acceptable": [
+        "jay"
+      ],
+      "returned": [
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.921,
+      "result_chars": 347,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jay",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jay cycling",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:04+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jay rides a bicycle and prefers quiet routes."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u09",
+      "group": "unseen",
+      "query": "Do I need permission before restarting services on Pepper?",
+      "required": [
+        "ssh"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "ssh",
+        "backup",
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.6666666666666666,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 3.641,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        },
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        },
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u10",
+      "group": "unseen",
+      "query": "For Jess, what ingredients should dinner avoid?",
+      "required": [
+        "jess-food"
+      ],
+      "acceptable": [
+        "jess",
+        "jess-food"
+      ],
+      "returned": [
+        "jess-food",
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.233,
+      "result_chars": 717,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jess-food",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess dining preferences",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:03+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess avoids peanuts and likes Italian restaurants."
+        },
+        {
+          "id": "jess",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess relationship",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:02+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess is the user’s fiancée. They are engaged."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u11",
+      "group": "unseen",
+      "query": "Who is my fiancée?",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess"
+      ],
+      "returned": [
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.237,
+      "result_chars": 353,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jess",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess relationship",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:02+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess is the user’s fiancée. They are engaged."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u12",
+      "group": "unseen",
+      "query": "Tell me the hostname or address of the machine running Hermes.",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.163,
+      "result_chars": 369,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u13",
+      "group": "unseen",
+      "query": "What is the critical recovery command in the storage runbook?",
+      "required": [
+        "long"
+      ],
+      "acceptable": [
+        "long"
+      ],
+      "returned": [
+        "long"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 5.529,
+      "result_chars": 7834,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "long",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Storage recovery runbook",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:18+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions.  Critical recovery command: RESTORE-VERIFY-OMEGA."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u14",
+      "group": "unseen",
+      "query": "What backup schedule applies to the office database?",
+      "required": [
+        "work-backup"
+      ],
+      "acceptable": [
+        "work-backup"
+      ],
+      "returned": [
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.508,
+      "result_chars": 356,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "work-backup",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office database backup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:09+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The office database backup is at 01:00 on weekdays."
+        }
+      ]
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u15",
+      "group": "unseen",
+      "query": "Multiply 41 by 7.",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 5.112,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u16",
+      "group": "unseen",
+      "query": "Explain photosynthesis in two sentences.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.952,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u17",
+      "group": "unseen",
+      "query": "Write a thank-you message for a birthday gift.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.63,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u18",
+      "group": "unseen",
+      "query": "What is the capital of Peru?",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.081,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u19",
+      "group": "unseen",
+      "query": "Which orbital period does Neptune have?",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.472,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "larger_budget",
+      "case": "u20",
+      "group": "unseen",
+      "query": "Suggest a name for a fictional dragon.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.236,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "u01",
+      "group": "unseen",
+      "query": "What transport does Mira prefer?",
+      "required": [
+        "mira"
+      ],
+      "acceptable": [
+        "mira"
+      ],
+      "returned": [
+        "mira"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.659,
+      "result_chars": 375,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "mira",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Mira travel preference",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Mira prefers travelling by train and avoids overnight flights."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "u02",
+      "group": "unseen",
+      "query": "I am arranging a trip with Mira. Which journeys should I avoid booking?",
+      "required": [
+        "mira"
+      ],
+      "acceptable": [
+        "mira"
+      ],
+      "returned": [
+        "mira"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.705,
+      "result_chars": 375,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "mira",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Mira travel preference",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Mira prefers travelling by train and avoids overnight flights."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "u03",
+      "group": "unseen",
+      "query": "energy.example.test",
+      "required": [
+        "orchid"
+      ],
+      "acceptable": [
+        "orchid"
+      ],
+      "returned": [
+        "orchid"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.664,
+      "result_chars": 396,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "orchid",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Orchid home dashboard",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:23+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Orchid is the home energy dashboard. It listens on port 8128 at energy.example.test."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "u04",
+      "group": "unseen",
+      "query": "Orchid dashboard port?",
+      "required": [
+        "orchid"
+      ],
+      "acceptable": [
+        "orchid"
+      ],
+      "returned": [
+        "orchid"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.034,
+      "result_chars": 396,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "orchid",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Orchid home dashboard",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:23+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Orchid is the home energy dashboard. It listens on port 8128 at energy.example.test."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "u05",
+      "group": "unseen",
+      "query": "Which application handles office equipment inventory?",
+      "required": [
+        "beacon"
+      ],
+      "acceptable": [
+        "beacon"
+      ],
+      "returned": [
+        "beacon"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.803,
+      "result_chars": 361,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "beacon",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Beacon office inventory",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Beacon handles office equipment inventory on port 9443."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "u06",
+      "group": "unseen",
+      "query": "What port does Beacon listen on at the office?",
+      "required": [
+        "beacon"
+      ],
+      "acceptable": [
+        "beacon"
+      ],
+      "returned": [
+        "beacon",
+        "atlas-work"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "atlas-work"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 3.928,
+      "result_chars": 733,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "beacon",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Beacon office inventory",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Beacon handles office equipment inventory on port 9443."
+        },
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "u07",
+      "group": "unseen",
+      "query": "How should I print this document by default?",
+      "required": [
+        "printing"
+      ],
+      "acceptable": [
+        "printing"
+      ],
+      "returned": [
+        "printing"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.382,
+      "result_chars": 387,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "printing",
+          "version": 1,
+          "space_id": "space_general",
+          "space_name": "General",
+          "title": "Document printing preference",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:25+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Print documents double-sided in monochrome unless colour is requested."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "u08",
+      "group": "unseen",
+      "query": "Please remind me what Jay enjoys doing outdoors.",
+      "required": [
+        "jay"
+      ],
+      "acceptable": [
+        "jay"
+      ],
+      "returned": [
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.29,
+      "result_chars": 347,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jay",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jay cycling",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:04+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jay rides a bicycle and prefers quiet routes."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "u09",
+      "group": "unseen",
+      "query": "Do I need permission before restarting services on Pepper?",
+      "required": [
+        "ssh"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "ssh",
+        "backup",
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.6666666666666666,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 4.973,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        },
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        },
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "u10",
+      "group": "unseen",
+      "query": "For Jess, what ingredients should dinner avoid?",
+      "required": [
+        "jess-food"
+      ],
+      "acceptable": [
+        "jess",
+        "jess-food"
+      ],
+      "returned": [
+        "jess-food",
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.588,
+      "result_chars": 717,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jess-food",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess dining preferences",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:03+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess avoids peanuts and likes Italian restaurants."
+        },
+        {
+          "id": "jess",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess relationship",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:02+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess is the user’s fiancée. They are engaged."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "u11",
+      "group": "unseen",
+      "query": "Who is my fiancée?",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess"
+      ],
+      "returned": [
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.728,
+      "result_chars": 353,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jess",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess relationship",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:02+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess is the user’s fiancée. They are engaged."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "u12",
+      "group": "unseen",
+      "query": "Tell me the hostname or address of the machine running Hermes.",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.913,
+      "result_chars": 369,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "u13",
+      "group": "unseen",
+      "query": "What is the critical recovery command in the storage runbook?",
+      "required": [
+        "long"
+      ],
+      "acceptable": [
+        "long"
+      ],
+      "returned": [
+        "long"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 8.92,
+      "result_chars": 7834,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "long",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Storage recovery runbook",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:18+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions.  Critical recovery command: RESTORE-VERIFY-OMEGA."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "u14",
+      "group": "unseen",
+      "query": "What backup schedule applies to the office database?",
+      "required": [
+        "work-backup"
+      ],
+      "acceptable": [
+        "work-backup"
+      ],
+      "returned": [
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 5.267,
+      "result_chars": 356,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "work-backup",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office database backup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:09+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The office database backup is at 01:00 on weekdays."
+        }
+      ]
+    },
+    {
+      "variant": "more_results",
+      "case": "u15",
+      "group": "unseen",
+      "query": "Multiply 41 by 7.",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.474,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "u16",
+      "group": "unseen",
+      "query": "Explain photosynthesis in two sentences.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.545,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "u17",
+      "group": "unseen",
+      "query": "Write a thank-you message for a birthday gift.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.117,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "u18",
+      "group": "unseen",
+      "query": "What is the capital of Peru?",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.96,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "u19",
+      "group": "unseen",
+      "query": "Which orbital period does Neptune have?",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 4.876,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "more_results",
+      "case": "u20",
+      "group": "unseen",
+      "query": "Suggest a name for a fictional dragon.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 5.924,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u01",
+      "group": "unseen",
+      "query": "What transport does Mira prefer?",
+      "required": [
+        "mira"
+      ],
+      "acceptable": [
+        "mira"
+      ],
+      "returned": [
+        "mira"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 5.96,
+      "result_chars": 375,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "mira",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Mira travel preference",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Mira prefers travelling by train and avoids overnight flights."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u02",
+      "group": "unseen",
+      "query": "I am arranging a trip with Mira. Which journeys should I avoid booking?",
+      "required": [
+        "mira"
+      ],
+      "acceptable": [
+        "mira"
+      ],
+      "returned": [
+        "mira"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.99,
+      "result_chars": 375,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "mira",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Mira travel preference",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Mira prefers travelling by train and avoids overnight flights."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u03",
+      "group": "unseen",
+      "query": "energy.example.test",
+      "required": [
+        "orchid"
+      ],
+      "acceptable": [
+        "orchid"
+      ],
+      "returned": [
+        "orchid"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.667,
+      "result_chars": 396,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "orchid",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Orchid home dashboard",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:23+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Orchid is the home energy dashboard. It listens on port 8128 at energy.example.test."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u04",
+      "group": "unseen",
+      "query": "Orchid dashboard port?",
+      "required": [
+        "orchid"
+      ],
+      "acceptable": [
+        "orchid"
+      ],
+      "returned": [
+        "orchid"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.757,
+      "result_chars": 396,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 4,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "orchid",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Orchid home dashboard",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:23+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Orchid is the home energy dashboard. It listens on port 8128 at energy.example.test."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u05",
+      "group": "unseen",
+      "query": "Which application handles office equipment inventory?",
+      "required": [
+        "beacon"
+      ],
+      "acceptable": [
+        "beacon"
+      ],
+      "returned": [
+        "beacon"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 6.683,
+      "result_chars": 361,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 4,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "beacon",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Beacon office inventory",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Beacon handles office equipment inventory on port 9443."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u06",
+      "group": "unseen",
+      "query": "What port does Beacon listen on at the office?",
+      "required": [
+        "beacon"
+      ],
+      "acceptable": [
+        "beacon"
+      ],
+      "returned": [
+        "beacon",
+        "atlas-work"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "atlas-work"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 4.035,
+      "result_chars": 733,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 5,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "beacon",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Beacon office inventory",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Beacon handles office equipment inventory on port 9443."
+        },
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u07",
+      "group": "unseen",
+      "query": "How should I print this document by default?",
+      "required": [
+        "printing"
+      ],
+      "acceptable": [
+        "printing"
+      ],
+      "returned": [
+        "printing"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.864,
+      "result_chars": 387,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "printing",
+          "version": 1,
+          "space_id": "space_general",
+          "space_name": "General",
+          "title": "Document printing preference",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:25+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Print documents double-sided in monochrome unless colour is requested."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u08",
+      "group": "unseen",
+      "query": "Please remind me what Jay enjoys doing outdoors.",
+      "required": [
+        "jay"
+      ],
+      "acceptable": [
+        "jay"
+      ],
+      "returned": [
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.157,
+      "result_chars": 347,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jay",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jay cycling",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:04+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jay rides a bicycle and prefers quiet routes."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u09",
+      "group": "unseen",
+      "query": "Do I need permission before restarting services on Pepper?",
+      "required": [
+        "ssh"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "ssh",
+        "backup",
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.6666666666666666,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 3.59,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        },
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        },
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u10",
+      "group": "unseen",
+      "query": "For Jess, what ingredients should dinner avoid?",
+      "required": [
+        "jess-food"
+      ],
+      "acceptable": [
+        "jess",
+        "jess-food"
+      ],
+      "returned": [
+        "jess-food",
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.008,
+      "result_chars": 717,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jess-food",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess dining preferences",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:03+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess avoids peanuts and likes Italian restaurants."
+        },
+        {
+          "id": "jess",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess relationship",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:02+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess is the user’s fiancée. They are engaged."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u11",
+      "group": "unseen",
+      "query": "Who is my fiancée?",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess"
+      ],
+      "returned": [
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 2.758,
+      "result_chars": 353,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jess",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess relationship",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:02+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess is the user’s fiancée. They are engaged."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u12",
+      "group": "unseen",
+      "query": "Tell me the hostname or address of the machine running Hermes.",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 2.834,
+      "result_chars": 369,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u13",
+      "group": "unseen",
+      "query": "What is the critical recovery command in the storage runbook?",
+      "required": [
+        "long"
+      ],
+      "acceptable": [
+        "long"
+      ],
+      "returned": [
+        "long"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 6.812,
+      "result_chars": 2393,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "long",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Storage recovery runbook",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:18+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "torage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions.  Critical recovery command: RESTORE-VERIFY-OMEGA.",
+          "truncated": true,
+          "excerpted": true
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u14",
+      "group": "unseen",
+      "query": "What backup schedule applies to the office database?",
+      "required": [
+        "work-backup"
+      ],
+      "acceptable": [
+        "work-backup"
+      ],
+      "returned": [
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 6.796,
+      "result_chars": 356,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 4,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "work-backup",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office database backup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:09+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The office database backup is at 01:00 on weekdays."
+        }
+      ]
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u15",
+      "group": "unseen",
+      "query": "Multiply 41 by 7.",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 6.002,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u16",
+      "group": "unseen",
+      "query": "Explain photosynthesis in two sentences.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.394,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u17",
+      "group": "unseen",
+      "query": "Write a thank-you message for a birthday gift.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.105,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u18",
+      "group": "unseen",
+      "query": "What is the capital of Peru?",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.795,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u19",
+      "group": "unseen",
+      "query": "Which orbital period does Neptune have?",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 2.894,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "explicit_broaden",
+      "case": "u20",
+      "group": "unseen",
+      "query": "Suggest a name for a fictional dragon.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 12.2,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_general",
+          "space_personal",
+          "space_work"
+        ],
+        "expanded": true,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u01",
+      "group": "unseen",
+      "query": "What transport does Mira prefer?",
+      "required": [
+        "mira"
+      ],
+      "acceptable": [
+        "mira"
+      ],
+      "returned": [
+        "mira"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.87,
+      "result_chars": 375,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "mira",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Mira travel preference",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Mira prefers travelling by train and avoids overnight flights."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u02",
+      "group": "unseen",
+      "query": "I am arranging a trip with Mira. Which journeys should I avoid booking?",
+      "required": [
+        "mira"
+      ],
+      "acceptable": [
+        "mira"
+      ],
+      "returned": [
+        "mira"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.166,
+      "result_chars": 375,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "mira",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Mira travel preference",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:22+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Mira prefers travelling by train and avoids overnight flights."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u03",
+      "group": "unseen",
+      "query": "energy.example.test",
+      "required": [
+        "orchid"
+      ],
+      "acceptable": [
+        "orchid"
+      ],
+      "returned": [
+        "orchid"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.317,
+      "result_chars": 396,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "orchid",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Orchid home dashboard",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:23+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Orchid is the home energy dashboard. It listens on port 8128 at energy.example.test."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u04",
+      "group": "unseen",
+      "query": "Orchid dashboard port?",
+      "required": [
+        "orchid"
+      ],
+      "acceptable": [
+        "orchid"
+      ],
+      "returned": [
+        "orchid"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.366,
+      "result_chars": 396,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "orchid",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Orchid home dashboard",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:23+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Orchid is the home energy dashboard. It listens on port 8128 at energy.example.test."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u05",
+      "group": "unseen",
+      "query": "Which application handles office equipment inventory?",
+      "required": [
+        "beacon"
+      ],
+      "acceptable": [
+        "beacon"
+      ],
+      "returned": [
+        "beacon"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.479,
+      "result_chars": 361,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "beacon",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Beacon office inventory",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Beacon handles office equipment inventory on port 9443."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u06",
+      "group": "unseen",
+      "query": "What port does Beacon listen on at the office?",
+      "required": [
+        "beacon"
+      ],
+      "acceptable": [
+        "beacon"
+      ],
+      "returned": [
+        "beacon",
+        "atlas-work"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "atlas-work"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.5,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 4.484,
+      "result_chars": 733,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "beacon",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Beacon office inventory",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:24+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Beacon handles office equipment inventory on port 9443."
+        },
+        {
+          "id": "atlas-work",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Atlas office server",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:08+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Atlas is the office reporting server. It runs PostgreSQL on port 5432."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u07",
+      "group": "unseen",
+      "query": "How should I print this document by default?",
+      "required": [
+        "printing"
+      ],
+      "acceptable": [
+        "printing"
+      ],
+      "returned": [
+        "printing"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.909,
+      "result_chars": 387,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "printing",
+          "version": 1,
+          "space_id": "space_general",
+          "space_name": "General",
+          "title": "Document printing preference",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:25+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Print documents double-sided in monochrome unless colour is requested."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u08",
+      "group": "unseen",
+      "query": "Please remind me what Jay enjoys doing outdoors.",
+      "required": [
+        "jay"
+      ],
+      "acceptable": [
+        "jay"
+      ],
+      "returned": [
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 4.04,
+      "result_chars": 347,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jay",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jay cycling",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:04+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jay rides a bicycle and prefers quiet routes."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u09",
+      "group": "unseen",
+      "query": "Do I need permission before restarting services on Pepper?",
+      "required": [
+        "ssh"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "ssh",
+        "backup",
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "precision": 0.6666666666666666,
+      "required_recall": 1.0,
+      "pass": false,
+      "retrieval_ms": 3.785,
+      "result_chars": 1124,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 3,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "ssh",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "SSH access procedure",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:13+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Use SSH keys to access Pepper. Ask before restarting services."
+        },
+        {
+          "id": "backup",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper backup instructions",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:01+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper backups run at 02:30. Verify the restore before upgrading."
+        },
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u10",
+      "group": "unseen",
+      "query": "For Jess, what ingredients should dinner avoid?",
+      "required": [
+        "jess-food"
+      ],
+      "acceptable": [
+        "jess",
+        "jess-food"
+      ],
+      "returned": [
+        "jess-food",
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.467,
+      "result_chars": 717,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 2,
+        "topical_count": 2,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jess-food",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess dining preferences",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:03+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess avoids peanuts and likes Italian restaurants."
+        },
+        {
+          "id": "jess",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess relationship",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:02+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess is the user’s fiancée. They are engaged."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u11",
+      "group": "unseen",
+      "query": "Who is my fiancée?",
+      "required": [
+        "jess"
+      ],
+      "acceptable": [
+        "jess"
+      ],
+      "returned": [
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.11,
+      "result_chars": 353,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "jess",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Jess relationship",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:02+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Jess is the user’s fiancée. They are engaged."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u12",
+      "group": "unseen",
+      "query": "Tell me the hostname or address of the machine running Hermes.",
+      "required": [
+        "host"
+      ],
+      "acceptable": [
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.789,
+      "result_chars": 369,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "host",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Pepper hosting",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:00+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "Pepper runs Hermes and Glyph Hold. Its address is 192.168.1.190."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u13",
+      "group": "unseen",
+      "query": "What is the critical recovery command in the storage runbook?",
+      "required": [
+        "long"
+      ],
+      "acceptable": [
+        "long"
+      ],
+      "returned": [
+        "long"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 7.621,
+      "result_chars": 2393,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 1,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "long",
+          "version": 1,
+          "space_id": "space_personal",
+          "space_name": "Personal",
+          "title": "Storage recovery runbook",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:18+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "torage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions. Storage recovery preparation. Verify hardware inventory and record disk positions.  Critical recovery command: RESTORE-VERIFY-OMEGA.",
+          "truncated": true,
+          "excerpted": true
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u14",
+      "group": "unseen",
+      "query": "What backup schedule applies to the office database?",
+      "required": [
+        "work-backup"
+      ],
+      "acceptable": [
+        "work-backup"
+      ],
+      "returned": [
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": 1.0,
+      "required_recall": 1.0,
+      "pass": true,
+      "retrieval_ms": 3.814,
+      "result_chars": 356,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_work",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_work",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 3,
+        "topical_count": 1,
+        "abstained": false
+      },
+      "visible_results": [
+        {
+          "id": "work-backup",
+          "version": 1,
+          "space_id": "space_work",
+          "space_name": "Work",
+          "title": "Office database backup",
+          "summary": null,
+          "source": null,
+          "last_verified_at": null,
+          "updated_at": "2026-01-01T00:00:09+00:00",
+          "record_type": "fact",
+          "source_refs": [],
+          "stale": false,
+          "body": "The office database backup is at 01:00 on weekdays."
+        }
+      ]
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u15",
+      "group": "unseen",
+      "query": "Multiply 41 by 7.",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.654,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u16",
+      "group": "unseen",
+      "query": "Explain photosynthesis in two sentences.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 4.268,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u17",
+      "group": "unseen",
+      "query": "Write a thank-you message for a birthday gift.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.832,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u18",
+      "group": "unseen",
+      "query": "What is the capital of Peru?",
+      "required": [],
+      "acceptable": [],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.882,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u19",
+      "group": "unseen",
+      "query": "Which orbital period does Neptune have?",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 6.852,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    },
+    {
+      "variant": "pins_disabled",
+      "case": "u20",
+      "group": "unseen",
+      "query": "Suggest a name for a fictional dragon.",
+      "required": [],
+      "acceptable": [
+        "style"
+      ],
+      "returned": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "precision": null,
+      "required_recall": null,
+      "pass": true,
+      "retrieval_ms": 3.401,
+      "result_chars": 0,
+      "wrapper_chars": null,
+      "wrapper_matches": null,
+      "context": {
+        "active_space_id": "space_personal",
+        "default_space_id": "space_personal",
+        "searched_space_ids": [
+          "space_personal",
+          "space_general"
+        ],
+        "expanded": false,
+        "retrieval_policy": "lexical-v2",
+        "candidate_count": 0,
+        "topical_count": 0,
+        "abstained": true
+      },
+      "visible_results": []
+    }
+  ]
+}

@@ -1,0 +1,1589 @@
+{
+  "model": "BAAI/bge-small-en-v1.5",
+  "retrieval_source_sha256": "0370df8254788e408a78dba810c0fd6bca790b61e0077961bacc45fbad1b0230",
+  "runtime_integration": false,
+  "threshold": 0.62,
+  "margin_threshold": 0.025,
+  "summary": {
+    "cases": 76,
+    "semantic_accepted": 8,
+    "strict_passes": 57,
+    "cases_with_missing": 9,
+    "cases_with_irrelevant": 12,
+    "required_found": 57,
+    "required_total": 66,
+    "local_model_and_batch_seconds": 1.625
+  },
+  "measurements": [
+    {
+      "case": "direct-host",
+      "query": "Pepper Hermes hosting",
+      "lexical_returned": [
+        "host",
+        "backup"
+      ],
+      "returned": [
+        "host",
+        "backup"
+      ],
+      "required": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.847,
+      "margin": 0.18,
+      "pass": false
+    },
+    {
+      "case": "direct-address",
+      "query": "192.168.1.190",
+      "lexical_returned": [
+        "host"
+      ],
+      "returned": [
+        "host"
+      ],
+      "required": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7178,
+      "margin": 0.0158,
+      "pass": true
+    },
+    {
+      "case": "direct-person",
+      "query": "Who is Jess?",
+      "lexical_returned": [
+        "jess-food",
+        "jess"
+      ],
+      "returned": [
+        "jess-food",
+        "jess"
+      ],
+      "required": [
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7672,
+      "margin": 0.121,
+      "pass": true
+    },
+    {
+      "case": "direct-folder",
+      "query": "Vaultwarden default folder",
+      "lexical_returned": [
+        "vault"
+      ],
+      "returned": [
+        "vault"
+      ],
+      "required": [
+        "vault"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8628,
+      "margin": 0.2686,
+      "pass": true
+    },
+    {
+      "case": "direct-dan",
+      "query": "Dan Goodman router",
+      "lexical_returned": [
+        "dan"
+      ],
+      "returned": [
+        "dan"
+      ],
+      "required": [
+        "dan"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8591,
+      "margin": 0.2539,
+      "pass": true
+    },
+    {
+      "case": "direct-dns",
+      "query": "Home DNS resolver",
+      "lexical_returned": [
+        "dns"
+      ],
+      "returned": [
+        "dns"
+      ],
+      "required": [
+        "dns"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8861,
+      "margin": 0.1078,
+      "pass": true
+    },
+    {
+      "case": "semantic-host",
+      "query": "Where is my assistant hosted?",
+      "lexical_returned": [],
+      "returned": [
+        "host"
+      ],
+      "required": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": true,
+      "similarity": 0.6574,
+      "margin": 0.0352,
+      "pass": true
+    },
+    {
+      "case": "semantic-relationship",
+      "query": "Who am I engaged to?",
+      "lexical_returned": [
+        "jess"
+      ],
+      "returned": [
+        "jess"
+      ],
+      "required": [
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7421,
+      "margin": 0.2198,
+      "pass": true
+    },
+    {
+      "case": "semantic-media",
+      "query": "Where do I watch my films?",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [
+        "atlas-home"
+      ],
+      "missing": [
+        "atlas-home"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.5016,
+      "margin": 0.0091,
+      "pass": false
+    },
+    {
+      "case": "semantic-diet",
+      "query": "What food should my partner avoid?",
+      "lexical_returned": [],
+      "returned": [
+        "jess-food"
+      ],
+      "required": [
+        "jess-food"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": true,
+      "similarity": 0.6294,
+      "margin": 0.1497,
+      "pass": true
+    },
+    {
+      "case": "semantic-access",
+      "query": "How do I connect securely to my always-on machine?",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [
+        "ssh"
+      ],
+      "missing": [
+        "ssh"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.6074,
+      "margin": 0.0134,
+      "pass": false
+    },
+    {
+      "case": "unrelated-science",
+      "query": "Explain why a solar eclipse happens.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.5694,
+      "margin": 0.0856,
+      "pass": true
+    },
+    {
+      "case": "unrelated-code",
+      "query": "Write a Python function that sorts numbers.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.6135,
+      "margin": 0.0,
+      "pass": true
+    },
+    {
+      "case": "unrelated-polite",
+      "query": "Can you explain how to bake a cake for me?",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.515,
+      "margin": 0.0227,
+      "pass": true
+    },
+    {
+      "case": "unrelated-exact",
+      "query": "quasars",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.55,
+      "margin": 0.0,
+      "pass": true
+    },
+    {
+      "case": "ambiguous-atlas",
+      "query": "Atlas",
+      "lexical_returned": [
+        "atlas-home"
+      ],
+      "returned": [
+        "atlas-home"
+      ],
+      "required": [
+        "atlas-home"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7355,
+      "margin": 0.1633,
+      "pass": true
+    },
+    {
+      "case": "explicit-work",
+      "query": "Atlas office reporting PostgreSQL",
+      "lexical_returned": [
+        "atlas-work"
+      ],
+      "returned": [
+        "atlas-work"
+      ],
+      "required": [
+        "atlas-work"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8925,
+      "margin": 0.2373,
+      "pass": true
+    },
+    {
+      "case": "work-from-home",
+      "query": "What port does the office Atlas PostgreSQL use?",
+      "lexical_returned": [
+        "atlas-home"
+      ],
+      "returned": [
+        "atlas-home"
+      ],
+      "required": [
+        "atlas-work"
+      ],
+      "missing": [
+        "atlas-work"
+      ],
+      "irrelevant": [
+        "atlas-home"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7521,
+      "margin": 0.1218,
+      "pass": false
+    },
+    {
+      "case": "home-from-work",
+      "query": "What port does the home Atlas Jellyfin use?",
+      "lexical_returned": [
+        "atlas-work"
+      ],
+      "returned": [
+        "atlas-work"
+      ],
+      "required": [
+        "atlas-home"
+      ],
+      "missing": [
+        "atlas-home"
+      ],
+      "irrelevant": [
+        "atlas-work"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.6532,
+      "margin": 0.1909,
+      "pass": false
+    },
+    {
+      "case": "general-style",
+      "query": "What response style do I prefer?",
+      "lexical_returned": [
+        "style"
+      ],
+      "returned": [
+        "style"
+      ],
+      "required": [
+        "style"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8451,
+      "margin": 0.2622,
+      "pass": true
+    },
+    {
+      "case": "followup-bare",
+      "query": "Can you check its backups too?",
+      "lexical_returned": [],
+      "returned": [
+        "backup"
+      ],
+      "required": [
+        "backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": true,
+      "similarity": 0.6976,
+      "margin": 0.0273,
+      "pass": true
+    },
+    {
+      "case": "followup-person",
+      "query": "What does she like to eat?",
+      "lexical_returned": [],
+      "returned": [
+        "jess-food"
+      ],
+      "required": [
+        "jess-food"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": true,
+      "similarity": 0.6895,
+      "margin": 0.1857,
+      "pass": true
+    },
+    {
+      "case": "followup-resolved",
+      "query": "Can you check Pepper backups too?",
+      "lexical_returned": [
+        "backup"
+      ],
+      "returned": [
+        "backup"
+      ],
+      "required": [
+        "backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8345,
+      "margin": 0.1252,
+      "pass": true
+    },
+    {
+      "case": "long-evidence",
+      "query": "Storage recovery runbook",
+      "lexical_returned": [
+        "long"
+      ],
+      "returned": [
+        "long"
+      ],
+      "required": [
+        "long"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8483,
+      "margin": 0.2183,
+      "pass": true
+    },
+    {
+      "case": "exact-short",
+      "query": "Pepper",
+      "lexical_returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "required": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.6907,
+      "margin": 0.0458,
+      "pass": false
+    },
+    {
+      "case": "prefix-collision",
+      "query": "pepper",
+      "lexical_returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "required": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.6907,
+      "margin": 0.0458,
+      "pass": false
+    },
+    {
+      "case": "long-natural",
+      "query": "I was thinking about the home server and I would like you to check where Hermes is running and tell me the address please.",
+      "lexical_returned": [
+        "atlas-home",
+        "host"
+      ],
+      "returned": [
+        "atlas-home",
+        "host"
+      ],
+      "required": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "atlas-home"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7471,
+      "margin": 0.0127,
+      "pass": false
+    },
+    {
+      "case": "punctuation",
+      "query": "\" OR (Pepper NEAR NOT:*)",
+      "lexical_returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "required": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.6137,
+      "margin": 0.012,
+      "pass": false
+    },
+    {
+      "case": "archived",
+      "query": "legacy endpoint",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.6165,
+      "margin": 0.0048,
+      "pass": true
+    },
+    {
+      "case": "never",
+      "query": "Unfinished scratchpad",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.5783,
+      "margin": 0.0,
+      "pass": true
+    },
+    {
+      "case": "freshness",
+      "query": "Which resolver do I use now?",
+      "lexical_returned": [
+        "new-dns",
+        "dns"
+      ],
+      "returned": [
+        "new-dns",
+        "dns"
+      ],
+      "required": [
+        "new-dns"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7672,
+      "margin": 0.0686,
+      "pass": true
+    },
+    {
+      "case": "conv-evening-out",
+      "query": "I want to take Jess out for a meal this weekend. What sort of place would suit her, and is there anything to steer clear of?",
+      "lexical_returned": [
+        "jess-food",
+        "jess"
+      ],
+      "returned": [
+        "jess-food",
+        "jess"
+      ],
+      "required": [
+        "jess-food"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7635,
+      "margin": 0.1456,
+      "pass": true
+    },
+    {
+      "case": "conv-jay-outing",
+      "query": "Help me think of an afternoon out that Jay would enjoy.",
+      "lexical_returned": [
+        "jay"
+      ],
+      "returned": [
+        "jay"
+      ],
+      "required": [
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.618,
+      "margin": 0.0922,
+      "pass": true
+    },
+    {
+      "case": "conv-dan-box",
+      "query": "Do you remember what make of internet router Dan Goodman has at home?",
+      "lexical_returned": [
+        "dan"
+      ],
+      "returned": [
+        "dan"
+      ],
+      "required": [
+        "dan"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8439,
+      "margin": 0.2474,
+      "pass": true
+    },
+    {
+      "case": "conv-wedding-person",
+      "query": "Remind me who I am planning to marry.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [
+        "jess"
+      ],
+      "missing": [
+        "jess"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.639,
+      "margin": 0.0147,
+      "pass": false
+    },
+    {
+      "case": "conv-film-night",
+      "query": "I fancy putting a film on tonight. Remind me what I use at home to stream my collection.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [
+        "atlas-home"
+      ],
+      "missing": [
+        "atlas-home"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.5671,
+      "margin": 0.0375,
+      "pass": false
+    },
+    {
+      "case": "conv-password-hunt",
+      "query": "I cannot find a saved login. Where do I usually keep passwords, and what should I try searching for?",
+      "lexical_returned": [],
+      "returned": [
+        "vault"
+      ],
+      "required": [
+        "vault"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": true,
+      "similarity": 0.7366,
+      "margin": 0.1544,
+      "pass": true
+    },
+    {
+      "case": "conv-solar-shopping",
+      "query": "What were the things I wanted to compare when looking at batteries for the solar panels?",
+      "lexical_returned": [
+        "research"
+      ],
+      "returned": [
+        "research"
+      ],
+      "required": [
+        "research"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8142,
+      "margin": 0.249,
+      "pass": true
+    },
+    {
+      "case": "conv-pepper-upgrade",
+      "query": "I am thinking of upgrading Pepper this evening. What was I meant to check first?",
+      "lexical_returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "required": [
+        "backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7544,
+      "margin": 0.0944,
+      "pass": true
+    },
+    {
+      "case": "conv-pepper-restart",
+      "query": "If you need to restart something on Pepper while helping me, what did I ask you to do first?",
+      "lexical_returned": [
+        "ssh",
+        "backup",
+        "host"
+      ],
+      "returned": [
+        "ssh",
+        "backup",
+        "host"
+      ],
+      "required": [
+        "ssh"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7238,
+      "margin": 0.004,
+      "pass": false
+    },
+    {
+      "case": "conv-hermes-location",
+      "query": "Which box did I put Hermes and Glyph Hold on again?",
+      "lexical_returned": [
+        "host",
+        "vault"
+      ],
+      "returned": [
+        "host",
+        "vault"
+      ],
+      "required": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "vault"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.6899,
+      "margin": 0.0234,
+      "pass": false
+    },
+    {
+      "case": "conv-office-copy",
+      "query": "What time is the office database copied for safekeeping, and does that happen every day?",
+      "lexical_returned": [
+        "work-backup"
+      ],
+      "returned": [
+        "work-backup"
+      ],
+      "required": [
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8399,
+      "margin": 0.2409,
+      "pass": true
+    },
+    {
+      "case": "conv-office-atlas",
+      "query": "What does Atlas do for us at the office?",
+      "lexical_returned": [
+        "atlas-work"
+      ],
+      "returned": [
+        "atlas-work"
+      ],
+      "required": [
+        "atlas-work"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7602,
+      "margin": 0.1956,
+      "pass": true
+    },
+    {
+      "case": "conv-rainbow",
+      "query": "Why do rainbows have different colours?",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.4888,
+      "margin": 0.009,
+      "pass": true
+    },
+    {
+      "case": "conv-thanks-note",
+      "query": "Write a short thank-you note to a neighbour who watered my plants.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.5875,
+      "margin": 0.0691,
+      "pass": true
+    },
+    {
+      "case": "conv-timer-maths",
+      "query": "How many minutes are there in two and a half hours?",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.5376,
+      "margin": 0.0,
+      "pass": true
+    },
+    {
+      "case": "agent-direct-01",
+      "query": "List services hosted on 192.168.1.190.",
+      "lexical_returned": [
+        "host"
+      ],
+      "returned": [
+        "host"
+      ],
+      "required": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.704,
+      "margin": 0.0565,
+      "pass": true
+    },
+    {
+      "case": "agent-direct-02",
+      "query": "Identify the resolver previously assigned 192.168.1.2.",
+      "lexical_returned": [
+        "dns"
+      ],
+      "returned": [
+        "dns"
+      ],
+      "required": [
+        "dns"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8359,
+      "margin": 0.0604,
+      "pass": true
+    },
+    {
+      "case": "agent-direct-03",
+      "query": "192.168.1.3 resolver software?",
+      "lexical_returned": [
+        "new-dns"
+      ],
+      "returned": [
+        "new-dns"
+      ],
+      "required": [
+        "new-dns"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8385,
+      "margin": 0.0341,
+      "pass": true
+    },
+    {
+      "case": "agent-direct-04",
+      "query": "Pepper: authentication method and restart approval rule.",
+      "lexical_returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "required": [
+        "ssh"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7204,
+      "margin": 0.04,
+      "pass": false
+    },
+    {
+      "case": "agent-direct-05",
+      "query": "Pepper upgrade prerequisites and backup schedule.",
+      "lexical_returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "returned": [
+        "backup",
+        "host",
+        "ssh"
+      ],
+      "required": [
+        "backup"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "host"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8728,
+      "margin": 0.1685,
+      "pass": false
+    },
+    {
+      "case": "agent-direct-06",
+      "query": "What cycling route conditions does Jay prefer?",
+      "lexical_returned": [
+        "jay"
+      ],
+      "returned": [
+        "jay"
+      ],
+      "required": [
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8622,
+      "margin": 0.3469,
+      "pass": true
+    },
+    {
+      "case": "agent-direct-07",
+      "query": "Which router brand is installed at Dan Goodman's home?",
+      "lexical_returned": [
+        "dan"
+      ],
+      "returned": [
+        "dan"
+      ],
+      "required": [
+        "dan"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8655,
+      "margin": 0.2486,
+      "pass": true
+    },
+    {
+      "case": "agent-direct-08",
+      "query": "Jess: relationship status and excluded ingredient.",
+      "lexical_returned": [
+        "jess",
+        "jess-food"
+      ],
+      "returned": [
+        "jess",
+        "jess-food"
+      ],
+      "required": [
+        "jess",
+        "jess-food"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7787,
+      "margin": 0.1099,
+      "pass": true
+    },
+    {
+      "case": "agent-direct-09",
+      "query": "Which machine serves my video library, and on which TCP port?",
+      "lexical_returned": [],
+      "returned": [
+        "atlas-home"
+      ],
+      "required": [
+        "atlas-home"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": true,
+      "similarity": 0.6596,
+      "margin": 0.0499,
+      "pass": true
+    },
+    {
+      "case": "agent-direct-10",
+      "query": "Office Atlas database engine and listening port.",
+      "lexical_returned": [
+        "atlas-work"
+      ],
+      "returned": [
+        "atlas-work"
+      ],
+      "required": [
+        "atlas-work"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7722,
+      "margin": 0.1199,
+      "pass": true
+    },
+    {
+      "case": "agent-direct-11",
+      "query": "Weekday database backup start time?",
+      "lexical_returned": [
+        "work-backup"
+      ],
+      "returned": [
+        "work-backup"
+      ],
+      "required": [
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8832,
+      "margin": 0.3496,
+      "pass": true
+    },
+    {
+      "case": "agent-direct-12",
+      "query": "When looking up a saved login, should I search its domain name?",
+      "lexical_returned": [],
+      "returned": [
+        "vault"
+      ],
+      "required": [
+        "vault"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": true,
+      "similarity": 0.669,
+      "margin": 0.027,
+      "pass": true
+    },
+    {
+      "case": "agent-direct-13",
+      "query": "Convert 4096 bytes to KiB.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.5537,
+      "margin": 0.0094,
+      "pass": true
+    },
+    {
+      "case": "agent-direct-14",
+      "query": "Define an idempotent HTTP method.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.5708,
+      "margin": 0.0026,
+      "pass": true
+    },
+    {
+      "case": "agent-direct-15",
+      "query": "Return only the decimal result: 17 * 23.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.5271,
+      "margin": 0.0,
+      "pass": true
+    },
+    {
+      "case": "varied-01",
+      "query": "What address is Pepper on, and which services does it host?",
+      "lexical_returned": [
+        "host",
+        "ssh",
+        "backup"
+      ],
+      "returned": [
+        "host",
+        "ssh",
+        "backup"
+      ],
+      "required": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup",
+        "ssh"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8413,
+      "margin": 0.1675,
+      "pass": false
+    },
+    {
+      "case": "varied-02",
+      "query": "Need to SSH into Peper for an upgrade — how do I log in and what should I check before doing it?",
+      "lexical_returned": [
+        "ssh"
+      ],
+      "returned": [
+        "ssh"
+      ],
+      "required": [
+        "backup",
+        "ssh"
+      ],
+      "missing": [
+        "backup"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7216,
+      "margin": 0.0694,
+      "pass": false
+    },
+    {
+      "case": "varied-03",
+      "query": "Thinking of taking my fiancée out for dinner. What food preferences do you remember for her?",
+      "lexical_returned": [],
+      "returned": [
+        "jess-food"
+      ],
+      "required": [
+        "jess",
+        "jess-food"
+      ],
+      "missing": [
+        "jess"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": true,
+      "similarity": 0.6796,
+      "margin": 0.0927,
+      "pass": false
+    },
+    {
+      "case": "varied-04",
+      "query": "Remind me what kind of bike route Jay likes, and what router Dan Goodman has at home.",
+      "lexical_returned": [
+        "dan",
+        "jay"
+      ],
+      "returned": [
+        "dan",
+        "jay"
+      ],
+      "required": [
+        "dan",
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7728,
+      "margin": 0.0873,
+      "pass": true
+    },
+    {
+      "case": "varied-05",
+      "query": "Leave the server stuff for now. What did I want to compare when researching batteries for the solar installation?",
+      "lexical_returned": [
+        "research"
+      ],
+      "returned": [
+        "research"
+      ],
+      "required": [
+        "research"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7919,
+      "margin": 0.2087,
+      "pass": true
+    },
+    {
+      "case": "varied-06",
+      "query": "Which app serves media from Atlas at home, and what port does it use?",
+      "lexical_returned": [
+        "atlas-home"
+      ],
+      "returned": [
+        "atlas-home"
+      ],
+      "required": [
+        "atlas-home"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8038,
+      "margin": 0.1876,
+      "pass": true
+    },
+    {
+      "case": "varied-07",
+      "query": "For the office Atlas reporting server, remind me of the database port and the weekday backup time.",
+      "lexical_returned": [
+        "atlas-work",
+        "work-backup"
+      ],
+      "returned": [
+        "atlas-work",
+        "work-backup"
+      ],
+      "required": [
+        "atlas-work",
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8188,
+      "margin": 0.0872,
+      "pass": true
+    },
+    {
+      "case": "varied-08",
+      "query": "I need to look up a saved login in Vaultwarden. Which folder do I normally use and what should I search for?",
+      "lexical_returned": [
+        "vault"
+      ],
+      "returned": [
+        "vault"
+      ],
+      "required": [
+        "vault"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8629,
+      "margin": 0.2709,
+      "pass": true
+    },
+    {
+      "case": "varied-09",
+      "query": "Whats the current home DNS resolvr after the move to Unbound?",
+      "lexical_returned": [
+        "dns",
+        "new-dns"
+      ],
+      "returned": [
+        "dns",
+        "new-dns"
+      ],
+      "required": [
+        "new-dns"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8221,
+      "margin": 0.0276,
+      "pass": true
+    },
+    {
+      "case": "varied-10",
+      "query": "What is the critical recovery command from my storage recovery runbook?",
+      "lexical_returned": [
+        "long"
+      ],
+      "returned": [
+        "long"
+      ],
+      "required": [
+        "long"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8033,
+      "margin": 0.1641,
+      "pass": true
+    },
+    {
+      "case": "varied-11",
+      "query": "What does the shipment contain besides the peppermill?",
+      "lexical_returned": [
+        "prefix"
+      ],
+      "returned": [
+        "prefix"
+      ],
+      "required": [
+        "prefix"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8534,
+      "margin": 0.2784,
+      "pass": true
+    },
+    {
+      "case": "varied-12",
+      "query": "And what should I verify before starting?",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [
+        "backup"
+      ],
+      "missing": [
+        "backup"
+      ],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.6233,
+      "margin": 0.0179,
+      "pass": false
+    },
+    {
+      "case": "varied-13",
+      "query": "Calculate 19 times 23.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.544,
+      "margin": 0.0,
+      "pass": true
+    },
+    {
+      "case": "varied-14",
+      "query": "Translate “good morning” into Spanish.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.6096,
+      "margin": 0.0532,
+      "pass": true
+    },
+    {
+      "case": "varied-15",
+      "query": "Write a two-line poem about a cloud shaped like a teapot.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.5098,
+      "margin": 0.0,
+      "pass": true
+    }
+  ]
+}

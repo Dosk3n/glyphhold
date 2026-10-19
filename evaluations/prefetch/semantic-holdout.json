@@ -1,0 +1,415 @@
+{
+  "model": "BAAI/bge-small-en-v1.5",
+  "retrieval_source_sha256": "0370df8254788e408a78dba810c0fd6bca790b61e0077961bacc45fbad1b0230",
+  "runtime_integration": false,
+  "threshold": 0.62,
+  "margin_threshold": 0.025,
+  "summary": {
+    "cases": 20,
+    "semantic_accepted": 0,
+    "strict_passes": 18,
+    "cases_with_missing": 0,
+    "cases_with_irrelevant": 2,
+    "required_found": 14,
+    "required_total": 14,
+    "local_model_and_batch_seconds": 0.654
+  },
+  "measurements": [
+    {
+      "case": "u01",
+      "query": "What transport does Mira prefer?",
+      "lexical_returned": [
+        "mira"
+      ],
+      "returned": [
+        "mira"
+      ],
+      "required": [
+        "mira"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8538,
+      "margin": 0.2956,
+      "pass": true
+    },
+    {
+      "case": "u02",
+      "query": "I am arranging a trip with Mira. Which journeys should I avoid booking?",
+      "lexical_returned": [
+        "mira"
+      ],
+      "returned": [
+        "mira"
+      ],
+      "required": [
+        "mira"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.811,
+      "margin": 0.2468,
+      "pass": true
+    },
+    {
+      "case": "u03",
+      "query": "energy.example.test",
+      "lexical_returned": [
+        "orchid"
+      ],
+      "returned": [
+        "orchid"
+      ],
+      "required": [
+        "orchid"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.6379,
+      "margin": 0.0385,
+      "pass": true
+    },
+    {
+      "case": "u04",
+      "query": "Orchid dashboard port?",
+      "lexical_returned": [
+        "orchid"
+      ],
+      "returned": [
+        "orchid"
+      ],
+      "required": [
+        "orchid"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7929,
+      "margin": 0.1647,
+      "pass": true
+    },
+    {
+      "case": "u05",
+      "query": "Which application handles office equipment inventory?",
+      "lexical_returned": [
+        "beacon"
+      ],
+      "returned": [
+        "beacon"
+      ],
+      "required": [
+        "beacon"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.712,
+      "margin": 0.0572,
+      "pass": true
+    },
+    {
+      "case": "u06",
+      "query": "What port does Beacon listen on at the office?",
+      "lexical_returned": [
+        "beacon",
+        "atlas-work"
+      ],
+      "returned": [
+        "beacon",
+        "atlas-work"
+      ],
+      "required": [
+        "beacon"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "atlas-work"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.8019,
+      "margin": 0.223,
+      "pass": false
+    },
+    {
+      "case": "u07",
+      "query": "How should I print this document by default?",
+      "lexical_returned": [
+        "printing"
+      ],
+      "returned": [
+        "printing"
+      ],
+      "required": [
+        "printing"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7193,
+      "margin": 0.1276,
+      "pass": true
+    },
+    {
+      "case": "u08",
+      "query": "Please remind me what Jay enjoys doing outdoors.",
+      "lexical_returned": [
+        "jay"
+      ],
+      "returned": [
+        "jay"
+      ],
+      "required": [
+        "jay"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.706,
+      "margin": 0.1411,
+      "pass": true
+    },
+    {
+      "case": "u09",
+      "query": "Do I need permission before restarting services on Pepper?",
+      "lexical_returned": [
+        "ssh",
+        "backup",
+        "host"
+      ],
+      "returned": [
+        "ssh",
+        "backup",
+        "host"
+      ],
+      "required": [
+        "ssh"
+      ],
+      "missing": [],
+      "irrelevant": [
+        "backup"
+      ],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7821,
+      "margin": 0.0274,
+      "pass": false
+    },
+    {
+      "case": "u10",
+      "query": "For Jess, what ingredients should dinner avoid?",
+      "lexical_returned": [
+        "jess-food",
+        "jess"
+      ],
+      "returned": [
+        "jess-food",
+        "jess"
+      ],
+      "required": [
+        "jess-food"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.763,
+      "margin": 0.188,
+      "pass": true
+    },
+    {
+      "case": "u11",
+      "query": "Who is my fiancée?",
+      "lexical_returned": [
+        "jess"
+      ],
+      "returned": [
+        "jess"
+      ],
+      "required": [
+        "jess"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7688,
+      "margin": 0.269,
+      "pass": true
+    },
+    {
+      "case": "u12",
+      "query": "Tell me the hostname or address of the machine running Hermes.",
+      "lexical_returned": [
+        "host"
+      ],
+      "returned": [
+        "host"
+      ],
+      "required": [
+        "host"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.7269,
+      "margin": 0.0486,
+      "pass": true
+    },
+    {
+      "case": "u13",
+      "query": "What is the critical recovery command in the storage runbook?",
+      "lexical_returned": [
+        "long"
+      ],
+      "returned": [
+        "long"
+      ],
+      "required": [
+        "long"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.804,
+      "margin": 0.1565,
+      "pass": true
+    },
+    {
+      "case": "u14",
+      "query": "What backup schedule applies to the office database?",
+      "lexical_returned": [
+        "work-backup"
+      ],
+      "returned": [
+        "work-backup"
+      ],
+      "required": [
+        "work-backup"
+      ],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": false,
+      "semantic_accepted": false,
+      "similarity": 0.901,
+      "margin": 0.3022,
+      "pass": true
+    },
+    {
+      "case": "u15",
+      "query": "Multiply 41 by 7.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.5551,
+      "margin": 0.0,
+      "pass": true
+    },
+    {
+      "case": "u16",
+      "query": "Explain photosynthesis in two sentences.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.6048,
+      "margin": 0.0066,
+      "pass": true
+    },
+    {
+      "case": "u17",
+      "query": "Write a thank-you message for a birthday gift.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.53,
+      "margin": 0.0024,
+      "pass": true
+    },
+    {
+      "case": "u18",
+      "query": "What is the capital of Peru?",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.4517,
+      "margin": 0.0172,
+      "pass": true
+    },
+    {
+      "case": "u19",
+      "query": "Which orbital period does Neptune have?",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.4605,
+      "margin": 0.004,
+      "pass": true
+    },
+    {
+      "case": "u20",
+      "query": "Suggest a name for a fictional dragon.",
+      "lexical_returned": [],
+      "returned": [],
+      "required": [],
+      "missing": [],
+      "irrelevant": [],
+      "missing_visible_evidence": [],
+      "semantic_attempted": true,
+      "semantic_accepted": false,
+      "similarity": 0.4769,
+      "margin": 0.0085,
+      "pass": true
+    }
+  ]
+}

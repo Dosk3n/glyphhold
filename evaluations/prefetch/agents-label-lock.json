@@ -1,0 +1,18 @@
+{
+  "synthetic_only": true,
+  "corpus_sha256": "d44f4c1bb36211d45109d1e3e03fe55fb201527b336fa2af17c377bdefb0438c",
+  "labels": [
+    {
+      "file": "agent_conversational_cases.json",
+      "sha256": "31cf89eb6a5e13f9fd9ece0bfd4b0bb7bcb0841593427a086b7c561cd0d1a78d"
+    },
+    {
+      "file": "agent_direct_cases.json",
+      "sha256": "b5cfca4ab5e2ec6a70301db5daada6420cb770399d22064bfed6a7516842eaa9"
+    },
+    {
+      "file": "agent_varied_cases.json",
+      "sha256": "9bbcbce15479800d16eea047f74815ddf4d6617aa066b165088ee54f2c6ab76e"
+    }
+  ]
+}

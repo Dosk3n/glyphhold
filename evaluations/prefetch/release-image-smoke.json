@@ -1,0 +1,20 @@
+{
+  "version": "2.2.0",
+  "http_recall": true,
+  "unrelated_topical_abstention": true,
+  "category_exclusion": true,
+  "permission_boundary": true,
+  "literal_fts": true,
+  "answer_excerpt": true,
+  "full_record_preserved": true,
+  "character_budget": true,
+  "authenticated_http_ms": [
+    11.68,
+    12.81,
+    11.75,
+    12.4,
+    13.19
+  ],
+  "scope": "Disposable local synthetic HTTP test, not production latency",
+  "retrieval_sha256": "0370df8254788e408a78dba810c0fd6bca790b61e0077961bacc45fbad1b0230"
+}

@@ -1,0 +1,22 @@
+{
+  "source_sha256": "989dd0ffe59c6d8ce527fa465fb8ac4b8ae8ef93f85df4fa9573e7aa8fb95a90",
+  "selected_functions": [
+    "_memory_query_text",
+    "_memory_turn_start_and_prefetch",
+    "substitute_api_content"
+  ],
+  "forwarded_queries": [
+    "Which server runs Hermes?",
+    "And its address?",
+    "Now tell me about Jess."
+  ],
+  "followup_includes_prior_question": false,
+  "old_sidecar_preserved": true,
+  "scope": "Observe installed Hermes pure helpers in isolation, with no model/service calls.\n\nReads the specified trusted Hermes source and executes only three selected functions.\nManager, text flattening and trivial-prompt dependencies are stubs: this tests input\nforwarding and sidecar substitution, not Hermes's full turn loop or trivial filtering.",
+  "hermes_revision": "0e427d788d253630d38a3a51cd76849e73cd6925",
+  "local_matches_deployed": {
+    "core": true,
+    "adapter": true
+  },
+  "deployed_adapter_sha256": "937efb94f099503aa570bffad66e6bab80f237049594cd507386e8245432bd88"
+}
