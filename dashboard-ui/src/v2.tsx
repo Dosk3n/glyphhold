@@ -1230,6 +1230,7 @@ function AdvancedSettings() {
 }
 
 export function MemoryReviewsPage() {
+  const [answers, setAnswers] = useState<Record<string, string>>({});
   const [config, setConfig] = useState<Row | null>(null), [status, setStatus] = useState<Row>({}), [spaces, setSpaces] = useState<Row[]>([]), [jobs, setJobs] = useState<Row[]>([]), [proposals, setProposals] = useState<Row[]>([]);
   const [error, setError] = useState(""), [success, setSuccess] = useState(""), [busy, setBusy] = useState(false), [detail, setDetail] = useState<Row | null>(null), [fullReview, setFullReview] = useState(false);
   async function refresh() {
@@ -1261,7 +1262,7 @@ export function MemoryReviewsPage() {
                     p.kind ||
                     "Memory improvement"}
                 </h3>
-                <span className="badge">{proposalState(p)}</span>
+                <span className="badge">{p.payload?.operation === "question" && proposalState(p) === "rejected" ? "dismissed" : proposalState(p)}</span>
               </div>
               <p>
                 {p.reason ||
@@ -1287,18 +1288,27 @@ export function MemoryReviewsPage() {
                 </p>
               )}
               {p.payload?.operation === "move" && <div className="v2-callout"><strong>Subject links change on approval</strong><p>Existing subject links will be replaced with the destination links listed below. Memory history is retained.</p>{p.payload.subject_ids?.length ? <div className="tag-row">{p.payload.subject_ids.map((sid: string) => <code key={sid}>{sid}</code>)}</div> : <p>No destination subject links. You can assign destination subjects after the move.</p>}</div>}
-              {p.payload?.operation === "question" && (
-                <p>
-                  <a href="/dashboard/spaces">Add confirmed guidance</a>, then
-                  dismiss this question and run another review.
-                </p>
+              {p.payload?.operation === "question" && ["pending", "proposed"].includes(proposalState(p)) && (
+                <label className="field">
+                  <span>Your answer</span>
+                  <textarea aria-label="Your answer" rows={3} maxLength={10000}
+                    value={answers[p.id] || ""}
+                    onChange={e => setAnswers(current => ({...current, [p.id]: e.target.value}))}
+                    placeholder="Share what you know. Include the outcome and any relevant dates." />
+                  <small className="muted">Saved as a memory in {spaces.find(s => s.id === p.payload.space_id)?.name || p.payload.space_id}. Available to future reviews; submitting does not start an AI run.</small>
+                </label>
               )}
+              {proposalState(p) === "answered" && <p className="v2-callout">Your answer: {p.result?.answer}</p>}
               <details>
                 <summary>Evidence & proposed changes</summary>
                 <pre className="v2-json">{pretty(p)}</pre>
               </details>
               {["pending", "proposed"].includes(proposalState(p)) && (
                 <div className="button-row">
+                  {p.payload?.operation === "question" && (
+                    <Button disabled={busy || !answers[p.id]?.trim()}
+                      onClick={() => action(() => send(`${advancedBase}/proposals/${p.id}/answer`, {answer: answers[p.id]}), "Answer saved as a memory. This question is now answered.")}>Submit answer</Button>
+                  )}
                   {p.payload?.operation !== "question" && (
                     <Button
                       disabled={busy || !config.enabled}
@@ -1323,11 +1333,11 @@ export function MemoryReviewsPage() {
                       action(
                         () =>
                           send(`${advancedBase}/proposals/${p.id}/reject`, {}),
-                        "Proposal rejected.",
+                        p.payload?.operation === "question" ? "Question dismissed. No answer was saved." : "Proposal rejected.",
                       )
                     }
                   >
-                    Reject
+                    {p.payload?.operation === "question" ? "Dismiss" : "Reject"}
                   </Button>
                 </div>
               )}

@@ -85,6 +85,77 @@ def test_off_default_and_no_dispatch(advanced):
         store.enqueue()
 
 
+def pending_question():
+    enabled()
+    memory = fact("A Virgin Media engineer visit was scheduled")
+    question = Proposal(
+        operation="question",
+        space_id=memory["space_id"],
+        reason="The visit outcome is unknown",
+        uncertainty="Was the engineer visit completed?",
+        source_refs=[{"id": memory["id"], "version": memory["version"]}],
+    )
+    store.enqueue()
+    asyncio.run(AdvancedWorker(FakeRunner(RunnerOutput(proposals=[question]))).run_once())
+    return store.list_proposals()[0], memory
+
+
+def test_answer_question_saves_fact_once_and_preserves_original(advanced):
+    question, original = pending_question()
+    answered = service.answer_question(
+        question["id"], "  The engineer replaced the router on 19 July.  "
+    )
+    assert answered["state"] == "answered"
+    memory = core.get_memory(core.ADMIN, answered["result"]["memory_id"])
+    assert memory["space_id"] == original["space_id"]
+    assert memory["record_type"] == "fact"
+    assert "Was the engineer visit completed?" in memory["body"]
+    assert "replaced the router" in memory["body"]
+    assert memory["metadata"]["question_source_refs"] == [{"id": original["id"], "version": 1}]
+    unchanged = core.get_memory(core.ADMIN, original["id"])
+    assert all(unchanged[key] == value for key, value in original.items())
+    assert (
+        service.answer_question(question["id"], answered["result"]["answer"])["state"] == "answered"
+    )
+    assert len(core.list_memories(core.ADMIN)) == 2
+    with pytest.raises(ValueError, match="already been answered"):
+        service.answer_question(question["id"], "A different answer")
+
+
+def test_answer_rejects_blank_dismissed_and_stale_questions(advanced):
+    question, original = pending_question()
+    with pytest.raises(ValueError, match="Enter an answer"):
+        service.answer_question(question["id"], "  ")
+    core.update_memory(core.ADMIN, original["id"], {"body": "Updated visit details"}, 1)
+    with pytest.raises(ValueError, match="Source evidence changed"):
+        service.answer_question(question["id"], "It happened")
+    service.decide(question["id"], False)
+    with pytest.raises(ValueError, match="no longer pending"):
+        service.answer_question(question["id"], "It happened")
+    assert len(core.list_memories(core.ADMIN)) == 1
+
+
+def test_answer_endpoint_validates_and_returns_saved_answer(advanced):
+    from fastapi import FastAPI
+    from fastapi.testclient import TestClient
+
+    from app.api.advanced import router
+    from app.core.auth import require_dashboard_user
+
+    app = FastAPI()
+    app.include_router(router)
+    app.dependency_overrides[require_dashboard_user] = lambda: {"id": "owner"}
+    question, _ = pending_question()
+    with TestClient(app) as client:
+        path = f"/dashboard/api/advanced/proposals/{question['id']}/answer"
+        assert client.post(path, json={"answer": "x" * 10001}).status_code == 422
+        assert client.post(path, json={"answer": "   "}).status_code == 409
+        result = client.post(path, json={"answer": "The engineer replaced the router."})
+        assert result.status_code == 200
+        assert result.json()["state"] == "answered"
+        assert result.json()["result"]["memory_id"]
+
+
 def test_schedule_gap_fold_weekly_and_hourly():
     config = AdvancedSettings(frequency="daily", hour=1, minute=30).model_dump()
     # UK spring gap: 01:30 doesn't exist; advance to the first valid local minute, 02:00.

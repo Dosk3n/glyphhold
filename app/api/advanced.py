@@ -4,7 +4,7 @@ from typing import Annotated
 from zoneinfo import available_timezones
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 from app.advanced import service, store
 from app.advanced.codex import CodexError
@@ -23,6 +23,11 @@ router = APIRouter(
 class RunRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     full_review: bool = False
+
+
+class AnswerRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    answer: str = Field(min_length=1, max_length=10000)
 
 
 def failure(exc: Exception):
@@ -181,5 +186,13 @@ def approve(proposal_id: str):
 def reject(proposal_id: str):
     try:
         return service.decide(proposal_id, False)
+    except (ValueError, core.SpaceError) as exc:
+        failure(exc)
+
+
+@router.post("/proposals/{proposal_id}/answer")
+def answer_question(proposal_id: str, payload: AnswerRequest):
+    try:
+        return service.answer_question(proposal_id, payload.answer)
     except (ValueError, core.SpaceError) as exc:
         failure(exc)

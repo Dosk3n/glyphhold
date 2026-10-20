@@ -60,7 +60,9 @@ def job_records(job: dict) -> tuple[list[dict], list[dict]]:
             context_chars = len(build_prompt(job, [], spaces, source_space_id=memory["space_id"]))
             evidence_budget = config["max_context_chars"] - context_chars - 100
             if evidence_budget < 512:
-                raise ValueError("Context limit is too small for this space's guidance and identities")
+                raise ValueError(
+                    "Context limit is too small for this space's guidance and identities"
+                )
         item = {
             key: memory.get(key)
             for key in (
@@ -258,6 +260,75 @@ def validate_proposal(job: dict, proposal: Proposal, *, current: bool = False) -
             raise ValueError("Derived output needs original fact evidence")
 
 
+def answer_question(proposal_id: str, answer: str) -> dict:
+    """Save an owner's clarification and close the question in one transaction."""
+    answer = answer.strip()
+    if not answer or len(answer) > 10000:
+        raise ValueError("Enter an answer of 1–10000 characters")
+    with connection() as conn:
+        row = conn.execute("SELECT * FROM advanced_proposals WHERE id=?", (proposal_id,)).fetchone()
+    if row is None:
+        raise ValueError("Question not found")
+    item = store.decode(row)
+    proposal = Proposal.model_validate(item["payload"])
+    if proposal.operation != "question":
+        raise ValueError("Only questions can be answered")
+    if item["state"] == "answered":
+        if item["result"]["answer"] != answer:
+            raise ValueError("This question has already been answered")
+        return item
+    if item["state"] != "pending":
+        raise ValueError("This question is no longer pending")
+    job = store.get_job(item["job_id"])
+    validate_proposal(job, proposal, current=True)
+    question = proposal.uncertainty or proposal.reason
+
+    def guard(conn):
+        current = conn.execute(
+            "SELECT state FROM advanced_proposals WHERE id=?", (proposal_id,)
+        ).fetchone()
+        if not current or current["state"] not in {"pending", "answered"}:
+            raise ValueError("This question is no longer pending")
+        for ref in proposal.source_refs:
+            source = conn.execute(
+                "SELECT version,space_id FROM memories WHERE id=?", (ref.id,)
+            ).fetchone()
+            if (
+                not source
+                or source["version"] != ref.version
+                or source["space_id"] != proposal.space_id
+            ):
+                raise ValueError("Source evidence changed; request a fresh review")
+
+    def complete(conn, memory):
+        conn.execute(
+            "UPDATE advanced_proposals SET state='answered',result=?,updated_at=? WHERE id=?",
+            (json.dumps({"answer": answer, "memory_id": memory["id"]}), store.now(), proposal_id),
+        )
+
+    core.create_memory(
+        core.ADMIN,
+        {
+            "space_id": proposal.space_id,
+            "title": ("Answer: " + question)[:500],
+            "body": f"Question: {question}\n\nOwner's confirmed answer: {answer}",
+            "source": "owner-review-answer",
+            "metadata": {
+                "review_question_id": proposal_id,
+                "question_source_refs": [r.model_dump() for r in proposal.source_refs],
+            },
+            "subject_ids": proposal.subject_ids,
+        },
+        "review-answer:" + proposal_id,
+        guard=guard,
+        on_commit=complete,
+    )
+    with connection() as conn:
+        return store.decode(
+            conn.execute("SELECT * FROM advanced_proposals WHERE id=?", (proposal_id,)).fetchone()
+        )
+
+
 def decide(proposal_id: str, approve: bool, *, automatic: bool = False) -> dict:
     with connection() as conn:
         row = conn.execute("SELECT * FROM advanced_proposals WHERE id=?", (proposal_id,)).fetchone()
@@ -277,7 +348,7 @@ def decide(proposal_id: str, approve: bool, *, automatic: bool = False) -> dict:
     proposal = Proposal.model_validate(proposal_row["payload"])
     if proposal.operation == "question":
         raise ValueError(
-            "Resolve this question through confirmed guidance, then reject it or run another review"
+            "Submit an answer to this question, or dismiss it without saving an answer"
         )
     if automatic and (proposal.operation == "move" or proposal.uncertainty):
         return proposal_row

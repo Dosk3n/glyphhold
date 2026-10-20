@@ -30,6 +30,8 @@ const origin=process.env.GH2_ASSET_ORIGIN||'http://gh2-layout.test';
   if(p==='/dashboard/api/activity')return json({events:[]});
   if(p.startsWith('/dashboard/api/advanced/jobs/'))return json({id:'job-one',state:'completed',result:'Fixture review finished'});
   if(p.endsWith('/approve')){proposals=proposals.map(x=>x.id===p.split('/').at(-2)?{...x,state:'applied'}:x);return json({status:'applied'});}
+  if(p.endsWith('/answer')){const answer=req.postDataJSON().answer;assert.equal(answer,'The engineer replaced the router.');proposals=proposals.map(x=>x.id===p.split('/').at(-2)?{...x,state:'answered',result:{answer}}:x);return json({state:'answered'});}
+  if(p.endsWith('/reject')){proposals=proposals.map(x=>x.id===p.split('/').at(-2)?{...x,state:'rejected'}:x);return json({state:'rejected'});}
   if(p==='/dashboard/api/advanced/proposals/pending-count')return json({count:proposals.filter(x=>['pending','proposed'].includes(x.state)&&x.payload.operation!=='question').length});
   if(p==='/dashboard/api/advanced/proposals')return json({proposals});
   if(req.isNavigationRequest()&&process.env.GH2_ASSET_ORIGIN)return route.continue();
@@ -55,6 +57,14 @@ const origin=process.env.GH2_ASSET_ORIGIN||'http://gh2-layout.test';
  await page.goto(origin+'/dashboard/settings');await page.getByLabel('Enable Advanced Memory',{exact:true}).waitFor();assert.equal(await page.getByRole('button',{name:/^Memory reviews/}).count(),0);assert.equal(await page.getByRole('heading',{name:'Proposed improvements',exact:true}).count(),0);assert.equal(await page.getByRole('heading',{name:'Run history',exact:true}).count(),0);
  await page.getByLabel('Enable Advanced Memory',{exact:true}).check();await page.getByRole('button',{name:'Save settings',exact:true}).click();await page.getByRole('button',{name:'Memory reviews 2 awaiting approval',exact:true}).waitFor();await page.getByRole('button',{name:'Memory reviews 2 awaiting approval',exact:true}).click();await page.getByRole('heading',{name:'Memory reviews',exact:true}).waitFor();await page.getByRole('heading',{name:'Proposed improvements',exact:true}).waitFor();await page.getByRole('heading',{name:'Run history',exact:true}).waitFor();await page.getByRole('button',{name:'Approve',exact:true}).first().click();await page.getByRole('button',{name:'Memory reviews 1 awaiting approval',exact:true}).waitFor();await page.getByRole('button',{name:'Details',exact:true}).click();await page.getByRole('dialog',{name:'Run details',exact:true}).waitFor();await page.keyboard.press('Escape');
  for(const width of[1500,768,390]){await page.setViewportSize({width,height:1050});await page.goto(origin+'/dashboard/memory-reviews');await page.getByRole('heading',{name:'Proposed improvements',exact:true}).waitFor();assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Review page overflow '+width);if(process.env.UI_SCREENSHOT_DIR)await page.screenshot({path:path.join(process.env.UI_SCREENSHOT_DIR,'reviews-'+width+'.png'),fullPage:true});}
+ const question=page.locator('article').filter({has:page.getByRole('textbox',{name:'Your answer',exact:true})});
+ assert.equal(await question.getByRole('button',{name:'Reject',exact:true}).count(),0);
+ assert(await question.getByRole('button',{name:'Submit answer',exact:true}).isDisabled());
+ await question.getByRole('button',{name:'Dismiss',exact:true}).waitFor();
+ await question.getByRole('textbox',{name:'Your answer',exact:true}).fill('The engineer replaced the router.');
+ await question.getByRole('button',{name:'Submit answer',exact:true}).click();
+ await page.getByText('Your answer: The engineer replaced the router.',{exact:true}).waitFor();
+ assert.equal(await page.getByRole('textbox',{name:'Your answer',exact:true}).count(),0);
  await page.goto(origin+'/dashboard/settings');await page.getByLabel('Enable Advanced Memory',{exact:true}).uncheck();await page.getByRole('button',{name:'Save settings',exact:true}).click();await page.getByRole('button',{name:/^Memory reviews/}).waitFor({state:'hidden'});await page.goto(origin+'/dashboard/activity');await page.getByLabel('Filter activity by actor',{exact:true}).waitFor();assert.equal(await page.getByRole('heading',{name:'Proposed improvements',exact:true}).count(),0);
  for(const width of[1500,768,390]){await page.setViewportSize({width,height:1050});await page.goto(origin+'/dashboard/secrets');await page.getByText('LONG_UNBROKEN_SECRET_IDENTIFIER_'.repeat(5),{exact:true}).waitFor();assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Long secret identifier overflow '+width);}
  assert.deepEqual(errors,[]);
