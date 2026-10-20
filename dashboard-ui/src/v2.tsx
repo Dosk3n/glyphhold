@@ -1230,6 +1230,7 @@ function AdvancedSettings() {
 }
 
 export function MemoryReviewsPage() {
+  const [reviewView, setReviewView] = useState<"pending" | "history">("pending");
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [config, setConfig] = useState<Row | null>(null), [status, setStatus] = useState<Row>({}), [spaces, setSpaces] = useState<Row[]>([]), [jobs, setJobs] = useState<Row[]>([]), [proposals, setProposals] = useState<Row[]>([]);
   const [error, setError] = useState(""), [success, setSuccess] = useState(""), [busy, setBusy] = useState(false), [detail, setDetail] = useState<Row | null>(null), [fullReview, setFullReview] = useState(false);
@@ -1243,16 +1244,22 @@ export function MemoryReviewsPage() {
     try { await fn(); if(reload) await refresh(); window.dispatchEvent(new Event("glyphhold:memory-reviews-changed")); setSuccess(text); } catch(e) { setError(message(e)); } finally { setBusy(false); }
   }
   const proposalState = (p: Row) => p.state || p.status || "pending";
+  const visibleProposals = proposals.filter(p => ["pending", "proposed"].includes(proposalState(p)) === (reviewView === "pending"));
   if(!config) return <><Notice error={error}/><div className="loading">Loading memory reviews…</div></>;
   return <><Heading title="Memory reviews" body="Review suggested improvements, approve changes and manage Advanced Memory runs." icon={BrainCircuit} /><div className="settings-content memory-activity">
     <Notice error={error} success={success}/>
     <div className="v2-callout">Review changes to your memories here. Configure the AI connection, model and schedule in <a href="/dashboard/settings">Settings</a>.</div>
       <section className="panel stack v2-section">
-        <h2>Proposed improvements</h2>
-        {!proposals.length ? (
-          <Empty>No proposals to review.</Empty>
+        <div className="v2-tabs" role="tablist" aria-label="Review items">
+          <button role="tab" aria-selected={reviewView === "pending"} aria-controls="review-items" onClick={() => setReviewView("pending")}>Pending</button>
+          <button role="tab" aria-selected={reviewView === "history"} aria-controls="review-items" onClick={() => setReviewView("history")}>History</button>
+        </div>
+        <div id="review-items" className="stack">
+        <h2>{reviewView === "pending" ? "Proposed improvements" : "Review history"}</h2>
+        {!visibleProposals.length ? (
+          <Empty>{reviewView === "pending" ? "No pending reviews. Answered and completed items are in History." : "No completed reviews yet."}</Empty>
         ) : (
-          proposals.map((p) => (
+          visibleProposals.map((p) => (
             <article className="v2-proposal" key={p.id}>
               <div className="panel-heading">
                 <h3>
@@ -1307,7 +1314,7 @@ export function MemoryReviewsPage() {
                 <div className="button-row">
                   {p.payload?.operation === "question" && (
                     <Button disabled={busy || !answers[p.id]?.trim()}
-                      onClick={() => action(() => send(`${advancedBase}/proposals/${p.id}/answer`, {answer: answers[p.id]}), "Answer saved as a memory. This question is now answered.")}>Submit answer</Button>
+                      onClick={() => action(() => send(`${advancedBase}/proposals/${p.id}/answer`, {answer: answers[p.id]}), "Answer saved as a memory. You can find this question in History.")}>Submit answer</Button>
                   )}
                   {p.payload?.operation !== "question" && (
                     <Button
@@ -1344,6 +1351,7 @@ export function MemoryReviewsPage() {
             </article>
           ))
         )}
+        </div>
       </section>
           <section className="panel stack">
             <h2>Run a review</h2>

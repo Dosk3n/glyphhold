@@ -57,14 +57,31 @@ const origin=process.env.GH2_ASSET_ORIGIN||'http://gh2-layout.test';
  await page.goto(origin+'/dashboard/settings');await page.getByLabel('Enable Advanced Memory',{exact:true}).waitFor();assert.equal(await page.getByRole('button',{name:/^Memory reviews/}).count(),0);assert.equal(await page.getByRole('heading',{name:'Proposed improvements',exact:true}).count(),0);assert.equal(await page.getByRole('heading',{name:'Run history',exact:true}).count(),0);
  await page.getByLabel('Enable Advanced Memory',{exact:true}).check();await page.getByRole('button',{name:'Save settings',exact:true}).click();await page.getByRole('button',{name:'Memory reviews 2 awaiting approval',exact:true}).waitFor();await page.getByRole('button',{name:'Memory reviews 2 awaiting approval',exact:true}).click();await page.getByRole('heading',{name:'Memory reviews',exact:true}).waitFor();await page.getByRole('heading',{name:'Proposed improvements',exact:true}).waitFor();await page.getByRole('heading',{name:'Run history',exact:true}).waitFor();await page.getByRole('button',{name:'Approve',exact:true}).first().click();await page.getByRole('button',{name:'Memory reviews 1 awaiting approval',exact:true}).waitFor();await page.getByRole('button',{name:'Details',exact:true}).click();await page.getByRole('dialog',{name:'Run details',exact:true}).waitFor();await page.keyboard.press('Escape');
  for(const width of[1500,768,390]){await page.setViewportSize({width,height:1050});await page.goto(origin+'/dashboard/memory-reviews');await page.getByRole('heading',{name:'Proposed improvements',exact:true}).waitFor();assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Review page overflow '+width);if(process.env.UI_SCREENSHOT_DIR)await page.screenshot({path:path.join(process.env.UI_SCREENSHOT_DIR,'reviews-'+width+'.png'),fullPage:true});}
+ assert.equal(await page.getByText('Already applied',{exact:true}).count(),0);
+ assert.equal(await page.getByText('New source information',{exact:true}).count(),0);
  const question=page.locator('article').filter({has:page.getByRole('textbox',{name:'Your answer',exact:true})});
  assert.equal(await question.getByRole('button',{name:'Reject',exact:true}).count(),0);
  assert(await question.getByRole('button',{name:'Submit answer',exact:true}).isDisabled());
  await question.getByRole('button',{name:'Dismiss',exact:true}).waitFor();
  await question.getByRole('textbox',{name:'Your answer',exact:true}).fill('The engineer replaced the router.');
  await question.getByRole('button',{name:'Submit answer',exact:true}).click();
- await page.getByText('Your answer: The engineer replaced the router.',{exact:true}).waitFor();
+ await page.getByText('Answer saved as a memory. You can find this question in History.',{exact:true}).waitFor();
+ assert.equal(await page.getByText('Your answer: The engineer replaced the router.',{exact:true}).count(),0);
  assert.equal(await page.getByRole('textbox',{name:'Your answer',exact:true}).count(),0);
+ await page.getByRole('button',{name:'Reject',exact:true}).click();
+ await page.getByText('No pending reviews. Answered and completed items are in History.',{exact:true}).waitFor();
+ await page.getByRole('tab',{name:'History',exact:true}).click();
+ await page.getByRole('heading',{name:'Review history',exact:true}).waitFor();
+ await page.getByText('Your answer: The engineer replaced the router.',{exact:true}).waitFor();
+ await page.getByText('Already applied',{exact:true}).waitFor();
+ await page.getByText('New source information',{exact:true}).waitFor();
+ assert.equal(await page.getByRole('button',{name:'Approve',exact:true}).count(),0);
+ assert.equal(await page.getByRole('button',{name:'Reject',exact:true}).count(),0);
+ for(const width of[1500,768,390]){await page.setViewportSize({width,height:1050});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Review history overflow '+width);}
+ await page.reload();
+ await page.getByRole('tab',{name:'Pending',exact:true}).waitFor();
+ assert.equal(await page.getByRole('tab',{name:'Pending',exact:true}).getAttribute('aria-selected'),'true');
+ await page.getByText('No pending reviews. Answered and completed items are in History.',{exact:true}).waitFor();
  await page.goto(origin+'/dashboard/settings');await page.getByLabel('Enable Advanced Memory',{exact:true}).uncheck();await page.getByRole('button',{name:'Save settings',exact:true}).click();await page.getByRole('button',{name:/^Memory reviews/}).waitFor({state:'hidden'});await page.goto(origin+'/dashboard/activity');await page.getByLabel('Filter activity by actor',{exact:true}).waitFor();assert.equal(await page.getByRole('heading',{name:'Proposed improvements',exact:true}).count(),0);
  for(const width of[1500,768,390]){await page.setViewportSize({width,height:1050});await page.goto(origin+'/dashboard/secrets');await page.getByText('LONG_UNBROKEN_SECRET_IDENTIFIER_'.repeat(5),{exact:true}).waitFor();assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Long secret identifier overflow '+width);}
  assert.deepEqual(errors,[]);
