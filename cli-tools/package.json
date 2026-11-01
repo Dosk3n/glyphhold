@@ -5,6 +5,6 @@
   "description": "Integrity-locked official command-line tools bundled in Glyph Hold",
   "dependencies": {
     "@openai/codex": "0.163.0",
-    "@bitwarden/cli": "2026.10.0"
+    "@bitwarden/cli": "2026.10.1"
   }
 }
